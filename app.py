@@ -1,10 +1,7 @@
 import os, time
 from flask import Flask
-from flask_cors import CORS
 
-application = Flask(__name__)
-application.config['CORS_HEADERS'] = 'Content-Type'
-CORS(application)
+app = Flask(__name__)
 
 #TODO: remove after routing file exists
 @app.route('/')
@@ -13,4 +10,4 @@ def hello_world_page():
 
 if __name__ == "__main__":
     # TODO: add route initializations here, both for templates and backend
-    application.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
