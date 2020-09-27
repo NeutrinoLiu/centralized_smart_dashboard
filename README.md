@@ -3,7 +3,7 @@ Centralized Smart Dashboard developed for the rover of Wisconsin Robotics team.
 
 # Prerequisites
 <ul>
-<li> docker
+<li>  [Docker](https://docs.docker.com/get-started)
 </ul>
 
 # Setup 
