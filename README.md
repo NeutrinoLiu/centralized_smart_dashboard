@@ -2,9 +2,7 @@
 Centralized Smart Dashboard developed for the rover of Wisconsin Robotics team. 
 
 # Prerequisites
-<ul>
-<li>  [Docker](https://docs.docker.com/get-started)
-</ul>
+[Docker](https://docs.docker.com/get-started)
 
 # Setup 
 The image only needs to be built once, per each new change we make in the container. However, you need to run the image each time.
