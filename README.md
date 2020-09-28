@@ -1,5 +1,16 @@
 [ATTENTION] this branch "spike exercise" is for badger_hive_management project
 
+LOG:
+
+[Sept 28]
+added login and register html pages; main html pages are  `./badger_hive/*.html` , resources including css/js/fonts are in `./badger_hive/assets/`
+
+TODO: add JS for the form and change flask router
+
+------
+
+Following is the original Readme:
+
 # Centralized Smart Dashboard
 
 Centralized Smart Dashboard developed for the rover of Wisconsin Robotics team. 

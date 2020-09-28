@@ -1,3 +1,0 @@
-sept 28
-added login and register html pages
-TODO: add js for the form and change flask router
