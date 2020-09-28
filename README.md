@@ -1,6 +1,6 @@
-# Centralized Smart Dashboard
+# Hive Management System
 
-Centralized Smart Dashboard developed for the rover of Wisconsin Robotics team. 
+Spike excercise for CS 506, Fall 2020. A hive management system that serves as an introductory project
 
 # Prerequisites
 [Docker](https://docs.docker.com/get-started)
