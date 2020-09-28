@@ -1,4 +1,7 @@
+[ATTENTION] this branch "spike exercise" is for badger_hive_management project
+
 # Centralized Smart Dashboard
+
 Centralized Smart Dashboard developed for the rover of Wisconsin Robotics team. 
 
 # Prerequisites
