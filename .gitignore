@@ -1,5 +1,9 @@
 # desktop layout file on macos
 .DS_Store
+*/.DS_Store
 
 # py runtime cache
 __pycache__/
+
+# bash cache
+.bash_history
