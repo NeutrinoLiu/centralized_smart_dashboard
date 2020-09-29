@@ -16,7 +16,7 @@ Notice that you might need Admin access
 <li> Run image at port 5000:
 
 ```
-docker run -it -p 5000:5000 -v <path_to_source>:/root flask_image
+docker run -it -p 5000:5000 -v <path_to_source>:/root flask-image
 ```
 Use a different port if 5000 is busy for you. Replace <path_to_source> to your path to the source of the project. Do not include the < > symbols.
 
