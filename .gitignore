@@ -1,0 +1,5 @@
+# desktop layout file on macos
+.DS_Store
+
+# py runtime cache
+__pycache__/
