@@ -8,12 +8,26 @@
 
 		function validateLogin() {
 			//TODO: add validations
-			console.log('validate login called');
-			$window.location.href ="/main";
+			var username = document.getElementById("usr_name").value;  
+			var password = document.getElementById("usr_pwd").value;
+			if (username && password) {
+				//todo: validate users
+				if (true) {
+					$window.location.href ="/main";
+				} else {
+					invalidInfo();
+				}
+			} else {
+				invalidInfo();	
+			}
 		}
 
 		function register() {
 			$window.location.href ="/register";
+		}
+
+		function invalidInfo() {
+			console.log('show invalid info');
 		}
 
 	}
