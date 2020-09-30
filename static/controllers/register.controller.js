@@ -24,7 +24,7 @@
 			}
 		}
 		
-		function back2login() {
+		function login() {
 			$window.location.href ="/login";
 		}
 		
