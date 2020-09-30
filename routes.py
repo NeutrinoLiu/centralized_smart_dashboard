@@ -9,6 +9,8 @@ def register():
 def register_success():
     return render_template('register_succ.html')
 
+def profile():
+    return render_template('profile.html')
 
 #TODO: might be useful to add server-side error handlers
 def error_handler( error ):
@@ -20,5 +22,14 @@ def init_website_routes(app):
         app.add_url_rule('/login', 'login', login, methods=['GET'])
         app.add_url_rule('/register', 'register', register, methods=['GET'])
         app.add_url_rule('/register-success', 'register_success', register_success, methods=['GET'])
+        app.add_url_rule('/profile', 'profile', profile, methods=['GET'])
         app.add_url_rule('/', 'login', login, methods=['GET'])
         app.register_error_handler(404, error_handler)
+        
+def init_api_routes(app):
+    #todo: add all routes related to backend
+    # for example, what happens after an image is uploaded
+    # what happens after a request for an image is made
+    # regardless if we use a DB or local this paths should trigger that code (potentially python)
+    # loading the image or text required. From the computer if we are doing local DB
+    pass
