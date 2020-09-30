@@ -28,6 +28,7 @@
 
 		function invalidInfo() {
 			console.log('show invalid info');
+			document.getElementById("login_error").innerHTML = "wrong username or password";
 		}
 
 	}

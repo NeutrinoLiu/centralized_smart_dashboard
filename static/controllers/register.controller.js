@@ -1,10 +1,10 @@
 (function() {
 	var app = angular.module('register', []);
-	app.controller('registerController', ['$scope', '$window', '$http', registerControlle]r);
+	app.controller('registerController', ['$scope', '$window', '$http', registerController]);
 
 	function registerController($scope, $window, $http) {
-		$scope.validateLogin = validateLogin;
-		$scope.register = register;
+		$scope.validateRegister = validateRegister;
+		$scope.back2login = back2login;
 
 		function validateRegister() {
 			//TODO: add validations
@@ -23,9 +23,12 @@
 				invalidInfo();
 			}
 		}
-		
+        function back2login() {
+			$window.location.href ="/login";
+		}
 		function invalidInfo() {
 			console.log('show invalid info');
+            document.getElementById("reg_error").innerHTML = "invalid or incomplete register information";
 		}
 
 	}

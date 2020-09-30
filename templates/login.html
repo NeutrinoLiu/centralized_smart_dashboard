@@ -20,8 +20,15 @@
             <form>
                 <div class="form-group" style="height: 198px;">
                     <p style="width: 93px;">username:</p><input class="form-control" type="text" id="usr_name">
-                    <p style="width: 93px;margin-top: 15px;">password:</p><input class="form-control" type="password" id="usr_pwd"></div>
-            </form><button ng-click="validateLogin()" class="btn btn-primary" id="login_button" type="button" style="margin-left: 67px;padding-left: 21px;padding-right: 26px;">Log in</button><button ng-click="register()" class="btn btn-primary" id="newuser_button" type="button" style="margin-left: 89px;">new user</button></div>
+                    <p style="width: 93px;margin-top: 15px;">password:</p><input class="form-control" type="password" id="usr_pwd">
+                    <p style="width: 400px;margin-top: 15px; color:red" id="login_error">&nbsp;</p>
+                </div>
+                    
+            </form>
+            
+            <button ng-click="validateLogin()" class="btn btn-primary" id="login_button" type="button" style="margin-top: 15px; margin-left: 67px;padding-left: 21px;padding-right: 26px;">Log in</button>
+            <button ng-click="register()" class="btn btn-primary" id="newuser_button" type="button" style="margin-top: 15px; margin-left: 89px;">new user</button>
+        </div>
     </div>
 </body>
 
