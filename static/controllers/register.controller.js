@@ -23,13 +23,14 @@
 				invalidInfo();
 			}
 		}
-        function back2login() {
+		
+		function back2login() {
 			$window.location.href ="/login";
 		}
+		
 		function invalidInfo() {
 			console.log('show invalid info');
-            document.getElementById("reg_error").innerHTML = "invalid or incomplete register information";
+			document.getElementById("reg_error").innerHTML = "invalid or incomplete register information";
 		}
-
 	}
 })();
