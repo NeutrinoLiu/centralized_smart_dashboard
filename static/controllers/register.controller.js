@@ -1,6 +1,6 @@
 (function() {
 	var app = angular.module('register', []);
-	app.controller('registerController', ['$scope', '$window', '$http', registerControlle]r);
+	app.controller('registerController', ['$scope', '$window', '$http', registerController);
 
 	function registerController($scope, $window, $http) {
 		$scope.validateLogin = validateLogin;
@@ -18,7 +18,7 @@
 
 			if (completeInfo) {
 				//TODO: store user
-				$window.location.href ="/register";
+				$window.location.href ="/register-success";
 			} else {
 				invalidInfo();
 			}
