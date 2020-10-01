@@ -5,7 +5,15 @@ table {
 	margin: 0 auto;
 	background-color: white;
 }
-#yellow
+#pictureupload, #contactupdate, #infoupdate, #yellow, #titleText
 {
 	background-color: #EFE4B0;
+}
+#hiveinfo
+{
+
+}
+#hiveimage
+{
+
 }
