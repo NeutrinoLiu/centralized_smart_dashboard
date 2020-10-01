@@ -13,11 +13,13 @@
 			var address = document.getElementById("reg_addr").value;  
 			var contact = document.getElementById("reg_contact").value;
 			// TODO: add pp
+		    var profileInfo = {"username":username, "password":password, "address":address, "contact":contact}
 			var completeInfo = username && password &&
 				address &&	contact;
 
 			if (completeInfo) {
 				//TODO: store user
+				$http.post("/register", profileInfo);
 				$window.location.href ="/register-success";
 			} else {
 				invalidInfo();

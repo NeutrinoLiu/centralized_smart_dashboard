@@ -1,9 +1,19 @@
-from flask import render_template, json, abort
+from flask import render_template, json, abort, request
+from classes import User
+
+users = []
 
 def login():
     return render_template('login.html')
 
 def register():
+    if request.method == 'POST':
+        userinfo = json.loads(request.data.decode())
+        new_user = User(userinfo.get("username"), userinfo.get("password"), userinfo.get("address"),
+                        userinfo.get("contact"))
+        # checks to see if there are any users with that username already in the system otherwise it adds it
+        if not any(x.username == new_user.username for x in users):
+            users.append(new_user)
     return render_template('register.html')
 
 def register_success():
@@ -20,7 +30,7 @@ def error_handler( error ):
 def init_website_routes(app):
     if app:
         app.add_url_rule('/login', 'login', login, methods=['GET'])
-        app.add_url_rule('/register', 'register', register, methods=['GET'])
+        app.add_url_rule('/register', 'register', register, methods=['GET', 'POST'])
         app.add_url_rule('/register-success', 'register_success', register_success, methods=['GET'])
         app.add_url_rule('/profile', 'profile', profile, methods=['GET'])
         app.add_url_rule('/', 'login', login, methods=['GET'])
