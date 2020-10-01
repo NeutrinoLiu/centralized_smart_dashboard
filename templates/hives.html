@@ -11,55 +11,50 @@
     <style>
         ul {
             list-style-type: none;
+            display: grid;
+            grid-template-columns: auto auto auto;
+            justify-content: space-between;
             border-radius: 10px;
             margin: 10px;
             padding: 8px;
             background-color: darkorange;
         }
         li {
-            display: inline-flex;
             padding: 8px;
             margin: 0px 15px 0px 15px;
+            margin: 0px 15px 0px 15px;
+            font-size:large;
         }
-        .apiary {
-            border-radius: 25px;
-            background-color: honeydew;
-            color: black;
-            margin: 50px;
-            padding: 50px;
-            text-align: center;
-            min-width: 200px;
-            max-width: 200px;
-            min-height: 100px;
-            max-height: 100px;
+        .hive-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            padding: 10px;
+            justify-content:space-evenly;
         }
         .hive {
             border-radius: 25px;
             background-color: azure;
             color: black;
-            margin: 50px;
+            margin: 20px;
             padding: 50px;
             text-align: center;
-            min-width: 200px;
-            max-width: 200px;
+            min-width: 150px;
+            max-width: 150px;
             min-height: 100px;
             max-height: 100px;
         }
+
         .addhive {
             border-radius: 25px;
             background-color: aliceblue;
             color: black;
-            margin: 50px;
+            margin: 20px;
             padding: 50px;
             text-align: center;
-            min-width: 200px;
-            max-width: 200px;
+            min-width: 150px;
+            max-width: 150px;
             min-height: 100px;
             max-height: 100px;
-        }
-        table, th, td {
-            padding: 15px;
-            border-spacing: 10px;
         }
     </style>
 </head>
@@ -67,35 +62,44 @@
 <body style="background-color:#EFE4B0;">
     <!--Head Navigation Bar-->
     <ul>
-        <li>All Hives</li>
-        <li><a href="">Add Apiary</a></li>
+        <li><b>All Hives</b></li>
+        <li><b><a href="">Add Apiary</a></b></li>
         <!--This is where "Welcome <username>" would go-->
-        <li>Welcome &nbsp; <a href="">User</a></li>
+        <li><b>Welcome, &nbsp; <a href="">User</a></b></li>
     </ul>
     <br>
     <br>
     <!--Beginning of Hive and Apiary lists-->
     <!--TODO: make buttons do things
         TODO: add icons; my icons don't play nice...-->
-    <table>
-        <tr>
-            <!--for apiaries, delete should have a confirm alert.-->
-            <td class="apiary">
-                <h2>Apiary 1</h2>
-                <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
-                <input type="button" onclick="" value="Delete" />
-            </td>
-            <td class="hive">
-                <h2>Hive 2</h2>
-                <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
-                <input type="button" onclick="" value="Delete" />
-            </td>
-            <td class="addhive">
-                <h2>Add Hive</h2>
-                <input type="button" onclick="" value="+" />
-            </td>
-        </tr>
+    <div class="hive-container" ng-repeat="hive in hives | orderBy : 'id'">
+        <div class="hive">
+            <h2>({{hive.id}})</h2>
+            <input type="button" style="font-size:medium" ng-click="" value="Edit" />&nbsp; &nbsp; &nbsp;
+            <input type="button" style="font-size:medium" ng-click="" value="Delete" />
+        </div>
+        <!--Hive 2 view example; To be deleted-->
+        <div class="hive">
+            <h2>Hive 2</h2>
+            <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
+            <input type="button" onclick="" value="Delete" />
+        </div>
+        <div class="hive">
+            <h2>Hive 2</h2>
+            <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
+            <input type="button" onclick="" value="Delete" />
+        </div>
+        <div class="hive">
+            <h2>Hive 2</h2>
+            <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
+            <input type="button" onclick="" value="Delete" />
+        </div>
+        <!--Add Hive function at the end-->
+        <div class="addhive">
+            <h2>Add Hive</h2>
+            <input type="button" style="font-size:x-large;" onclick="" value="+" />
+        </div>
+    </div>
 
-    </table>
 </body>
 </html>
