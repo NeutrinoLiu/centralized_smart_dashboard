@@ -1,25 +1,37 @@
-<!-- This is a comment on HTML -->
-<!-- ope... thanks
-    Cool. So my plan is we could work on the main page where you see the different hives after you log in. Like on my drawing.
-    Yup we can work on the HTML here-->
+<!--This is the All Hives page. It lists all hives and apiaries that a 
+    logged in user has associated with their profile.
+    Helpful Website: w3schools.com
+    -->
 
-<!-- I think there's a way to use templates, but for now... BASIC!-->
 <!DOCTYPE html>
 <html>
 <head>
     <title>All Hives</title>
+    <!--Style stuff to go into a css file later-->
     <style>
         ul {
             list-style-type: none;
             border-radius: 10px;
-            margin: 0;
+            margin: 10px;
             padding: 8px;
             background-color: darkorange;
         }
         li {
-            display: inline-block;
+            display: inline-flex;
             padding: 8px;
             margin: 0px 15px 0px 15px;
+        }
+        .apiary {
+            border-radius: 25px;
+            background-color: honeydew;
+            color: black;
+            margin: 50px;
+            padding: 50px;
+            text-align: center;
+            min-width: 200px;
+            max-width: 200px;
+            min-height: 100px;
+            max-height: 100px;
         }
         .hive {
             border-radius: 25px;
@@ -28,8 +40,8 @@
             margin: 50px;
             padding: 50px;
             text-align: center;
-            min-width: 150px;
-            max-width: 150px;
+            min-width: 200px;
+            max-width: 200px;
             min-height: 100px;
             max-height: 100px;
         }
@@ -40,8 +52,8 @@
             margin: 50px;
             padding: 50px;
             text-align: center;
-            min-width: 150px;
-            max-width: 150px;
+            min-width: 200px;
+            max-width: 200px;
             min-height: 100px;
             max-height: 100px;
         }
@@ -51,19 +63,25 @@
         }
     </style>
 </head>
+
 <body style="background-color:#EFE4B0;">
     <!--Head Navigation Bar-->
-    <ul style="width: 100%">
+    <ul>
         <li>All Hives</li>
         <li><a href="">Add Apiary</a></li>
         <!--This is where "Welcome <username>" would go-->
-        <li>Welcome <a href="">User</a></li>
-    </ul><br>
+        <li>Welcome &nbsp; <a href="">User</a></li>
+    </ul>
     <br>
+    <br>
+    <!--Beginning of Hive and Apiary lists-->
+    <!--TODO: make buttons do things
+        TODO: add icons; my icons don't play nice...-->
     <table>
         <tr>
-            <td class="hive">
-                <h2>Hive 1</h2>
+            <!--for apiaries, delete should have a confirm alert.-->
+            <td class="apiary">
+                <h2>Apiary 1</h2>
                 <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
                 <input type="button" onclick="" value="Delete" />
             </td>
@@ -74,7 +92,7 @@
             </td>
             <td class="addhive">
                 <h2>Add Hive</h2>
-                <input type="button" onclick="" value="Add hive (should be plus sign)" />
+                <input type="button" onclick="" value="+" />
             </td>
         </tr>
 
