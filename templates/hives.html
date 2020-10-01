@@ -11,22 +11,39 @@
     <style>
         ul {
             list-style-type: none;
+            border-radius: 10px;
             margin: 0;
             padding: 8px;
+            background-color: darkorange;
         }
         li {
             display: inline-block;
             padding: 8px;
+            margin: 0px 15px 0px 15px;
         }
-        li a {
-            display: inline-block;
-            padding: 8px;
-         }
-        .hive{
+        .hive {
+            border-radius: 25px;
             background-color: azure;
             color: black;
             margin: 50px;
             padding: 50px;
+            text-align: center;
+            min-width: 150px;
+            max-width: 150px;
+            min-height: 100px;
+            max-height: 100px;
+        }
+        .addhive {
+            border-radius: 25px;
+            background-color: aliceblue;
+            color: black;
+            margin: 50px;
+            padding: 50px;
+            text-align: center;
+            min-width: 150px;
+            max-width: 150px;
+            min-height: 100px;
+            max-height: 100px;
         }
         table, th, td {
             padding: 15px;
@@ -36,33 +53,31 @@
 </head>
 <body style="background-color:#EFE4B0;">
     <!--Head Navigation Bar-->
-    <ul>
+    <ul style="width: 100%">
         <li>All Hives</li>
         <li><a href="">Add Apiary</a></li>
         <!--This is where "Welcome <username>" would go-->
         <li>Welcome <a href="">User</a></li>
     </ul><br>
     <br>
-    <table >
+    <table>
         <tr>
             <td class="hive">
                 <h2>Hive 1</h2>
-                <p>Add edit and delete buttons here</p>
+                <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
+                <input type="button" onclick="" value="Delete" />
             </td>
             <td class="hive">
                 <h2>Hive 2</h2>
-                <p>Add edit and delete buttons here</p>
+                <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
+                <input type="button" onclick="" value="Delete" />
             </td>
-            <td class="hive">
-                <h2>Hive 3</h2>
-                <p>Add edit and delete buttons here</p>
+            <td class="addhive">
+                <h2>Add Hive</h2>
+                <input type="button" onclick="" value="Add hive (should be plus sign)" />
             </td>
         </tr>
 
     </table>
-    <div class="hive">
-        <h2>Hive 1</h2>
-        <p>Add edit and delete buttons here</p>
-    </div>
 </body>
 </html>
