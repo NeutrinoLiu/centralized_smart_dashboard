@@ -5,6 +5,7 @@
     function hivesController($scope, $window, $http) {
         $scope.editHive = editHive;
         $scope.deleteHive = deleteHive;
+        $scope.addHive = addHive;
         $scope.hives;
 
         function loadHives() {
@@ -25,12 +26,21 @@
 
         function deleteHive(hiveId) {
             // TODO: call hive backend class to remove this
-            console.log(hiveId);
+
+            // id not necessarily math array indxs
+            for (i = 0; i < $scope.hives.length; i++) {
+                if (parseInt($scope.hives[i].id) == hiveId) {
+                    $scope.hives.splice(i, 1);
+                    console.log(i);
+                }
+            }
         }
 
         function addHive() {
-            // TODO: call hive backend class to remove this
-            console.log("Add hive");
+            // TODO: call hive backend class to ADD this
+            let newHiveId = (parseInt($scope.hives[$scope.hives.length-1].id) + 1).toString()
+            $scope.hives = $scope.hives.concat([{id: newHiveId}])
+            console.log($scope.hives)
         }
 
         loadHives();
