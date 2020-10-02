@@ -1,4 +1,4 @@
-﻿body
+body
 {
 }
 table {
@@ -8,6 +8,16 @@ table {
 #pictureupload, #contactupdate, #infoupdate, #yellow, #titleText
 {
 	background-color: #EFE4B0;
+}
+.imagio {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+#imagebox
+{
+	background-color: black;
 }
 #hiveinfo
 {
