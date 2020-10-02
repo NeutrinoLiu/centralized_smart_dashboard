@@ -38,7 +38,7 @@
 
         function addHive() {
             // TODO: call hive backend class to ADD this
-            let newHiveId = (parseInt($scope.hives[$scope.hives.length-1].id) + 1).toString()
+            let newHiveId = ($scope.hives.length == 0 ? "1" : (parseInt($scope.hives[$scope.hives.length-1].id) + 1).toString());
             $scope.hives = $scope.hives.concat([{id: newHiveId}])
             console.log($scope.hives)
         }
