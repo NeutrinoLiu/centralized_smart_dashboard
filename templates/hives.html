@@ -1,6 +1,7 @@
 <!--This is the All Hives page. It lists all hives and apiaries that a 
     logged in user has associated with their profile.
     Helpful Website: w3schools.com
+    Author: Brenna Kinder
     -->
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
         ul {
             list-style-type: none;
             display: grid;
-            grid-template-columns: auto auto auto;
+            grid-template-columns: auto auto;
             justify-content: space-between;
             border-radius: 10px;
             margin: 10px;
@@ -61,43 +62,27 @@
 
 <body style="background-color:#EFE4B0;">
     <!--Head Navigation Bar-->
+    <!--TODO: Add urls to links-->
     <ul>
         <li><b>All Hives</b></li>
-        <li><b><a href="">Add Apiary</a></b></li>
         <!--This is where "Welcome <username>" would go-->
-        <li><b>Welcome, &nbsp; <a href="">User</a></b></li>
+        <li><b>Welcome, &nbsp; <a href="profile.html">User</a></b></li>
     </ul>
     <br>
     <br>
-    <!--Beginning of Hive and Apiary lists-->
+    <!--Beginning of Hive lists-->
     <!--TODO: make buttons do things
         TODO: add icons; my icons don't play nice...-->
     <div class="hive-container" ng-repeat="hive in hives | orderBy : 'id'">
         <div class="hive">
             <h2>({{hive.id}})</h2>
-            <input type="button" style="font-size:medium" ng-click="" value="Edit" />&nbsp; &nbsp; &nbsp;
+            <input type="button" style="font-size:medium" onclick="document.location='editHive.html'" value="Edit" />&nbsp; &nbsp; &nbsp;
             <input type="button" style="font-size:medium" ng-click="" value="Delete" />
-        </div>
-        <!--Hive 2 view example; To be deleted-->
-        <div class="hive">
-            <h2>Hive 2</h2>
-            <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
-            <input type="button" onclick="" value="Delete" />
-        </div>
-        <div class="hive">
-            <h2>Hive 2</h2>
-            <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
-            <input type="button" onclick="" value="Delete" />
-        </div>
-        <div class="hive">
-            <h2>Hive 2</h2>
-            <input type="button" onclick="" value="Edit" />&nbsp; &nbsp; &nbsp;
-            <input type="button" onclick="" value="Delete" />
         </div>
         <!--Add Hive function at the end-->
         <div class="addhive">
             <h2>Add Hive</h2>
-            <input type="button" style="font-size:x-large;" onclick="" value="+" />
+            <input type="button" style="font-size:x-large;" onclick="document.location=''" value="+" />
         </div>
     </div>
 
