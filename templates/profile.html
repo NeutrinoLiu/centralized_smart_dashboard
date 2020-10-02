@@ -4,7 +4,31 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../static/css/ProfileStyle.css">
-    <title></title>
+    <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='controllers/profile.controller.js') }}"></script>
+    <script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#imagio')
+                    .attr('src', e.target.result)
+                    .width(325)
+                    .height(300);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    </script>        <!-- credit to https://stackoverflow.com/questions/12368910/html-display-image-after-selecting-filename !-->
+    <title>Profile</title>
+<style>
+  article, aside, figure, footer, header, hgroup, 
+  menu, nav, section { display: block; }
+</style>
 </head>
 <body style="background-color:#EFE4B0;">
     </br>
@@ -14,13 +38,13 @@
         <tr style="height: 35px;">
             <td style="width: 50%; height: 35px;" colspan="3" id="titleText"><h1>Title of Profile would go here</h1></td>
         </tr>
-        <tr style="height: 200px;">
-            <td style="width: 30%; height: 200px;"><img id="hiveimage" src="" alt=""></td>
-            <td style="width: 5%; height: 200px;" rowspan="4" id="yellow"></td>
-            <td style="width: 50%; height: 200px;" rowspan="3" id="hiveinfobox"><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Hive info goes here</label></td>
+        <tr style="height: 300px;">
+            <td style="width: 30%; height: 300px;" id="imagebox"><img id="imagio" src="#" alt="your hive" class="imagio" /></td>
+            <td style="width: 5%; height: 300px;" rowspan="4" id="yellow"></td>
+            <td style="width: 50%; height: 300px;" rowspan="3" id="hiveinfobox"><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Hive info goes here</label></td>
         </tr>
         <tr style="height: 31px;">
-            <td style="width: 30%; height: 31px;" id="yellow"><input id="pictureupload" type="file" value="Upload" /></td>
+            <td style="width: 30%; height: 31px;" id="yellow"><input id="pictureupload" type="file" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png" value="Upload" /></td>
         </tr>
         <tr style="height: 222px;">
             <td style="width: 30%; height: 222px;">Phone: <input name="yourphone" type="tel" /><br /></br>Email: <input name="yourmail" type="email" /></td>
