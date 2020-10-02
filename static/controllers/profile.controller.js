@@ -1,16 +1,13 @@
 // JavaScript source code
 (function() {
 	var app = angular.module('profile', []);
-	app.controller('profileController', ['$scope', '$window', 'http', profileController]);
+	app.controller('profileController', ['$scope', '$window', profileController]);
 
-    function profileController($scope, $window, $http) {
+    function profileController($scope, $window) {
         $scope.profilepic;
-
-	}
-
-    	//TODO Need someone to help me figure out how this even works
-
-	function readURL(input) {  // couldnt get this to work like I wanted it to
+        $scope.userName = 'Sample user';
+        //TODO Need someone to help me figure out how this even works
+        function readURL(input) {  // couldnt get this to work like I wanted it to
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
@@ -24,4 +21,6 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+	}
 })();

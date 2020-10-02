@@ -3,10 +3,7 @@
 <html lang="en" ng-app="profile" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../static/css/ProfileStyle.css">
-    <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <!-- <link rel="stylesheet" href="../static/css/ProfileStyle.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='controllers/profile.controller.js') }}"></script>
     <script>
@@ -25,7 +22,7 @@
     <table border="0" style="border-collapse: collapse; width: 80%;">
     <tbody>
         <tr style="height: 35px;">
-            <td style="width: 50%; height: 35px;" colspan="3" id="titleText"><h1>Title of Profile would go here</h1></td>
+            <td style="width: 50%; height: 35px;" colspan="3" id="titleText"><h1>{{ '{{userName}}'}} would go here</h1></td>
         </tr>
         <tr style="height: 300px;">
             <td style="width: 30%; height: 300px;" id="imagebox"><img id="imagio" src="#" alt="your hive" class="imagio" /></td>
