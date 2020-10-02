@@ -23,13 +23,15 @@
 
             reader.readAsDataURL(input.files[0]);
         }
-        function contactUpdate() {
-                console.log("contact information here.")
         }
+
+        function contactUpdate() {
+            console.log("contact information here.")
+        }
+            
         function hiveInfoUpdate() {
             console.log("Hive Information here")
         }
-    }
 
-	}
+    }
 })();
