@@ -20,12 +20,17 @@
         }
 
         function editHive(hiveId) {
-            console.log(hiveId);
-
+            $window.location.href ="/edit-hive?hiveId="+hiveId;
         }
 
         function deleteHive(hiveId) {
+            // TODO: call hive backend class to remove this
             console.log(hiveId);
+        }
+
+        function addHive() {
+            // TODO: call hive backend class to remove this
+            console.log("Add hive");
         }
 
         loadHives();

@@ -13,7 +13,7 @@
 			if (username && password) {
 				//todo: validate users
 				if (true) {
-					$window.location.href ="/main";
+					$window.location.href ="/hives";
 				} else {
 					invalidInfo();
 				}
