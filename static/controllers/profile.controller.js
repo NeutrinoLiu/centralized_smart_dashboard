@@ -3,7 +3,8 @@
 	var app = angular.module('profile', []);
 	app.controller('profileController', ['$scope', '$window', 'http', profileController]);
 
-	function profileController($scope, $window, $http) {
+    function profileController($scope, $window, $http) {
+        $scope.profilepic;
 
 	}
 
