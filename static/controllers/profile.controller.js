@@ -10,18 +10,18 @@
 
     	//TODO Need someone to help me figure out how this even works
 
-	/*function readURL(input) {  // couldnt get this to work like I wanted it to
+	function readURL(input) {  // couldnt get this to work like I wanted it to
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('#blah')
+                $('#imagio')
                     .attr('src', e.target.result)
-                    .width(150)
-                    .height(200);
+                    .width(325)
+                    .height(300);
             };
 
             reader.readAsDataURL(input.files[0]);
         }
-    }*/
+    }
 })();
