@@ -9,8 +9,33 @@
     <style>
         {
             box-sizing: border-box;
+            
         }
-
+        table, th, td {
+            border: 1px solid black;
+            text-align: left;
+            background-color: #EFE4B0;
+            padding: 10px;
+            border-collapse: collapse;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        table thead tr {
+            background-color: #ddd;
+            color: black;
+            text-align: left;
+        }
+        /*Grid layout to evenly space the displayed current information and edit form*/
+        .results-container {
+            display: grid;
+            grid-template-columns: auto auto;
+            padding: 10px;
+            justify-content: space-evenly;
+        }
+        .results-item {
+            margin: 20px;
+            padding: 50px;
+            
+        }
         /* Button used to open the contact form - fixed at the bottom of the page */
         .open-button {
             background-color: #555;
@@ -85,63 +110,96 @@
 </head>
 <body ng-controller="editHiveController" style="background-color:#EFE4B0;">
     <h1 style="text-align: center; background-color:darkorange; border-radius: 10px;">Hive {{ '{{hiveId}}' }} Information</h1>
-    <form>
-        <label for="editHealth">Health:</label><br>
-        <input type="text" id="editHealth" name="editHealth"><br>
 
-        <label for="rofInspection">Results of Inspection:</label><br>
-        <input type="file" id="rofInspection" name="rofInspection"><br>
 
-        <label for="hstores">Honey Stores:</label><br>
-        <input type="text" id="hstores" name="hstores"><br>
 
-        <label for="qproduction">Queen Production:</label><br>
-        <input type="text" id="qproduction" name="qproduction"><br>
+    <div class="results-container">
+        <div class="results-item">
+            <h2>
+                Current Results <!-- Need to make the hive ID and update that -->
+            </h2>
 
-        <label for="equipment">Equipment on the Hive:</label><br>
-        <input type="text" id="equipment" name="equipment"><br>
+            <table>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>Health</td>
+                    <td>1234</td>
+                </tr>
+                <tr>
+                    <td>Results of Inspection</td>
+                    <td>1234</td>
+                </tr>
+                <tr>
+                    <td>Honey Stores</td>
+                    <td>1234</td>
+                </tr>
+                <tr>
+                    <td>Queen Production</td>
+                    <td>1234</td>
+                </tr>
+                <tr>
+                    <td>Equipment in the Hive</td>
+                    <td>1234</td>
+                </tr>
+                <tr>
+                    <td>Equipment in Inventory</td>
+                    <td>1234</td>
+                </tr>
+                <tr>
+                    <td>Losses</td>
+                    <td>1234</td>
+                </tr>
+                <tr>
+                    <td>Gains</td>
+                    <td>1234</td>
+                </tr>
 
-        <label for="iequipment">Equipment in Inventory:</label><br>
-        <input type="text" id="iequipment" name="iequipment"><br>
+            </table>
+        </div>
+        <div class="results-item">
+            <h2>
+                New Hive Results
+            </h2>
+            <form style="        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); border: 1px solid black; padding: 10px">
+                <label for="editHealth">Health:</label><br>
+                <input type="text" id="editHealth" name="editHealth"><br>
 
-        <label for="losses">Losses:</label><br>
-        <input type="text" id="losses" name="losses"><br>
+                <label for="rofInspection">Results of Inspection:</label><br>
+                <input type="text" id="rofInspection" name="rofInspection"><br>
 
-        <label for="gains">Gains:</label><br>
-        <input type="text" id="gains" name="gains"><br>
+                <label for="hstores">Honey Stores:</label><br>
+                <input type="text" id="hstores" name="hstores"><br>
 
-        <input ng-click="update()" type="button" value="Submit">
-    </form>
+                <label for="qproduction">Queen Production:</label><br>
+                <input type="text" id="qproduction" name="qproduction"><br>
 
-    <p>
-        Click the "Submit" button and the form-data will be sent to a page on the
-        server called "hive_{{ '{{hiveId}}' }}.csv".
-    </p>
+                <label for="equipment">Equipment on the Hive:</label><br>
+                <input type="text" id="equipment" name="equipment"><br>
 
-    <div class="form-popup" id="myForm">
-        <form action="/action_page.php" class="form-container">
-            <h1>Login</h1>
+                <label for="iequipment">Equipment in Inventory:</label><br>
+                <input type="text" id="iequipment" name="iequipment"><br>
 
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" required>
+                <label for="losses">Losses:</label><br>
+                <input type="text" id="losses" name="losses"><br>
 
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
+                <label for="gains">Gains:</label><br>
+                <input type="text" id="gains" name="gains"><br>
 
-            <button type="submit" class="btn">Login</button>
-            <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
-        </form>
+                <input ng-click="update()" type="button" value="Submit">
+            </form>
+
+            <!--
+        <p>
+            Click the "Submit" button and the form-data will be sent to a page on the
+            server called "hive_{{ '{{hiveId}}' }}.csv".
+        </p>
+            -->
+        </div>
+
     </div>
 
-
-    <script>
-        function openForm() {
-        document.getElementById("myForm").style.display = "block";
-        }
-
-        function closeForm() {
-        document.getElementById("myForm").style.display = "none";
-        }
-    </script>
 </body>
 </html>
