@@ -6,6 +6,9 @@
     function profileController($scope, $window) {
         $scope.profilepic;
         $scope.userName = 'Sample user';
+        $scope.readURL = readURL;
+        $scope.contactUpdate = contactUpdate;
+        $scope.hiveInfoUpdate = hiveInfoUpdate;
         //TODO Need someone to help me figure out how this even works
         function readURL(input) {  // couldnt get this to work like I wanted it to
         if (input.files && input.files[0]) {
@@ -19,6 +22,12 @@
             };
 
             reader.readAsDataURL(input.files[0]);
+        }
+        function contactUpdate() {
+                console.log("contact information here.")
+        }
+        function hiveInfoUpdate() {
+            console.log("Hive Information here")
         }
     }
 
