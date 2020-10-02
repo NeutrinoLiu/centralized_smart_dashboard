@@ -4,10 +4,30 @@
 
     function editHiveController($scope, $window, $http) {
         $scope.hiveId;
+        $scope.health;
+        $scope.inspection;
+        $scope.honeyStores;
+        $scope.queenprod;
+        $scope.equipment;
+        $scope.losses;
+        $scope.gains;
 
         $scope.update = update;
 
         const urlParams = new URLSearchParams(window.location.search);
+
+        function init() {
+            //TODO: get this from python backend
+            getHiveId();
+            $scope.health = "sample health";
+            $scope.inspection = "sample inspection";
+            $scope.honeyStores = "sample honeyStores";
+            $scope.queenProd = "sample queenprod";
+            $scope.equipment = "sample equipment";
+            $scope.losses = "sample losses";
+            $scope.gains = "sample gains";
+        }
+
 
         function getHiveId() {
             $scope.hiveId = urlParams.get('hiveId');
@@ -47,7 +67,7 @@
             console.log('Invalid update');
         }
 
-        getHiveId();
+        init();
 
     }
 })();
