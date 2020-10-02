@@ -5,7 +5,7 @@
     -->
 
 <!DOCTYPE html>
-<html>
+<html ng-app='hives'>
 <head>
     <title>All Hives</title>
     <!--Style stuff to go into a css file later-->
@@ -58,9 +58,12 @@
             max-height: 100px;
         }
     </style>
+
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='controllers/hives.controller.js') }}"></script>
 </head>
 
-<body style="background-color:#EFE4B0;">
+<body ng-controller='hivesController' style="background-color:#EFE4B0;">
     <!--Head Navigation Bar-->
     <!--TODO: Add urls to links-->
     <ul>
@@ -75,9 +78,9 @@
         TODO: add icons; my icons don't play nice...-->
     <div class="hive-container" ng-repeat="hive in hives | orderBy : 'id'">
         <div class="hive">
-            <h2>({{hive.id}})</h2>
-            <input type="button" style="font-size:medium" onclick="document.location='editHive.html'" value="Edit" />&nbsp; &nbsp; &nbsp;
-            <input type="button" style="font-size:medium" ng-click="" value="Delete" />
+            <h2>{{ '{{hive.id}}' }}</h2>
+            <input type="button" style="font-size:medium" ng-click="editHive(hive.id)" value="Edit" />&nbsp; &nbsp; &nbsp;
+            <input type="button" style="font-size:medium" ng-click="deleteHive(hive.id)" value="Delete" />
         </div>
         <!--Add Hive function at the end-->
         <div class="addhive">

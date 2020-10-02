@@ -22,6 +22,12 @@ def register_success():
 def profile():
     return render_template('profile.html')
 
+def hives():
+    return render_template('hives.html')
+
+def edit_hives():
+    return render_template('editHives.html') 
+
 #TODO: might be useful to add server-side error handlers
 def error_handler( error ):
     return render_template('invalid-page.html')
@@ -33,9 +39,11 @@ def init_website_routes(app):
         app.add_url_rule('/register', 'register', register, methods=['GET', 'POST'])
         app.add_url_rule('/register-success', 'register_success', register_success, methods=['GET'])
         app.add_url_rule('/profile', 'profile', profile, methods=['GET'])
+        app.add_url_rule('/hives', 'hives', hives, methods=['GET'])
+        app.add_url_rule('/edit-hives', 'edit_hives', edit_hives, methods=['GET'])
         app.add_url_rule('/', 'login', login, methods=['GET'])
         app.register_error_handler(404, error_handler)
-        
+    
 def init_api_routes(app):
     #todo: add all routes related to backend
     # for example, what happens after an image is uploaded
