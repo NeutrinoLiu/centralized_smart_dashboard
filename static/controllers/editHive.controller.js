@@ -12,6 +12,7 @@
         $scope.invequipment;
         $scope.losses;
         $scope.gains;
+        $scope.hives = hives;
 
         $scope.update = update;
 
@@ -30,6 +31,9 @@
             $scope.gains = "sample gains";
         }
 
+        function hives() {
+            $window.location.href = "/hives";
+        }
 
         function getHiveId() {
             $scope.hiveId = urlParams.get('hiveId');

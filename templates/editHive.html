@@ -13,7 +13,7 @@
         }
 
         .back-button {
-            background-color: #EFE480;
+            background-color: #f1f1f1;
             border: 2px solid darkorange;
 
         }
@@ -112,7 +112,7 @@
             }
     </style>
 
-    <script src = "https://ajax.googleapis.com/ajax /libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='controllers/editHive.controller.js') }}"></script>
 </head>
 <body ng-controller="editHiveController" style="background-color:#EFE4B0;">
@@ -195,7 +195,7 @@
                 <input type="text" id="gains" name="gains"><br><br />
 
                 <input ng-click="update()" type="button" value="Submit">
-                <button class="back-button" onclick="goBack()">Back to All Hives</button>
+                <button class="back-button" ng-click="hives()" >Back to All Hives</button>
             </form>
 
             <!--
@@ -209,11 +209,6 @@
     </div>
 
 
-    <script>
-        function goBack() {
-        window.history.back();
-        }
-    </script>
-
+ 
 </body>
 </html>
