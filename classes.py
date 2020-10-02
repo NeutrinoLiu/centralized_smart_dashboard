@@ -8,21 +8,17 @@ from uuid import uuid4
 
 class Hive(object):                 # hive object, may need to add more field in the future
 
-    def __init__(self, hiveID):
+    def __init__(self, hiveID, health, honeyStores, queenProduction, equipment, losses, gains):
         self.id = hiveID            # use hive id to index hive for a specific user
-
+        self.health = health
+        self.honeyStores = honeyStores
+        self.queenProduction = queenProduction
+        self.equipment = equipment
+        self.losses = losses
+        self.gains = gains
 
         
 class User(object):
-
-    userList = []                   # class field records all the username
-
-    @classmethod                    # check if the user name has been registered
-    def checkName(cls, name):       # called when validate the register info
-        if name in cls.userList:
-            return True
-        else:
-            return False
 
     def __init__(self, username, password, address, contact):  # called when register info is valid
         # todo: add profile pic.
@@ -35,8 +31,6 @@ class User(object):
         self.is_active = True
         self.is_anonymous = False
         self.is_authenticated = True
-        User.userList.append(username)  # add new user name to userlist
-
 
     def addHive(self):              # called when add a new hive
         self.hiveIdAdder += 1 
@@ -55,5 +49,5 @@ class User(object):
         return self.hives           # return a list containing all hives
     
     def __repr__(self):
-        return str({"username": self.name, "password": self.pswd,
-                    "address": self.addr, "contact": self.contact})
+        return str({"username": self.username, "password": self.password,
+                    "address": self.address, "contact": self.contact})
