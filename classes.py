@@ -48,6 +48,8 @@ class User(object):
     def getHives(self):              # called when log in, showing the hive panel
         return self.hives           # return a list containing all hives
 
+
+
     def __repr__(self):
         return str({"username": self.username, "password": self.password,
                     "address": self.address, "contact": self.contact})
