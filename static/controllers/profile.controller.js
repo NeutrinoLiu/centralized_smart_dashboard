@@ -9,6 +9,8 @@
         $scope.readURL = readURL;
         $scope.contactUpdate = contactUpdate;
         $scope.hiveInfoUpdate = hiveInfoUpdate;
+        $scope.hives = goToHives;
+        
         //TODO Need someone to help me figure out how this even works
         function readURL(input) {  // couldnt get this to work like I wanted it to
             if (input.files && input.files[0]) {
@@ -33,6 +35,10 @@
 
         function hiveInfoUpdate() {
             console.log("Hive Information here")
+        }
+
+        function goToHives() {
+            $window.location.href ="/hives";
         }
 
 	}
