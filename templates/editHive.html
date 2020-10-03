@@ -12,6 +12,7 @@
             
         }
 
+
         .back-button {
             background-color: #f1f1f1;
             border: 2px solid darkorange;
@@ -194,7 +195,8 @@
                 <label for="gains">Gains:</label><br>
                 <input type="text" id="gains" name="gains"><br><br />
 
-                <input ng-click="update()" type="button" value="Submit">
+                <button class="back-button" ng-click="update()" >Submit</button>
+                <!--<input ng-click="update()" type="button" value="Submit"> -->
                 <button class="back-button" ng-click="hives()" >Back to All Hives</button>
             </form>
 

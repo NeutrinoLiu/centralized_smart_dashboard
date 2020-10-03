@@ -31,6 +31,7 @@
             $scope.gains = "sample gains";
         }
 
+
         function hives() {
             $window.location.href = "/hives";
         }

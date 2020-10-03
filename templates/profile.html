@@ -3,7 +3,7 @@
 <html lang="en" ng-app="profile" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <!-- <link rel="stylesheet" href="../static/css/ProfileStyle.css"> -->
+    <link rel="stylesheet" href="../static/css/ProfileStyle.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='controllers/profile.controller.js') }}"></script>
     <script>
@@ -17,29 +17,43 @@
     </style>
 </head>
 <body ng-controller='profileController' style="background-color:#EFE4B0;">
-    </br>
-    </br>
+    <ul id="nameList">
+        <li><b>{{ '{{userName}}'}}'s Hive</b></li>
+        <!--This is where "Welcome <username>" would go-->
+        <li><button class="back-button" ng-click="hives()">Back to All Hives</button></li>
+    </ul>
+    <br>
+    <br>
     <table border="0" style="border-collapse: collapse; width: 80%;">
-    <tbody>
-        <tr style="height: 35px;">
-            <td style="width: 50%; height: 35px;" colspan="3" id="titleText"><h1>{{ '{{userName}}'}}'s Hive</h1></td>
-        </tr>
-        <tr style="height: 300px;">
-            <td style="width: 30%; height: 300px;" id="imagebox"><img id="imagio" src="#" alt="your hive" class="imagio" /></td>
-            <td style="width: 5%; height: 300px;" rowspan="4" id="yellow"></td>
-            <td style="width: 50%; height: 300px;" rowspan="3" id="hiveinfobox"><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Hive info goes here</label></td>
-        </tr>
-        <tr style="height: 31px;">
-            <td style="width: 30%; height: 31px;" id="yellow"><input id="pictureupload" type="file" ng-change="readURL(this)" accept="image/gif, image/jpeg, image/png" value="Upload" /></td>
-        </tr>
-        <tr style="height: 222px;">
-            <td style="width: 30%; height: 222px;">Phone: <input name="yourphone" type="tel" /><br /></br>Email: <input name="yourmail" type="email" /></td>
-        </tr>
-        <tr style="height: 31px;">
-            <td style="width: 30%; height: 31px;" id-"yellow"><input id="contactupdate" ng-click="contactUpdate()" type="submit" value="Update" /></td>
-            <td style="width: 60%; height: 31px;" id="yellow"><input id="infoupdate" ng-click="hiveInfoUpdate()" type="submit" value="Update" /></td>
-        </tr>
-    </tbody>
+        <tbody>
+            <tr style="height: 300px;">
+                <td style="width: 30%; height: 300px;" id="imagebox"><img id="imagio" src="#" alt="your hive" class="imagio" /></td>
+                <td style="width: 5%; height: 300px;" rowspan="4" id="yellow"></td>
+                <td style="width: 50%; height: 300px;" rowspan="3" id="hiveinfobox">
+                    <h2 style="text-align:center">Toggle Public Hive Information</h2>
+                    <ul style="list-style-type: none" id="infoList">
+                        <li><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Hive Health</label></li>
+                        <li><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Inspection Results</label></li>
+                        <li><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Honey Stores</label></li>
+                        <li><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Queen Production</label></li>
+                        <li><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Hive Equipment</label></li>
+                        <li><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Equipment in Inventory</label></li>
+                        <li><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Hive Losses</label></li>
+                        <li><label><input type="checkbox" id="hiveinfo" name="hiveinfo" value="hiveinfo">Hive Gains</label></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr style="height: 31px;">
+                <td style="width: 30%; height: 31px;" id="yellow"><input id="pictureupload" type="file" ng-change="readURL(this)" accept="image/gif, image/jpeg, image/png" value="Upload" /></td>
+            </tr>
+            <tr style="height: 200px;">
+                <td style="width: 30%; height: 200px;">Phone: <input name="yourphone" type="tel" /><br /></br>Email: <input name="yourmail" type="email" /></td>
+            </tr>
+            <tr style="height: 31px;">
+                <td style="width: 30%; height: 31px;" id="yellow"><input id="contactupdate" ng-click="contactUpdate()" type="submit" value="Update Contact Info" /></td>
+                <td style="width: 60%; height: 31px;" id="yellow"><input id="infoupdate" ng-click="hiveInfoUpdate()" type="submit" value="Update Hive Display" /></td>
+            </tr>
+        </tbody>
     </table>
 </body>
 </html>

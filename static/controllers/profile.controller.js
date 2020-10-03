@@ -23,9 +23,13 @@
 
             reader.readAsDataURL(input.files[0]);
         }
+
         function contactUpdate() {
-                console.log("contact information here.")
+            var phoneNumber = document.getElementById("yourphone").value;
+            var email = document.getElementById("yourmail").value;
+            console.log("contact information here.")
         }
+
         function hiveInfoUpdate() {
             console.log("Hive Information here")
         }
