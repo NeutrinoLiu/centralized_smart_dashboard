@@ -8,7 +8,7 @@
         $scope.addHive = addHive;
         $scope.hives;
         $scope.username;
-        
+
         const PATH = "http://localhost:5000/";
         const urlParams = new URLSearchParams(window.location.search);
 
@@ -36,7 +36,7 @@
 
         function addHive() {
             // TODO: call hive backend class to ADD this
-            let newHiveId = ($scope.hives.length == 0 ? "1" : (parseInt($scope.hives[$scope.hives.length-1].id) + 1).toString());
+            let newHiveId = ($scope.hives.length == 0 ? "1" : (parseInt($scope.hives[$scope.hives.length-1].hiveID) + 1).toString());
             console.log($scope.hives)
             $http.post( PATH + '/api/add-hive', 
                     {
@@ -45,7 +45,7 @@
                     }
                 ).then( (response) => {
                     if (response.data.success) {
-                        $scope.hives = $scope.hives.concat([{id: newHiveId}])
+                        $scope.hives = $scope.hives.concat([{hiveID: newHiveId}])
                     }
                 }, (error) => {
                 });
