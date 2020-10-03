@@ -24,7 +24,7 @@ def allowed_file(filename):
 
 def logout():
     logout_user()
-    return json.jsonify({'result': 'success'})
+    return json.jsonify({'success': True})
 
 
 def login():
@@ -32,8 +32,6 @@ def login():
 
 
 def api_login():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
     userinfo = json.loads(request.data.decode())
     username = userinfo.get("username")
     password = userinfo.get("password")
@@ -83,8 +81,10 @@ def upload_file():
     print("end")
     return""
 
+
 def register_success():
     return render_template('register_succ.html')
+
 
 @login_required
 def profile(username):
@@ -94,11 +94,9 @@ def profile(username):
         return render_template('invalid-page.html')
 
 @login_required
-def hives(username):
-    if current_user.username == username:
-        return current_user.getHives()
-
+def hives():
     return render_template('hives.html')
+
 
 def edit_hive():
     return render_template('editHive.html')
@@ -124,11 +122,20 @@ def api_edit_hive():
                     h.losses = losses
                     h.gains = gains
                     return json.jsonify({'success': True, 'username': current_user.username, 'health': health,
-                                         'honeyStores': honeyStores, 'queenProduction':queenProduction,
+                                         'honeyStores': honeyStores, 'queenProduction': queenProduction,
                                          'equipment': equipment, 'losses': losses, 'gains': gains})
             return json.jsonify({'success': False})
     else:
-        return json.jsonify({'result': 'unauthorized'})
+        correct_hive = current_user.findHiveByID(hiveID)
+        health = correct_hive.health
+        honeyStores = correct_hive.honeyStores
+        queenProduction = correct_hive.queenproduction
+        equipment = correct_hive.equipment
+        losses = correct_hive.losses
+        gains = correct_hive.gains
+        return json.jsonify({'success': False, 'username': current_user.username, 'health': health,
+                                         'honeyStores': honeyStores, 'queenProduction': queenProduction,
+                                         'equipment': equipment, 'losses': losses, 'gains': gains})
 
 #def api_add_hive():
 #    current_user.addHive(health, honeyStores, queenProduction, equipment, losses, gains)
