@@ -36,11 +36,11 @@
                     $scope.health = response.data.health;
                     $scope.honeyStores = response.data.honeyStores;
                     $scope.honeyStores = response.data.honeyStores;
-                    $scope.queenProduction = response.data.queenProduction;
-                    $scope.equipment = response.data.equipment;
+                    $scope.queenProd = response.data.queenProduction;
+                    $scope.invequipment = response.data.equipment_inventory;
+                    $scope.hiveequipment = response.data.equipment_hive;
                     $scope.losses = response.data.losses;
                     $scope.gains = response.data.gains;
-
                 }, (error) => {
                     console.log('Error from post');
                 });
@@ -93,7 +93,7 @@
                     // $scope.hiveequipment = response.data.equipment_hive;
                     // $scope.losses = response.data.losses;
                     // $scope.gains = response.data.gains;
-                    
+
                     $scope.inspection = inspection;
                     $scope.health = health;
                     $scope.honeyStores = honeyStores;

@@ -129,7 +129,8 @@ def api_add_hive():
 def api_edit_hive():
     hiveInfo = json.loads(request.data.decode())
     hiveID = hiveInfo.get("hiveID")
-    if hiveInfo.get("update") == 'True':
+    if hiveInfo.get("update"):
+        print('update is true')
         health = hiveInfo.get("health")
         honeyStores = hiveInfo.get("honeyStores")
         queenProduction = hiveInfo.get("queenProduction")
@@ -138,8 +139,11 @@ def api_edit_hive():
         losses = hiveInfo.get("losses")
         gains = hiveInfo.get("gains")
         if current_user in users:
+            print('+')
+            print(type(hiveID)) 
             for h in current_user.hives:
-                if h.id == hiveID:
+                print(type(h.hiveID))
+                if h.hiveID == hiveID:
                     h.health = health
                     h.honeyStores = honeyStores
                     h.queenProduction = queenProduction
@@ -147,10 +151,12 @@ def api_edit_hive():
                     h.equipment_inventory = equipment_inventory
                     h.losses = losses
                     h.gains = gains
+                    print('in siccess')
                     return json.jsonify({'success': True, 'username': current_user.username, 'health': health,
                                          'honeyStores': honeyStores, 'queenProduction': queenProduction,
                                          'equipment_hive': equipment_hive, 'equipment_inventory': equipment_inventory,
                                          'losses': losses, 'gains': gains})
+
             return json.jsonify({'success': False})
     else:
         correct_hive = current_user.findHiveByID(hiveID)
