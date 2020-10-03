@@ -11,17 +11,18 @@
         $scope.hiveInfoUpdate = hiveInfoUpdate;
         //TODO Need someone to help me figure out how this even works
         function readURL(input) {  // couldnt get this to work like I wanted it to
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $('#imagio')
-                    .attr('src', e.target.result)
-                    .width(325)
-                    .height(300);
-            };
+                reader.onload = function (e) {
+                    $('#imagio')
+                        .attr('src', e.target.result)
+                        .width(325)
+                        .height(300);
+                };
 
-            reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(input.files[0]);
+            }
         }
 
         function contactUpdate() {
@@ -33,7 +34,6 @@
         function hiveInfoUpdate() {
             console.log("Hive Information here")
         }
-    }
 
 	}
 })();

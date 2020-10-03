@@ -5,6 +5,8 @@
 	function loginController($scope, $window, $http) {
 		$scope.validateLogin = validateLogin;
 		$scope.register = register;
+		const PATH = "http://localhost:5000";
+		var username = "";
 
 		function validateLogin() {
 			//TODO: add validations
@@ -12,7 +14,8 @@
 			var password = document.getElementById("usr_pwd").value;
 			if (username && password) {
 				//todo: validate users
-				if (true) {
+
+				if (validateUser(username, password)) {
 					$window.location.href ="/hives";
 				} else {
 					invalidInfo();
@@ -31,5 +34,20 @@
 			document.getElementById("login_error").innerHTML = "wrong username or password";
 		}
 
+		function validateUser(username, password) {
+			$http.post( PATH + '/api/login', 
+                    {
+                    'username': username,
+                    'password': password
+                    }
+                ).then( (response) => {
+                	if (response.data.success) {
+                		username = response.data.username;
+                		return true;
+                	}
+                }, (error) => {
+                	return false;
+                });
+        }
 	}
 })();

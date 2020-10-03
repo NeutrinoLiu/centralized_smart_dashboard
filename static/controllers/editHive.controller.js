@@ -21,14 +21,30 @@
         function init() {
             //TODO: get this from python backend
             getHiveId();
-            $scope.health = "sample health";
-            $scope.inspection = "sample inspection";
-            $scope.honeyStores = "sample honeyStores";
-            $scope.queenProd = "sample queenprod";
-            $scope.hiveequipment = "sample hive equipment";
-            $scope.invequipment = "sample invenvtory equipment";
-            $scope.losses = "sample losses";
-            $scope.gains = "sample gains";
+            $http.post( PIN_PATH + '/api/edit-hive', 
+                    {
+                    'update': false,
+                    'hiveID': $scope.hiveId,
+                    'health': health,
+                    'honeyStores': honeyStores,
+                    'queenProduction': queenProd,
+                    'equipment': equipment,
+                    'losses': losses,
+                    'gains': gains
+                    }
+                )
+                .then( (response) => {
+                    $scope.health = response.data.health;
+                    $scope.honeyStores = response.data.honeyStores;
+                    $scope.honeyStores = response.data.honeyStores;
+                    $scope.queenProduction = response.data.queenProduction;
+                    $scope.equipment = response.data.equipment;
+                    $scope.losses = response.data.losses;
+                    $scope.gains = response.data.gains;
+
+                }, (error) => {
+                    console.log('Error from post');
+                });
         }
 
 
@@ -54,18 +70,46 @@
                 queenProd && hiveequipment && invequipment && losses && gains;
 
             if (validUpdate) {
+                // parameter is 
+                $http.post( PIN_PATH + '/api/edit-hive', 
+                    {
+                    'update': true,
+                    'hiveID': $scope.hiveId,
+                    'health': health,
+                    'honeyStores': honeyStores,
+                    'queenProduction': queenProd,
+                    'equipment': equipment,
+                    'losses': losses,
+                    'gains': gains
+                    }
+                )
+                .then( (response) => {
+                    $scope.health = response.data.health;
+                    $scope.honeyStores = response.data.honeyStores;
+                    $scope.honeyStores = response.data.honeyStores;
+                    $scope.queenProduction = response.data.queenProduction;
+                    $scope.equipment = response.data.equipment;
+                    $scope.losses = response.data.losses;
+                    $scope.gains = response.data.gains;
+
+                }, (error) => {
+                    console.log('Error from post');
+                });
+
                 // TODO: consider storing old info in previows rows
                 // TODO: ADD PYTHON BACKEND CODE TO UPDATE LOCAL SERVER FILE WITH THIS INFO
-                const header = ["Health", "Honey Stores", "Queen Production", "Hive Equipment", "Inventory Equipment", "Losses", "Gains"];
-                const data = [health, honeyStores, queenProd, hiveequipment, invequipment, losses, gains];
-                let csvContent = "data:text/csv;charset=utf-8," + header + "\r\n" + data + "\r\n";
-                var encodedUri = encodeURI(csvContent);
-                var link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", "hive_"+$scope.hiveId+".csv");
-                document.body.appendChild(link); // Required for FF
-                link.click();
-                $window.location.href ="/hives";
+                // const header = ["Health", "Honey Stores", "Queen Production", "Hive Equipment", "Inventory Equipment", "Losses", "Gains"];
+                // const data = [health, honeyStores, queenProd, hiveequipment, invequipment, losses, gains];
+                // let csvContent = "data:text/csv;charset=utf-8," + header + "\r\n" + data + "\r\n";
+                // var encodedUri = encodeURI(csvContent);
+                // var link = document.createElement("a");
+                // link.setAttribute("href", encodedUri);
+                // link.setAttribute("download", "hive_"+$scope.hiveId+".csv");
+                // document.body.appendChild(link); // Required for FF
+                // link.click();
+                // $window.location.href ="/hives";
+
+
             } else {
                 invalidUpdate();
             }
