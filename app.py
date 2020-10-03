@@ -10,11 +10,12 @@ def register_extensions():
     login.init_app(app)
 
 
-
 #TODO: remove after routing file exists
 #@app.route('/')
 #def hello_world_page():
 #return 'CS506, hello world page!'
+app.config["SECRET_KEY"] = "SUPER SECRET KEY"
+
 
 if __name__ == "__main__":
     # TODO: add route initializations here, both for templates and backend
