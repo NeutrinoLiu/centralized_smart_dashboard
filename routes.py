@@ -91,12 +91,8 @@ def register_success():
 
 
 @login_required
-def profile(username):
-    if current_user.username == username:
-        return render_template('profile.html')
-    else:
-        return render_template('invalid-page.html')
-
+def profile():
+    return render_template('profile.html')
 @login_required
 def hives():
     # if current_user.username == username:
@@ -107,6 +103,18 @@ def hives():
 
 def edit_hive():
     return render_template('editHive.html')
+
+def api_add_hive():
+    hiveInfo = json.loads(request.data.decode())
+    hiveID = hiveInfo.get("hiveID")
+    health = hiveInfo.get("health")
+    honeyStores = hiveInfo.get("honeyStores")
+    queenProduction = hiveInfo.get("queenProduction")
+    equipment = hiveInfo.get("equipment")
+    losses = hiveInfo.get("losses")
+    gains = hiveInfo.get("gains")
+    current_user.addHive(hiveID, health, honeyStores, queenProduction, equipment, losses, gains)
+    return json.jsonify({'success': True})
 
 
 @login_required
@@ -170,4 +178,5 @@ def init_website_routes(app):
 
         app.add_url_rule('/api/edit-hive', 'api_edit_hive', api_edit_hive, methods=['POST'] )
         app.add_url_rule('/api/login', 'api_login', api_login, methods=['POST'])
+        app.add_url_rule('/api/add-hive', 'api_app', api_add_hive, methods=['POST'])
 
