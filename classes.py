@@ -3,8 +3,7 @@
         add more field into Hive
         try to use pickle to store user info into local file
 '''
-from uuid import uuid4
-
+import json
 
 class Hive(object):                 # hive object, may need to add more field in the future
 
@@ -18,12 +17,13 @@ class Hive(object):                 # hive object, may need to add more field in
         self.equipment_inventory = equipment_inventory
         self.losses = losses
         self.gains = gains
+    def toJson(self):
+        hiveDict = {'hiveID': self. hiveID, 'health': self.health,'honeyStores': self.honeyStores,
+                    'queenProduction': self.queenProduction, 'equipment_hive': self.equipment_hive,
+                    'equipment_inventory': self.equipment_inventory,
+                        'losses': self.losses, 'gains': self.gains}
+        return json.dumps(hiveDict)
 
-        def __repr__(self):
-            return str({'hiveID': hiveID, 'health': self.health,'honeyStores': self.honeyStores,
-                        'queenProduction': self.queenProduction,
-                        'equipment_hive': self.equipment_hive, 'equipment_inventory': self.equipment_inventory,
-                        'losses': self.losses, 'gains': self.gains})
 
         
 class User(object):
