@@ -38,6 +38,8 @@
                 ).then( (response) => {
                 	if (response.data.success) {
 						$window.location.href ="/hives?username="+response.data.username;
+                	} else {
+                		invalidInfo();
                 	}
                 }, (error) => {
                 	invalidInfo();

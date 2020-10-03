@@ -149,7 +149,7 @@ def init_website_routes(app):
         app.add_url_rule('/login', 'login', login, methods=['GET'])
         app.add_url_rule('/register', 'register', register, methods=['GET', 'POST'])
         app.add_url_rule('/register-success', 'register_success', register_success, methods=['GET'])
-        app.add_url_rule('/profile/<username>', 'profile', profile, methods=['GET'])
+        app.add_url_rule('/profile', 'profile', profile, methods=['GET'])
         app.add_url_rule('/hives', 'hives', hives, methods=['GET'])
         app.add_url_rule('/edit-hive', 'edit_hive', edit_hive, methods=['GET'])
         app.add_url_rule('/', 'login', login, methods=['GET'])
