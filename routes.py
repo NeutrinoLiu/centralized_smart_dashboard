@@ -145,7 +145,7 @@ def api_edit_hive():
         correct_hive = current_user.findHiveByID(hiveID)
         health = correct_hive.health
         honeyStores = correct_hive.honeyStores
-        queenProduction = correct_hive.queenproduction
+        queenProduction = correct_hive.queenProduction
         equipment = correct_hive.equipment
         losses = correct_hive.losses
         gains = correct_hive.gains

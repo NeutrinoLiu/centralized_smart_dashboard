@@ -58,8 +58,8 @@
             var inspection = document.getElementById("rofInspection").value;
             var honeyStores = document.getElementById("hstores").value;
             var queenProd = document.getElementById("qproduction").value;
-            var equipment = document.getElementById("hiveequipment").value;
-            var equipment = document.getElementById("invequipment").value;
+            var equipment = document.getElementById("equipment").value;
+            var equipment_inventory = document.getElementById("equipment").value;
             var losses = document.getElementById("losses").value;
             var gains = document.getElementById("gains").value;
 
@@ -75,7 +75,8 @@
                     'health': health,
                     'honeyStores': honeyStores,
                     'queenProduction': queenProd,
-                    'equipment': equipment,
+                    'equipment_hive': equipment,
+                    'equipment_inventory': equipment_inventory,
                     'losses': losses,
                     'gains': gains
                     }

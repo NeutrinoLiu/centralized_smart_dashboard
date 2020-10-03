@@ -9,7 +9,7 @@ from uuid import uuid4
 class Hive(object):                 # hive object, may need to add more field in the future
 
     def __init__(self, hiveID, health="", honeyStores="", queenProduction="", equipment="", losses="", gains=""):
-        self.id = hiveID            # use hive id to index hive for a specific user
+        self.hiveID = hiveID            # use hive id to index hive for a specific user
         self.health = health
         self.honeyStores = honeyStores
         self.queenProduction = queenProduction
