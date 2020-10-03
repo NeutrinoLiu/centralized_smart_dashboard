@@ -17,12 +17,12 @@ class Hive(object):                 # hive object, may need to add more field in
         self.equipment_inventory = equipment_inventory
         self.losses = losses
         self.gains = gains
-    def toJSON(self):
+    def toDict(self):
         hiveDict = {'hiveID': self. hiveID, 'health': self.health,'honeyStores': self.honeyStores,
                     'queenProduction': self.queenProduction, 'equipment_hive': self.equipment_hive,
                     'equipment_inventory': self.equipment_inventory,
                         'losses': self.losses, 'gains': self.gains}
-        return json.dumps(hiveDict)
+        return hiveDict
 
 
         
