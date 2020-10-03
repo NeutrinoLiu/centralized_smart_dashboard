@@ -78,7 +78,7 @@
         TODO: add icons; my icons don't play nice...-->
     <div class="hive-container">
         <div class="hive" ng-repeat="hive in hives | orderBy : 'id'">
-            <h2>Hive #{{ '{{hive.id}}' }}</h2>
+            <h2>Hive #{{ '{{hive.hiveID}}' }}</h2>
             <input type="button" style="font-size:medium" ng-click="editHive(hive.id)" value="Edit" />&nbsp; &nbsp; &nbsp;
             <input type="button" style="font-size:medium" ng-click="deleteHive(hive.id)" value="Delete" />
         </div>
