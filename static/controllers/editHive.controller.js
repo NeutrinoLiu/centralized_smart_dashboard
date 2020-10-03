@@ -16,24 +16,21 @@
 
         $scope.update = update;
 
+        const PATH = "http://localhost:5000";
+
         const urlParams = new URLSearchParams(window.location.search);
 
         function init() {
             //TODO: get this from python backend
             getHiveId();
-            $http.post( PIN_PATH + '/api/edit-hive', 
+            $http.post( PATH + '/api/edit-hive', 
                     {
                     'update': false,
-                    'hiveID': $scope.hiveId,
-                    'health': health,
-                    'honeyStores': honeyStores,
-                    'queenProduction': queenProd,
-                    'equipment': equipment,
-                    'losses': losses,
-                    'gains': gains
+                    'hiveID': $scope.hiveId
                     }
                 )
                 .then( (response) => {
+                    console.log(response);
                     $scope.health = response.data.health;
                     $scope.honeyStores = response.data.honeyStores;
                     $scope.honeyStores = response.data.honeyStores;
