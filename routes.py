@@ -104,6 +104,9 @@ def hives():
 def edit_hive():
     return render_template('editHive.html')
 
+def api_hives():
+    return json.jsonify(current_user.hives)
+
 def api_add_hive():
     hiveInfo = json.loads(request.data.decode())
     hiveID = hiveInfo.get("hiveID")
@@ -145,7 +148,7 @@ def api_edit_hive():
         correct_hive = current_user.findHiveByID(hiveID)
         health = correct_hive.health
         honeyStores = correct_hive.honeyStores
-        queenProduction = correct_hive.queenproduction
+        queenProduction = correct_hive.queenProduction
         equipment = correct_hive.equipment
         losses = correct_hive.losses
         gains = correct_hive.gains
@@ -179,4 +182,5 @@ def init_website_routes(app):
         app.add_url_rule('/api/edit-hive', 'api_edit_hive', api_edit_hive, methods=['POST'] )
         app.add_url_rule('/api/login', 'api_login', api_login, methods=['POST'])
         app.add_url_rule('/api/add-hive', 'api_app', api_add_hive, methods=['POST'])
+        app.add_url_rule('/api/hives', 'api_hives', api_hives, methods=['GET'])
 

@@ -8,12 +8,14 @@ from uuid import uuid4
 
 class Hive(object):                 # hive object, may need to add more field in the future
 
-    def __init__(self, hiveID, health="", honeyStores="", queenProduction="", equipment="", losses="", gains=""):
-        self.id = hiveID            # use hive id to index hive for a specific user
+    def __init__(self, hiveID, health="", honeyStores="", queenProduction="", equipment_hive="",
+                 equipment_inventory="", losses="", gains=""):
+        self.hiveID = hiveID            # use hive id to index hive for a specific user
         self.health = health
         self.honeyStores = honeyStores
         self.queenProduction = queenProduction
-        self.equipment = equipment
+        self.equipment_hive = equipment_hive
+        self.equipment_inventory = equipment_inventory
         self.losses = losses
         self.gains = gains
 
@@ -31,8 +33,10 @@ class User(object):
         self.is_anonymous = False
         self.is_authenticated = True
 
-    def addHive(self, hiveID, health, honeyStores, queenProduction, equipment, losses, gains):  # called when add a new hive
-        self.hives.append(Hive(hiveID, health, honeyStores, queenProduction, equipment, losses, gains))
+    def addHive(self, hiveID, health, honeyStores, queenProduction, equipment_hive,
+                equipment_inventory, losses, gains):  # called when add a new hive
+        self.hives.append(Hive(hiveID, health, honeyStores, queenProduction, equipment_hive,
+                               equipment_inventory, losses, gains))
     
     def rmHive(self, hiveID):       # called when rm the hive
         for i in self.hives:
