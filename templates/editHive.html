@@ -11,6 +11,14 @@
             box-sizing: border-box;
             
         }
+
+
+        .back-button {
+            background-color: #f1f1f1;
+            border: 2px solid darkorange;
+
+        }
+
         table, th, td {
             border: 1px solid black;
             text-align: left;
@@ -100,7 +108,7 @@
             }
 
             /* Add some hover effects to buttons */
-            .form-container .btn:hover, .open-button:hover {
+            .form-container .btn:hover, .back-button:hover {
                 opacity: 1;
             }
     </style>
@@ -109,13 +117,12 @@
     <script type="text/javascript" src="{{ url_for('static', filename='controllers/editHive.controller.js') }}"></script>
 </head>
 <body ng-controller="editHiveController" style="background-color:#EFE4B0;">
-    <h1 style="text-align: center; background-color:darkorange; border-radius: 10px;">Hive {{ '{{hiveId}}' }} Information</h1>
-
+    <h1 style="text-align: center; background-color:darkorange; border-radius: 10px;">Hive {{ '{{hiveId}}' }} Information</h1><br />
 
 
     <div class="results-container">
         <div class="results-item">
-            <h2>
+            <h2 style="text-align:center">
                 Current Results <!-- Need to make the hive ID and update that -->
             </h2>
 
@@ -126,35 +133,35 @@
                 </tr>
                 <tr>
                     <td>Health</td>
-                    <td>1234</td>
+                    <td>{{ '{{health}}' }}</td>
                 </tr>
                 <tr>
                     <td>Results of Inspection</td>
-                    <td>1234</td>
+                    <td>{{ '{{inspection}}' }}</td>
                 </tr>
                 <tr>
                     <td>Honey Stores</td>
-                    <td>1234</td>
+                    <td>{{ '{{honeyStores}}' }}</td>
                 </tr>
                 <tr>
                     <td>Queen Production</td>
-                    <td>1234</td>
+                    <td>{{ '{{queenProd}}' }}</td>
                 </tr>
                 <tr>
-                    <td>Equipment in the Hive</td>
-                    <td>1234</td>
+                    <td>Amount of Equipment in Hive</td>
+                    <td>{{ '{{hiveequipment}}' }}</td>
                 </tr>
                 <tr>
-                    <td>Equipment in Inventory</td>
-                    <td>1234</td>
+                    <td>Amount of Equipment in Inventory</td>
+                    <td>{{ '{{invequipment}}' }}</td>
                 </tr>
                 <tr>
                     <td>Losses</td>
-                    <td>1234</td>
+                    <td>{{ '{{losses}}' }}</td>
                 </tr>
                 <tr>
                     <td>Gains</td>
-                    <td>1234</td>
+                    <td>{{ '{{gains}}' }}</td>
                 </tr>
 
             </table>
@@ -186,20 +193,24 @@
                 <input type="text" id="losses" name="losses"><br>
 
                 <label for="gains">Gains:</label><br>
-                <input type="text" id="gains" name="gains"><br>
+                <input type="text" id="gains" name="gains"><br><br />
 
-                <input ng-click="update()" type="button" value="Submit">
+                <button class="back-button" ng-click="update()" >Submit</button>
+                <!--<input ng-click="update()" type="button" value="Submit"> -->
+                <button class="back-button" ng-click="hives()" >Back to All Hives</button>
             </form>
 
             <!--
-        <p>
-            Click the "Submit" button and the form-data will be sent to a page on the
-            server called "hive_{{ '{{hiveId}}' }}.csv".
-        </p>
-            -->
+            <p>
+                Click the "Submit" button and the form-data will be sent to a page on the
+                server called "hive_{{ '{{hiveId}}' }}.csv".
+            </p>
+                -->
         </div>
 
     </div>
 
+
+ 
 </body>
 </html>

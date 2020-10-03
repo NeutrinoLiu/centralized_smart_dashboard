@@ -8,9 +8,11 @@
         $scope.inspection;
         $scope.honeyStores;
         $scope.queenprod;
-        $scope.equipment;
+        $scope.hiveequipment;
+        $scope.invequipment;
         $scope.losses;
         $scope.gains;
+        $scope.hives = hives;
 
         $scope.update = update;
 
@@ -23,11 +25,16 @@
             $scope.inspection = "sample inspection";
             $scope.honeyStores = "sample honeyStores";
             $scope.queenProd = "sample queenprod";
-            $scope.equipment = "sample equipment";
+            $scope.hiveequipment = "sample hive equipment";
+            $scope.invequipment = "sample invenvtory equipment";
             $scope.losses = "sample losses";
             $scope.gains = "sample gains";
         }
 
+
+        function hives() {
+            $window.location.href = "/hives";
+        }
 
         function getHiveId() {
             $scope.hiveId = urlParams.get('hiveId');
@@ -38,18 +45,19 @@
             var inspection = document.getElementById("rofInspection").value;
             var honeyStores = document.getElementById("hstores").value;
             var queenProd = document.getElementById("qproduction").value;
-            var equipment = document.getElementById("equipment").value;
+            var equipment = document.getElementById("hiveequipment").value;
+            var equipment = document.getElementById("invequipment").value;
             var losses = document.getElementById("losses").value;
             var gains = document.getElementById("gains").value;
 
             var validUpdate = health && honeyStores &&
-                queenProd && equipment && losses && gains;
+                queenProd && hiveequipment && invequipment && losses && gains;
 
             if (validUpdate) {
                 // TODO: consider storing old info in previows rows
                 // TODO: ADD PYTHON BACKEND CODE TO UPDATE LOCAL SERVER FILE WITH THIS INFO
-                const header = ["Health", "Honey Stores", "Queen Production", "Equipment", "Losses", "Gains"];
-                const data = [health, honeyStores, queenProd, equipment, losses, gains];
+                const header = ["Health", "Honey Stores", "Queen Production", "Hive Equipment", "Inventory Equipment", "Losses", "Gains"];
+                const data = [health, honeyStores, queenProd, hiveequipment, invequipment, losses, gains];
                 let csvContent = "data:text/csv;charset=utf-8," + header + "\r\n" + data + "\r\n";
                 var encodedUri = encodeURI(csvContent);
                 var link = document.createElement("a");

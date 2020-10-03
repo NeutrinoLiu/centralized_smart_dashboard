@@ -1,6 +1,24 @@
 body
 {
 }
+#nameList {
+	list-style-type: none;
+	display: inline-grid;
+	grid-template-columns: auto auto;
+	justify-content: space-between;
+	border-radius: 10px;
+	padding: 8px;
+	background-color: darkorange;
+	text-align: center;
+	align-self: center;
+	width: 99%;
+}
+li {
+	padding: 8px;
+	margin: 0px 15px 0px 15px;
+	margin: 0px 15px 0px 15px;
+	font-size: large;
+}
 table {
 	margin: 0 auto;
 	background-color: white;
@@ -9,15 +27,22 @@ table {
 {
 	background-color: #EFE4B0;
 }
+#hiveinfobox {
+
+}
 .imagio {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
 	width: 50%;
 }
-#imagebox
-{
+.back-button {
+    background-color: #f1f1f1;
+    border: 2px solid darkorange;
+}
+#imagebox {
 	background-color: black;
+	box-shadow: 5px 10px #888888;
 }
 #hiveinfo
 {
