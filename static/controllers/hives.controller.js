@@ -7,9 +7,13 @@
         $scope.deleteHive = deleteHive;
         $scope.addHive = addHive;
         $scope.hives;
+        $scope.username;
+
+        const urlParams = new URLSearchParams(window.location.search);
 
         function loadHives() {
             // TODO: load hives from storage
+            $scope.username = urlParams.get('username');
             $scope.hives = [
                 {name:'name1', id:'1'},
                 {name:'name2', id:'2'},
