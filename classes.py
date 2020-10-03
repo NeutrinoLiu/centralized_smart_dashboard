@@ -19,6 +19,12 @@ class Hive(object):                 # hive object, may need to add more field in
         self.losses = losses
         self.gains = gains
 
+        def __repr__(self):
+            return str({'hiveID': hiveID, 'health': self.health,'honeyStores': self.honeyStores,
+                        'queenProduction': self.queenProduction,
+                        'equipment_hive': self.equipment_hive, 'equipment_inventory': self.equipment_inventory,
+                        'losses': self.losses, 'gains': self.gains})
+
         
 class User(object):
 

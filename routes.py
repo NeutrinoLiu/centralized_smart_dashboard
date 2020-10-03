@@ -150,6 +150,7 @@ def api_edit_hive():
             return json.jsonify({'success': False})
     else:
         correct_hive = current_user.findHiveByID(hiveID)
+        print(current_user.hives)
         health = correct_hive.health
         honeyStores = correct_hive.honeyStores
         queenProduction = correct_hive.queenProduction
