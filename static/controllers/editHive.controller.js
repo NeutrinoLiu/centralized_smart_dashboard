@@ -23,6 +23,8 @@
         function init() {
             //TODO: get this from python backend
             getHiveId();
+            console.log($scope.hiveId);
+
             $http.post( PATH + '/api/edit-hive', 
                     {
                     'update': false,
@@ -59,16 +61,17 @@
             var honeyStores = document.getElementById("hstores").value;
             var queenProd = document.getElementById("qproduction").value;
             var equipment = document.getElementById("equipment").value;
-            var equipment_inventory = document.getElementById("equipment").value;
+            var equipment_inventory = document.getElementById("iequipment").value;
             var losses = document.getElementById("losses").value;
             var gains = document.getElementById("gains").value;
 
             var validUpdate = health && honeyStores &&
-                queenProd && hiveequipment && invequipment && losses && gains;
+                queenProd && equipment && equipment_inventory && losses && gains;
 
+            console.log($scope.hiveId);
             if (validUpdate) {
                 // parameter is 
-                $http.post( PIN_PATH + '/api/edit-hive', 
+                $http.post( PATH + '/api/edit-hive', 
                     {
                     'update': true,
                     'hiveID': $scope.hiveId,
@@ -82,11 +85,12 @@
                     }
                 )
                 .then( (response) => {
+                    console.log(response);
                     $scope.health = response.data.health;
                     $scope.honeyStores = response.data.honeyStores;
-                    $scope.honeyStores = response.data.honeyStores;
                     $scope.queenProduction = response.data.queenProduction;
-                    $scope.equipment = response.data.equipment;
+                    $scope.invequipment = response.data.equipment_inventory;
+                    $scope.hiveequipment = response.data.equipment_hive;
                     $scope.losses = response.data.losses;
                     $scope.gains = response.data.gains;
 

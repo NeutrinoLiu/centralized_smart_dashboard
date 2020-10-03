@@ -16,6 +16,10 @@
             // TODO: load hives from storage
             $scope.username = urlParams.get('username');
             $scope.hives = [];
+            $http.get( PATH + '/api/hives').then( (response) => {
+                console.log(response);
+            }, (error) => {
+            });
         }
 
         function editHive(hiveId) {
@@ -38,6 +42,7 @@
             // TODO: call hive backend class to ADD this
             let newHiveId = ($scope.hives.length == 0 ? "1" : (parseInt($scope.hives[$scope.hives.length-1].hiveID) + 1).toString());
             console.log($scope.hives)
+            console.log(newHiveId);
             $http.post( PATH + '/api/add-hive', 
                     {
                         'hiveID': newHiveId,
