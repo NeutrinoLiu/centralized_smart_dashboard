@@ -1,6 +1,6 @@
 import os
 from flask import render_template, json, abort, request, session, redirect, url_for
-from classes import User
+from classes import User, Hive
 from werkzeug.utils import secure_filename
 from flask_login import current_user, login_user, logout_user, login_required
 from extensions import login
@@ -86,18 +86,43 @@ def register_success():
 
 @login_required
 def profile(username):
-    if current_user == username:
+    if current_user.username == username:
         return render_template('profile.html')
     else:
         return render_template('invalid-page.html')
 
 @login_required
-def hives():
+def hives(username):
+    if current_user.username == username:
+        return current_user.getHives()
+
     return render_template('hives.html')
 
 @login_required
 def edit_hive():
-    return render_template('editHive.html') 
+    if request.method == 'POST':
+        hiveInfo = json.loads(request.data.decode())
+        hiveID = hiveInfo.get("hiveID")
+        health = hiveInfo.get("health")
+        honeyStores = hiveInfo.get("honeyStores")
+        queenProduction = hiveInfo.get("queenProduction")
+        equipment = hiveInfo.get("equipment")
+        losses = hiveInfo.get("losses")
+        gains = hiveInfo.get("gains")
+        if current_user in users:
+            for h in current_user.hives:
+                if h.id == hiveID:
+                    h.health = health
+                    h.honeyStores = honeyStores
+                    h.queenProduction = queenProduction
+                    h.equipment = equipment
+                    h.losses = losses
+                    h.gains = gains
+                    return json.jsonify({'result': 'hive updated'})
+
+            current_user.addHive(health, honeyStores, queenProduction, equipment, losses, gains)
+            return json.jsonify({'result': 'hive added'})
+
 
 #TODO: might be useful to add server-side error handlers
 def error_handler( error ):
@@ -112,7 +137,7 @@ def init_website_routes(app):
         app.add_url_rule('/register', 'register', register, methods=['GET', 'POST'])
         app.add_url_rule('/register-success', 'register_success', register_success, methods=['GET'])
         app.add_url_rule('/profile/<username>', 'profile', profile, methods=['GET'])
-        app.add_url_rule('/hives', 'hives', hives, methods=['GET'])
-        app.add_url_rule('/edit-hive', 'edit_hive', edit_hive, methods=['GET'])
+        app.add_url_rule('/hives/<username>', 'hives', hives, methods=['GET'])
+        app.add_url_rule('/edit-hive/<username>', 'edit_hive', edit_hive, methods=['POST'])
         app.add_url_rule('/', 'login', login, methods=['GET'])
         app.register_error_handler(404, error_handler)

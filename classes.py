@@ -32,9 +32,9 @@ class User(object):
         self.is_anonymous = False
         self.is_authenticated = True
 
-    def addHive(self):              # called when add a new hive
+    def addHive(self, health, honeyStores, queenProduction, equipment, losses, gains):  # called when add a new hive
         self.hiveIdAdder += 1 
-        self.hives.append(Hive(self.hiveIdAdder)) 
+        self.hives.append(Hive(self.hiveIdAdder, health, honeyStores, queenProduction, equipment, losses, gains))
     
     def rmHive(self, hiveID):       # called when rm the hive
         for i in self.hives:
@@ -45,9 +45,9 @@ class User(object):
     def get_id(self):
         return self.username
 
-    def getHive(self):              # called when log in, showing the hive panel
+    def getHives(self):              # called when log in, showing the hive panel
         return self.hives           # return a list containing all hives
-    
+
     def __repr__(self):
         return str({"username": self.username, "password": self.password,
                     "address": self.address, "contact": self.contact})
