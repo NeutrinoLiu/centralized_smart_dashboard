@@ -14,12 +14,7 @@
 			var password = document.getElementById("usr_pwd").value;
 			if (username && password) {
 				//todo: validate users
-
-				if (validateUser(username, password)) {
-					$window.location.href ="/hives";
-				} else {
-					invalidInfo();
-				}
+				validateUser(username, password);
 			} else {
 				invalidInfo();	
 			}
@@ -42,11 +37,10 @@
                     }
                 ).then( (response) => {
                 	if (response.data.success) {
-                		username = response.data.username;
-                		return true;
+						$window.location.href ="/hives?username="+response.data.username;
                 	}
                 }, (error) => {
-                	return false;
+                	invalidInfo();
                 });
         }
 	}

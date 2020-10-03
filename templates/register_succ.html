@@ -9,13 +9,13 @@
     <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="../static/controllers/jquery.min.js"></script>
     <script src="../static/controllers/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='controllers/register-success.controller.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='controllers/register.controller.js') }}"></script>
 </head>
 
 <body ng-controller='registerController' style="background-color:#EFE4B0;">
     <div class="container">
         <div class="col" style="width: 659px;margin-left: 307px;margin-top: 20px;padding: 0;padding-top: 56px;">
-            <h1 style="margin-top: 38px;margin-left: 0;">Register Successfully!</h1><button class="btn btn-primary" ng-click="login()" id="back2Login" type="button" style="margin-left: 113px;margin-top: 37px;">Back to Login Page</button></div>
+            <h1 style="margin-top: 38px;margin-left: 0;">Register Successfully!</h1><button class="btn btn-primary" ng-click="back2login()" id="back2Login" type="button" style="margin-left: 113px;margin-top: 37px;">Back to Login Page</button></div>
     </div>
     
 </body>

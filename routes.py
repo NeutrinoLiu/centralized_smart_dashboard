@@ -32,8 +32,10 @@ def login():
 
 
 def api_login():
-    if current_user.is_authenticated:
-        return redirect(url_for('index'))
+    # if current_user.is_authenticated:
+    #     return redirect(url_for('index'))
+
+
     userinfo = json.loads(request.data.decode())
     username = userinfo.get("username")
     password = userinfo.get("password")
@@ -94,9 +96,9 @@ def profile(username):
         return render_template('invalid-page.html')
 
 @login_required
-def hives(username):
-    if current_user.username == username:
-        return current_user.getHives()
+def hives():
+    # if current_user.username == username:
+    #     return current_user.getHives()
 
     return render_template('hives.html')
 
