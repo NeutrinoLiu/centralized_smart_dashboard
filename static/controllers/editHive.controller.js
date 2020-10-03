@@ -86,13 +86,23 @@
                 )
                 .then( (response) => {
                     console.log(response);
-                    $scope.health = response.data.health;
-                    $scope.honeyStores = response.data.honeyStores;
-                    $scope.queenProduction = response.data.queenProduction;
-                    $scope.invequipment = response.data.equipment_inventory;
-                    $scope.hiveequipment = response.data.equipment_hive;
-                    $scope.losses = response.data.losses;
-                    $scope.gains = response.data.gains;
+                    // $scope.health = response.data.health;
+                    // $scope.honeyStores = response.data.honeyStores;
+                    // $scope.queenProduction = response.data.queenProduction;
+                    // $scope.invequipment = response.data.equipment_inventory;
+                    // $scope.hiveequipment = response.data.equipment_hive;
+                    // $scope.losses = response.data.losses;
+                    // $scope.gains = response.data.gains;
+                    
+                    $scope.inspection = inspection;
+                    $scope.health = health;
+                    $scope.honeyStores = honeyStores;
+                    $scope.queenProd = queenProd;
+                    $scope.invequipment = equipment_inventory;
+                    $scope.hiveequipment = equipment;
+                    $scope.losses = losses;
+                    $scope.gains = gains;
+
 
                 }, (error) => {
                     console.log('Error from post');

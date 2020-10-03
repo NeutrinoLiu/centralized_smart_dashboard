@@ -17,7 +17,9 @@
             $scope.username = urlParams.get('username');
             $scope.hives = [];
             $http.get( PATH + '/api/hives').then( (response) => {
-                console.log(response);
+                for (i = 0; i < response.data.length; i++) {
+                    $scope.hives.push(response.data[i]);
+                }
             }, (error) => {
             });
         }
@@ -27,11 +29,10 @@
         }
 
         function deleteHive(hiveId) {
-            // TODO: call hive backend class to remove this
 
             // id not necessarily math array indxs
             for (i = 0; i < $scope.hives.length; i++) {
-                if (parseInt($scope.hives[i].id) == hiveId) {
+                if (parseInt($scope.hives[i].hiveID) == hiveId) {
                     $scope.hives.splice(i, 1);
                     console.log(i);
                 }

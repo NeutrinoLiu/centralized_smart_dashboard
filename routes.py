@@ -107,8 +107,9 @@ def edit_hive():
 def api_hives():
     hive_list = []
     for i in current_user.hives:
-        hive_list.append(i.toDict)
-    return json.jsonify(hive_list)
+        hive_list.append(i.toDict())
+
+    return json.dumps(hive_list)
 
 def api_add_hive():
     hiveInfo = json.loads(request.data.decode())
