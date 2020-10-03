@@ -113,10 +113,11 @@ def api_add_hive():
     health = hiveInfo.get("health")
     honeyStores = hiveInfo.get("honeyStores")
     queenProduction = hiveInfo.get("queenProduction")
-    equipment = hiveInfo.get("equipment")
+    equipment_hive = hiveInfo.get("equipment_hive")
+    equipment_inventory = hiveInfo.get("equipment_inventory")
     losses = hiveInfo.get("losses")
     gains = hiveInfo.get("gains")
-    current_user.addHive(hiveID, health, honeyStores, queenProduction, equipment, losses, gains)
+    current_user.addHive(hiveID, health, honeyStores, queenProduction, equipment_hive, equipment_inventory, losses, gains)
     return json.jsonify({'success': True})
 
 
@@ -128,7 +129,8 @@ def api_edit_hive():
         health = hiveInfo.get("health")
         honeyStores = hiveInfo.get("honeyStores")
         queenProduction = hiveInfo.get("queenProduction")
-        equipment = hiveInfo.get("equipment")
+        equipment_hive = hiveInfo.get("equipment_hive")
+        equipment_inventory = hiveInfo.get("equipment_inventory")
         losses = hiveInfo.get("losses")
         gains = hiveInfo.get("gains")
         if current_user in users:
@@ -137,24 +139,28 @@ def api_edit_hive():
                     h.health = health
                     h.honeyStores = honeyStores
                     h.queenProduction = queenProduction
-                    h.equipment = equipment
+                    h.equipment_hive = equipment_hive
+                    h.equipment_inventory = equipment_inventory
                     h.losses = losses
                     h.gains = gains
                     return json.jsonify({'success': True, 'username': current_user.username, 'health': health,
                                          'honeyStores': honeyStores, 'queenProduction': queenProduction,
-                                         'equipment': equipment, 'losses': losses, 'gains': gains})
+                                         'equipment_hive': equipment_hive, 'equipment_inventory': equipment_inventory,
+                                         'losses': losses, 'gains': gains})
             return json.jsonify({'success': False})
     else:
         correct_hive = current_user.findHiveByID(hiveID)
         health = correct_hive.health
         honeyStores = correct_hive.honeyStores
         queenProduction = correct_hive.queenProduction
-        equipment = correct_hive.equipment
+        equipment_hive = correct_hive.equipment_hive
+        equipment_inventory = correct_hive.equipment_inventory
         losses = correct_hive.losses
         gains = correct_hive.gains
         return json.jsonify({'success': False, 'username': current_user.username, 'health': health,
                                          'honeyStores': honeyStores, 'queenProduction': queenProduction,
-                                         'equipment': equipment, 'losses': losses, 'gains': gains})
+                                         'equipment_hive': equipment_hive, 'equipment_inventory': equipment_inventory,
+                             'losses': losses, 'gains': gains})
 
 #def api_add_hive():
 #    current_user.addHive(health, honeyStores, queenProduction, equipment, losses, gains)
