@@ -48,7 +48,11 @@ class User(object):
     def getHives(self):              # called when log in, showing the hive panel
         return self.hives           # return a list containing all hives
 
-
+    def findHiveByID(self, hiveID):
+        for h in self.hives:
+            if h.hiveID == hiveID:
+                return h
+        return None
 
     def __repr__(self):
         return str({"username": self.username, "password": self.password,
