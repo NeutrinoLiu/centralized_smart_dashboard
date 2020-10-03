@@ -166,6 +166,14 @@ def api_edit_hive():
                                          'honeyStores': honeyStores, 'queenProduction': queenProduction,
                                          'equipment_hive': equipment_hive, 'equipment_inventory': equipment_inventory,
                              'losses': losses, 'gains': gains})
+@login_required
+def api_delete():
+    hiveInfo = json.loads(request.data.decode())
+    hiveID = hiveInfo.get('hiveID')
+    if current_user.rmHive(hiveID):
+        return json.jsonify({'success': True})
+    return json.jsonify({'success': False})
+
 
 #def api_add_hive():
 #    current_user.addHive(health, honeyStores, queenProduction, equipment, losses, gains)
@@ -194,4 +202,4 @@ def init_website_routes(app):
         app.add_url_rule('/api/login', 'api_login', api_login, methods=['POST'])
         app.add_url_rule('/api/add-hive', 'api_app', api_add_hive, methods=['POST'])
         app.add_url_rule('/api/hives', 'api_hives', api_hives, methods=['GET'])
-
+        app.add_url_rule('/api/delete', 'api_delete', api_delete, methods=['POST'])

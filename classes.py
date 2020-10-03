@@ -18,11 +18,14 @@ class Hive(object):                 # hive object, may need to add more field in
         self.losses = losses
         self.gains = gains
     def toDict(self):
-        hiveDict = {'hiveID': self. hiveID, 'health': self.health,'honeyStores': self.honeyStores,
+        hiveDict = {'hiveID': self.hiveID, 'health': self.health,'honeyStores': self.honeyStores,
                     'queenProduction': self.queenProduction, 'equipment_hive': self.equipment_hive,
                     'equipment_inventory': self.equipment_inventory,
-                        'losses': self.losses, 'gains': self.gains}
+                    'losses': self.losses, 'gains': self.gains}
         return hiveDict
+
+    def __repr__(self):
+        return str(self.toDict())
 
 
         
@@ -48,7 +51,8 @@ class User(object):
         for i in self.hives:
             if i.hiveID == hiveID:
                 self.hives.remove(i)
-                break
+                return True
+        return False
 
     def get_id(self):
         return self.username
