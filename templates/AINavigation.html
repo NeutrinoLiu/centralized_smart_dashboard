@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html ng-app="AINavigation">
 <head>
     <meta charset="utf-8" />
     <title>Centralized Dashboard - AINavigation</title>
@@ -15,7 +15,10 @@
     <script type="text/javascript" src="{{ url_for('static', filename='controllers/AINavigation.controller.js') }}"></script>
 
 </head>
-<body>
-
+<body ng-controller="AINavigationController">
+    <div class="topnav">
+        <homepage href="#home">Homepage</homepage>
+        <pageName href="#pageName">AI Navigation</pageName>
+    </div>
 </body>
 </html>
