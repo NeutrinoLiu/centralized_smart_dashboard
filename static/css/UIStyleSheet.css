@@ -13,3 +13,8 @@ h1 {
     padding: 10px;
     justify-content: space-evenly;
 }
+
+.topnav {
+    overflow: hidden;
+    background-color: whitesmoke;
+}

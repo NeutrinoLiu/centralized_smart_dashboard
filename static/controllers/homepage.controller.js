@@ -3,7 +3,8 @@
 	app.controller('homepageController', ['$scope', '$window', invalidPageController]);
 
 	function homepageController($scope, $window) {
-		
+		//TODO: Ask Sebastian how the scopes and functions should be formatted	
+
 		/*
 		These are the function that, when the buttons on the homepage are hit, will send to the various pages
 		*/
@@ -36,6 +37,12 @@
 		$scope.Maintenance = Maintenance;
 		function Maintenance() {
 			$window.location.href = "/Maintenance";
+		}
+
+		// Sending to Coming Soon
+		$scope.comingSoon = comingSoon;
+		function comingSoon() {
+			$window.location.href = "/comingSoon";
 		}
 
 	}
