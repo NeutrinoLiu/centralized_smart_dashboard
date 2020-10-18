@@ -3,10 +3,10 @@
 	app.controller('invalidPageController', ['$scope', '$window', invalidPageController]);
 
 	function invalidPageController($scope, $window) {
-		$scope.login = login;
+		$scope.homepage = homepage;
 
-		function login() {
-			$window.location.href = "/login";
+		function homepage() {
+			$window.location.href = "/homepage";
 		}
 
 	}
