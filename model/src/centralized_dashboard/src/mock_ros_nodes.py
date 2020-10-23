@@ -1,21 +1,16 @@
 #! /usr/bin/env python
-'''
-Target topic list:
-/drive_cmd has motor info
-/nav_data has all navigation info
 
-TODO: Import NavigationMsg from WRobotics repo
-
-'''
 import rospy
 import random
+from threading import Thread
+
 from centralized_dashboard.msg import NavigationMsg
+from centralized_dashboard.msg import Drive
 
 class NavData:
 
-    def __init__(self, node_name='dead_reckoning', topic_name='/nav_data', frequency=100):
-        rospy.init_node(node_name, anonymous=False)
-        self.navigation_pub = rospy.Publisher(topic_name, NavigationMsg, queue_size=1)
+    def __init__(self, topic_name='/nav_data', frequency=100):
+        self.publisher = rospy.Publisher(topic_name, NavigationMsg, queue_size=1)
         self.rate = rospy.Rate(frequency)
 
     def get_target_coordinates(self):
@@ -65,21 +60,54 @@ class NavData:
             msg.heading = self.get_heading()
 
             # Publish pose at f rate
-            self.navigation_pub.publish(msg)
+            self.publisher.publish(msg)
             self.rate.sleep()
 
 
 class DriveData:
-    
-    def __init__(self):
-        pass
+
+    def __init__(self, topic_name='/drive_data', frequency=100):
+        self.publisher = rospy.Publisher(topic_name, Drive, queue_size=1)
+        self.rate = rospy.Rate(frequency)
+
+    def get_wheel_speeds(self):
+        ''' 
+        TODO: make this more dynamic
+        '''
+        wheel_speeds = [random.randrange(0, 101), random.randrange(0, 101), random.randrange(0, 101), \
+            random.randrange(0, 101), random.randrange(0, 101), random.randrange(0, 101)]
+
+        return wheel_speeds
+
+
+    def talker(self):
+        msg = Drive()
+        while not rospy.is_shutdown():
+            wheel_speeds = self.get_wheel_speeds()
+            msg.wheel0 = wheel_speeds[0]
+            msg.wheel1 = wheel_speeds[1]
+            msg.wheel2 = wheel_speeds[2]
+            msg.wheel3 = wheel_speeds[3]
+            msg.wheel4 = wheel_speeds[4]
+            msg.wheel5 = wheel_speeds[5]
+            # TODO: determine what are and if we need the other fields
+            self.publisher.publish(msg)
+            self.rate.sleep()
 
 
 if __name__ == '__main__':
     try:
+        rospy.init_node('mock_data', anonymous=False)
         navigation_data = NavData()
-        navigation_data.talker()
-        #todo: consider making different threads for each topic publisher
+        thread_navigation_data = Thread(target=navigation_data.talker)
+        thread_navigation_data.daemon=True
+        thread_navigation_data.start()
+
+        drive_data = DriveData()
+        thread_drive_data = Thread(target=drive_data.talker)
+        thread_drive_data.daemon=True
+        thread_drive_data.start()
+        rospy.spin()
     except rospy.ROSInterruptException:
         print('ROSPY EXCETION')
         
