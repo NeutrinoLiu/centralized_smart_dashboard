@@ -27,7 +27,7 @@ def science():
 
 
 # TODO: might be useful to add server-side error handlers
-def error_handler( error ):
+def error_handler(error):
     return render_template('invalid-page.html')
 
 
@@ -35,5 +35,10 @@ def init_website_routes(app):
     if app:
         app.add_url_rule('/', 'home', home, methods=['GET'])
         app.add_url_rule('/home', 'home', home, methods=['GET'])
+        app.add_url_rule('/ai-navigation', 'ai_navigation', ai_navigation, methods=['GET'])
+        app.add_url_rule('/equipment-servicing', 'equipment_servicing', equipment_servicing, methods=['GET'])
+        app.add_url_rule('/erdm', 'erdm', erdm, methods=['GET'])
+        app.add_url_rule('/maintenance', 'maintenance',  maintenance, methods=['GET'])
+        app.add_url_rule('/science', 'science', science, methods=['GET'])
 
         app.register_error_handler(404, error_handler)

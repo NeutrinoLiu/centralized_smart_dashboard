@@ -1,4 +1,3 @@
-import os, time
 from flask import Flask
 from routes import init_website_routes
 
