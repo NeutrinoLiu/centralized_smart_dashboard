@@ -1,5 +1,5 @@
 ﻿body {
-    background-color: whitesmoke;
+    background-color:whitesmoke;
 }
 
 h1 {
@@ -15,6 +15,38 @@ h1 {
 }
 
 .topnav {
-    overflow: hidden;
-    background-color: whitesmoke;
+    overflow:hidden;
+    background-color:whitesmoke;
+}
+
+.topnav homepage {
+    float:right;
+    text-align:center;
+    font: italic times new roman;
+}
+
+.topnav homepage:hover {
+    background-color:black;
+    color:whitesmoke;
+}
+
+.topnav pageName {
+    align-content:center;
+    font: bold verdana;
+}
+
+#emergency-stop {
+    color: red;
+    text-align: center;
+
+}
+
+#reset-button {
+    color: orange;
+    text-align: center;
+}
+
+#go-button {
+    color: green;
+    text-align: center;
 }

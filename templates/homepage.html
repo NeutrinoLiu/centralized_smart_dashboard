@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html ng-app="homepage">
 <head>
     <meta charset="utf-8" />
     <title>Centralized Dashboard - Homepage</title>
@@ -15,7 +15,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename='controllers/homepage.controller.js') }}"></script>
  
 </head>
-<body>
+<body ng-controller="homepageController">
     <!--Homepage Title-->
     <h1>WELCOME</h1><br>
     <h1>Choose Rover Task</h1><br>
