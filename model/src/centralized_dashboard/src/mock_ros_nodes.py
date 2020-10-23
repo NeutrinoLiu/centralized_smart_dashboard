@@ -1,5 +1,4 @@
-import rospy
-
+#! /usr/bin/env python
 '''
 Target topic list:
 /drive_cmd has motor info
@@ -8,7 +7,9 @@ Target topic list:
 TODO: Import NavigationMsg from WRobotics repo
 
 '''
-
+import rospy
+from centralized_dashboard.msg import NavigationMsg
+# from std_mgs import Time
 
 class NavData:
 

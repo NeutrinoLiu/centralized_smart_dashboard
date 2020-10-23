@@ -5,3 +5,7 @@
 .vs/*
 __pycache__/
 static/.DS_Store
+model/build/*
+model/devel/*
+model/install/*
+model/.catkin_workspace
