@@ -28,7 +28,7 @@ def science():
 
 # TODO: might be useful to add server-side error handlers
 def error_handler(error):
-    return render_template('invalid-page.html')
+    return render_template('ComingSoon.html')
 
 
 def init_website_routes(app):
