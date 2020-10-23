@@ -1,12 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\dockerfiles",
     "\\static",
     "\\static\\controllers",
     "\\static\\css",
     "\\static\\imgs",
     "\\templates"
   ],
-  "SelectedNode": "\\templates\\profile.html",
+  "SelectedNode": "\\templates\\Maintenance.html",
   "PreviewInSolutionExplorer": false
 }
