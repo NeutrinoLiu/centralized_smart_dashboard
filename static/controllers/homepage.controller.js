@@ -15,27 +15,32 @@
 		
 		// Sending to AINavigation
 		function aiNav() {
-			$window.location.href = "/AINavigation";
+			$window.location.href = "/ai-navigation";
 		}
 
 		// Sending to EquipmentServicing
 		function EquipmentServicing() {
-			$window.location.href = "/EquipmentServicing";
+			//$window.location.href = "/equipment-servicing";
+			$window.location.href = "/coming-soon";
 		}
 
 		// Sending to Science
 		function Science() {
-			$window.location.href = "/Science";
+			//$window.location.href = "/science";
+			$window.location.href = "/coming-soon";
 		}
 
 		// Sending to ERDM
 		function ERDM() {
-			$window.location.href = "/ERDM";
+			//$window.location.href = "/erdm";
+			$window.location.href = "/coming-soon";
 		}
 
 		// Sending to Maintenance
 		function Maintenance() {
-			$window.location.href = "/Maintenance";
+			//$window.location.href = "/maintenance";
+			$window.location.href = "/coming-soon";
+			
 		}
 
 	}

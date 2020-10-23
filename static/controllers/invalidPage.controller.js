@@ -6,7 +6,7 @@
 		$scope.homepage = homepage;
 
 		function homepage() {
-			$window.location.href = "/homepage";
+			$window.location.href = "/home";
 		}
 
 	}
