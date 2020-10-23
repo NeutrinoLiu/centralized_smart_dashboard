@@ -41,7 +41,7 @@ source /opt/ros/noetic/setup.bash
 <li>
   
 ```
-catking_make
+catkin_make
 ```
 If this command does not work, run ```rosdep update``` and try again.
 <li> 
