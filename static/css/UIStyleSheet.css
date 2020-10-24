@@ -73,6 +73,8 @@ h1 {
 
 .ainav {
     display: grid;
+    padding: 5px 5px;
+    row-gap: 10px;
     grid-template-columns: 50% 25% 25%;
     grid-template-rows: 450px 100px 50px 150px;
 
