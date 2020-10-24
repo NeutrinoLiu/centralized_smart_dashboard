@@ -25,14 +25,23 @@
         <map > MAP GOES HERE <br><img src="{{ url_for('static', filename='imgs/invalid-access.svg') }}" width="300" height="300"/> </map>
         <!--Coord-display will be a big table that includes current coord on top, and target coords and distance as two columns below-->
         <coord-display>
-            Current Coordinates: <br />
-            <table>Target coordinates</table>
+            <table>
+                <tr>
+                    <td>Current Coordinates:</td>
+                    <td>Latitude: &nbsp;&nbsp; Longitude: &nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <th>Target coordinates</th>
+                    <th>Distance</th>
+                </tr>
+                
+            </table>
         </coord-display>
         <enter-coord>enter new waypoint</enter-coord>
-        <div>Add Camera IP: *Form and button here*</div>
-        <#go-button></#go-button>
+        <div>Add Camera IP: *Form and button here*</div><div></div>
+        <div id="go-button">GO</div>
         <notification-bar><b>Command logs here</b></notification-bar>
-        <#emergency-stop></#emergency-stop>
+        <div id="emergency-stop">STOP</div>
     </div>
 </body>
 </html>

@@ -69,7 +69,7 @@ h1 {
 .ainav {
     display: grid;
     grid-template-columns: 50% 25% 25%;
-    grid-template-rows: 450px 100px auto auto;
+    grid-template-rows: 450px 100px 50px 150px;
 
 }
 
@@ -101,17 +101,19 @@ h1 {
 }
 
 #emergency-stop {
-    color: red;
+    border-radius: 25px;
+    background-color: red;
     text-align: center;
-
+    font: bold larger;
 }
 
 #reset-button {
-    color: orange;
+    background-color: orange;
     text-align: center;
 }
 
 #go-button {
-    color: green;
+    border-radius: 25px;
+    background-color: green;
     text-align: center;
 }
