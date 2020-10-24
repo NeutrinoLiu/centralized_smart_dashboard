@@ -9,6 +9,7 @@ up to date whenever a call is made
 
 from ui_nodes import *
 
+
 def test(data):
     print('###################')
     print(data)
@@ -16,6 +17,7 @@ def test(data):
 def test2(data):
     print('$$$$$$$$$$$$$$$$$$$')
     print(data)
+
 
 sub = Subscriber(test, test2)
 
