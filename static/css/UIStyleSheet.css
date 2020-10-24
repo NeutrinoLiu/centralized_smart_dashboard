@@ -11,8 +11,7 @@ h1 {
     display: grid;
     grid-template-columns: auto auto;
     padding: 10px;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-evenly;
 }
 
 .topnav {
