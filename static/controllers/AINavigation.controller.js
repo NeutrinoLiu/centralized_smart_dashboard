@@ -8,6 +8,14 @@
 		function homepage() {
 			$window.location.href = "/home";
 		}
+
+		function waypointNew() {
+			alert("The form was submitted");
+		}
+
+		function cameraIP() {
+			alert("The second form was submitted");
+		}
 	}
 
 	})();

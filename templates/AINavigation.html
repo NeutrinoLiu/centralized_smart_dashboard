@@ -37,13 +37,13 @@
                 
             </table>
         </coord-display>
-        <enter-coord><form>
+        <enter-coord><form onsubmit="waypointNew()">
             <input type="text" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
             <input type="text" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
             <input type="submit" value="Submit" id="submit-button"><br>
         </form></enter-coord>
         
-        <form>
+        <form onsubmit="cameraIP()">
             <input type="text" id="cameraIP" name="cameraIP" placeholder="Add Camera IP Address:">
             <input type="submit" value="Submit" id="submit-button">
             </form><div></div>
