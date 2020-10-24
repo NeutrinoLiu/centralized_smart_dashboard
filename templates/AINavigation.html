@@ -20,6 +20,19 @@
         <pageName href="#pageName">AI Navigation</pageName>
         <homepage ng-click="homepage()" href="#home">Homepage</homepage>
     </div>
-
+    
+    <div class="ainav">
+        <map > MAP GOES HERE <br><img src="{{ url_for('static', filename='imgs/invalid-access.svg') }}" width="300" height="300"/> </map>
+        <!--Coord-display will be a big table that includes current coord on top, and target coords and distance as two columns below-->
+        <coord-display>
+            Current Coordinates: <br />
+            <table>Target coordinates</table>
+        </coord-display>
+        <enter-coord>enter new waypoint</enter-coord>
+        <div>Add Camera IP: *Form and button here*</div>
+        <#go-button></#go-button>
+        <notification-bar><b>Command logs here</b></notification-bar>
+        <#emergency-stop></#emergency-stop>
+    </div>
 </body>
 </html>

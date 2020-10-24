@@ -1,12 +1,13 @@
 {
   "ExpandedNodes": [
     "",
+    "\\dockerfiles",
     "\\static",
     "\\static\\controllers",
     "\\static\\css",
     "\\static\\imgs",
     "\\templates"
   ],
-  "SelectedNode": "\\templates\\AINavigation.html",
+  "SelectedNode": "\\routes.py",
   "PreviewInSolutionExplorer": false
 }
