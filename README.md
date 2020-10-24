@@ -38,18 +38,18 @@ source /opt/ros/noetic/setup.bash
 ```
 
 <li> cd model
+<li>
+  
+```
+catkin_make
+```
+If this command does not work, run ```rosdep update``` and try again.
 <li> 
 
 ```
 source devel/setup.bash
 ```
 
-<li>
-  
-```
-catking_make
-```
-If this command does not work, run ```rosdep update``` and try again.
 <li>
 To start the model server, we need to run roscore you can run it in the background using:
 
