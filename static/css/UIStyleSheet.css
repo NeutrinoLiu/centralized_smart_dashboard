@@ -26,24 +26,26 @@ h1 {
 }
 
 .topnav {
-    overflow:hidden;
-    background-color:silver;
+    overflow: hidden;
+    background-color: silver;
+    align-content: center;
+}
+
+
+.topnav pageName {
+    font: bold 20pt verdana;
 }
 
 .topnav homepage {
     float:right;
     text-align:center;
-    font: italic times new roman;
+    justify-content:right;
+    font: italic 20pt times new roman;
 }
 
 .topnav homepage:hover {
     background-color:black;
     color:whitesmoke;
-}
-
-.topnav pageName {
-    align-content:center;
-    font: bold verdana;
 }
 
 #emergency-stop {

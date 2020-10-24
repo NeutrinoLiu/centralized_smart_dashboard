@@ -25,10 +25,12 @@ def maintenance():
 def science():
     return render_template("Science.html")
 
+def coming_soon():
+    return render_template("ComingSoon.html")
 
 # TODO: might be useful to add server-side error handlers
 def error_handler(error):
-    return render_template('ComingSoon.html')
+    return render_template('invalid-page.html')
 
 
 def init_website_routes(app):
@@ -40,5 +42,6 @@ def init_website_routes(app):
         app.add_url_rule('/erdm', 'erdm', erdm, methods=['GET'])
         app.add_url_rule('/maintenance', 'maintenance',  maintenance, methods=['GET'])
         app.add_url_rule('/science', 'science', science, methods=['GET'])
+        app.add_url_rule('/coming-soon', 'coming_soon', coming_soon, methods=['GET'])
 
         app.register_error_handler(404, error_handler)
