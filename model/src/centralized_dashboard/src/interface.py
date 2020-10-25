@@ -2,7 +2,7 @@
 standarize the communication between frontend and the local node 
 '''
 from ui_nodes import *
-from rover.py import *
+from rover import *
 
 class Interface:
 
@@ -14,7 +14,7 @@ class Interface:
                                 # hence the path is stored locally
                                 # route_state[0] stores the start point and it gets updated everytime a passing point is achieved
                                 # 0-----*-O-------O--------O-------O------------O
-                                # r[0]    r[1]    r[2]                            and it get updated when rover arrive r[1]
+                                # r[0]    r[1]    r[2]                            for example: it get updated when rover arrive r[1]
                                 #         0--*----O--------O-------O------------O
                                 #         r[0]    r[1]     r[2]
     
@@ -75,7 +75,7 @@ class Interface:
             print("warning: off the route, need manual intervene")
             return
 
-    def get_curent_state(self): # the API that return the state of rover, in the format of Rover classs
+    def get_current_state(self): # the API that return the state of rover, in the format of Rover classs
         return self.rover
 
     def send_cmd(self, command): # the API that get command object from front end and send it to rover
