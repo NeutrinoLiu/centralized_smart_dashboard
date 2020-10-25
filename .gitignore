@@ -1,7 +1,0 @@
-.DS_Store
-.python_history
-.gitconfig
-.ros/*
-.vs/*
-__pycache__/
-static/.DS_Store
