@@ -37,20 +37,20 @@
                 
             </table>
         </coord-display>
-        <enter-coord><form onsubmit="waypointNew()">
+        <enter-coord><form>
             <input type="text" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
             <input type="text" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
-            <input type="submit" value="Submit" id="submit-button"><br>
+            <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
         </form></enter-coord>
         
-        <form onsubmit="cameraIP()">
+        <form ng-submit="cameraIP()">
             <input type="text" id="cameraIP" name="cameraIP" placeholder="Add Camera IP Address:">
             <input type="submit" value="Submit" id="submit-button">
             </form><div></div>
         
-        <div id="go-button">GO</div>
+        <div id="go-button" ng-click="goButton()">GO</div>
         <notification-bar><b>Command logs here</b></notification-bar>
-        <div id="emergency-stop">STOP</div>
+        <div id="emergency-stop" ng-click="eStopButton()">STOP</div>
     </div>
 </body>
 </html>

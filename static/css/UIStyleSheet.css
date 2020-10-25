@@ -112,7 +112,8 @@ h1 {
     border-radius: 25px;
     background-color: red;
     text-align: center;
-    font: bold larger;
+    padding: 10px 0;
+    max-height: 50px;
 }
 
 #reset-button {
@@ -122,6 +123,7 @@ h1 {
 
 #go-button {
     border-radius: 25px;
+    padding: 10px 0;
     background-color: green;
     text-align: center;
 }
