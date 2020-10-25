@@ -22,6 +22,10 @@ class Interface:
     def almost_equal(a, b, error = 0.1):    # error should be carfully chosed
         return abs(a-b) <= error
 
+    def debug_print(self, str):
+        print(str)
+        # self.rover.remark = self.rover.remark + '\n' + str
+
     def nav_callback(self, nav_data):
         self.rover.ori = nav_data.heading
         self.rover.gps_longt = nav_data.cur_lang
@@ -48,11 +52,11 @@ class Interface:
         cur_lat = self.rover.gps_latit  # current point
 
         if (len(self.rover.route_state) <= 1):
-            print("no route available currently")
+            self.debug_print("no route available currently")
             return
 
         if (tar_long != self.rover.route_state[1].longt) or (tar_lat != self.rover.route_state[1].lati):
-            print("warning: target conflict, reset the rover route")
+            self.debug_print("warning: target conflict, reset the rover route")
             self.rover.route_state = [PosState(cur_lat, cur_long), PosState(tar_lat, tar_long)]
             return
 
@@ -63,16 +67,16 @@ class Interface:
             : # if the currend pos is on the line between start point and target point
 
             if almost_equal(cur_long, tar_long, error) and almost_equal(cur_lat, tar_lat, error):
-                print("arrive one station, heading to the next!")
+                self.debug_print("arrive one station, heading to the next!")
                 self.rover.route_state.pop(0)
                 self.pub.set_target_coordinates(['lat': self.rover.route_state[1].lati, 'long': self.rover.route_state[1].longt])
                 return
             else:
-                print("still on the way from start point to target point")
+                self.debug_print("still on the way from start point to target point")
                 return
 
         else:
-            print("warning: off the route, need manual intervene")
+            self.debug_print("warning: off the route, need manual intervene")
             return
 
     def get_current_state(self): # the API that return the state of rover, in the format of Rover classs
@@ -90,6 +94,17 @@ class Interface:
             pass
         if command & 0b0100:    # a speed update command
             self.pub.set_motor_power(list(range(5)), command.new_speed)
-        print(command)
-            
+        self.debug_print(command)
+    
+    def get_current_gps(self):
+        return ['lat': self.rover.gps_latit, 'long': self.rover.gps_longt]
+
+    def get_current_speed(self):
+        return self.rover.speed
+
+    def get_notification(self):
+        return self.rover.remark
+
+    def clear_notification_buffer(self):
+        self.rover.remark = ''
 
