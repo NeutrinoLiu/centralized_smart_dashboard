@@ -36,7 +36,7 @@ class Interface:
         self.check_route(nav_data.tar_long, nav_data.tar_lat) 
         # check if the target info from rover is consistant with our local path record
         # and update the route whenever there is an arriving
-        print('nav data updated!\n')
+        self.debug_print('nav data updated!\n')
     
     def drive_callback(self, drive_data):
         self.rover.speed = [drive_data.wheel0,
@@ -45,7 +45,7 @@ class Interface:
                             drive_data.wheel3,
                             drive_data.wheel4,
                             drive_data.wheel5]
-        print('drive data updated!\n')
+        self.debug_print('drive data updated!\n')
 
     def check_route(self, tar_long, tar_lat):   # target point, check if the rover is heading the correct direction
         error = 0.02    # gps error 
@@ -69,7 +69,7 @@ class Interface:
             and (cur_lat >= min(tar_lat, st_lat) - error) and (cur_lat <= max(tar_lat, st_lat))+ error)             \
             : # if the currend pos is on the line between start point and target point
 
-            if almost_equal(cur_long, tar_long, error) and almost_equal(cur_lat, tar_lat, error):
+            if almost_equal(cur_long, tar_long, error) and almost_equal(cur_lat, tar_lat, error):   # we arrive the target point
                 self.debug_print("arrive one station, heading to the next!")
                 self.rover.route_state.pop(0)
                 self.pub.set_target_coordinates(['lat': self.rover.route_state[1].lati, 'long': self.rover.route_state[1].longt])
