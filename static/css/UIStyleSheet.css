@@ -1,3 +1,129 @@
-﻿body
-{
+﻿body {
+    background-color:silver;
+
+}
+
+h1 {
+    text-align: center;
+    font: bold arial;
+    font-size: 50px;
+}
+
+.homepage-button-container {
+    display: grid;
+    grid-template-columns: auto;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.homepage-button {
+    border-radius: 5px;
+    color: white;
+    padding: 15px 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.hp-button {
+    background-color: black;
+    color: white;
+    padding: 12px 40px;
+    border-radius: 30px;
+    min-width: 400px;
+    max-width: 400px;
+    min-height: 80px;
+    max-height: 80px;
+    font-size: 25px;
+}
+
+.hp-button:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.topnav {
+    overflow: hidden;
+    background-color: silver;
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+
+.topnav pageName {
+    font: bold 20pt verdana;
+}
+
+.topnav homepage {
+    float:right;
+    text-align:center;
+    justify-content:right;
+    font: italic 20pt times new roman;
+}
+
+.topnav homepage:hover {
+    background-color:black;
+    color:whitesmoke;
+}
+
+.submit-button{
+    background-color:papayawhip;
+    border-color:dimgrey;
+}
+
+.ainav {
+    display: grid;
+    padding: 5px 5px;
+    row-gap: 10px;
+    grid-template-columns: 50% 25% 25%;
+    grid-template-rows: 450px 100px 50px 150px;
+
+}
+
+.ainav map{
+    grid-row: 1 / 3;
+    border: 2px solid black;
+    text-align:center;
+}
+
+/*target coordinates? or just section for current coordinates and then table of targets below?*/
+.ainav coord-display{
+    grid-row: 1;
+    grid-column: 2 / span 2; 
+    border: 2px solid black;
+    padding: 5px;
+}
+
+.ainav enter-coord{
+    grid-row: 2;
+    grid-column: 2 / span 2; 
+    /*border: 5px solid black;*/
+    padding: 5px;
+}
+
+.ainav notification-bar {
+    background-color: whitesmoke;
+    grid-row: 4;
+    grid-column: 1 / 3;
+    border: 2px solid black;
+}
+
+#emergency-stop {
+    border-radius: 25px;
+    background-color: red;
+    text-align: center;
+    padding: 10px 0;
+    max-height: 50px;
+}
+
+#reset-button {
+    background-color: orange;
+    text-align: center;
+}
+
+#go-button {
+    border-radius: 25px;
+    padding: 10px 0;
+    background-color: green;
+    text-align: center;
 }

@@ -1,11 +1,56 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html ng-app="AINavigation">
 <head>
     <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+    <title>Centralized Dashboard - AINavigation</title>
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/UIStyleSheet.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='controllers/AINavigation.controller.js') }}"></script>
 
+</head>
+<body ng-controller="AINavigationController">
+    <div class="topnav">
+        <pageName href="#pageName">AI Navigation</pageName>
+        <homepage ng-click="homepage()" href="#home">Homepage</homepage>
+    </div>
+    
+    <div class="ainav">
+        <map > MAP GOES HERE <br><img src="{{ url_for('static', filename='imgs/invalid-access.svg') }}" width="300" height="300"/> </map>
+        <!--Coord-display will be a big table that includes current coord on top, and target coords and distance as two columns below-->
+        <coord-display>
+            <table>
+                <tr>
+                    <td>Current Coordinates:</td>
+                    <td>Latitude: &nbsp;&nbsp; Longitude: &nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <th>Target coordinates</th>
+                    <th>Distance</th>
+                </tr>
+                
+            </table>
+        </coord-display>
+        <enter-coord><form>
+            <input type="text" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
+            <input type="text" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
+            <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
+        </form></enter-coord>
+        
+        <form ng-submit="cameraIP()">
+            <input type="text" id="cameraIP" name="cameraIP" placeholder="Add Camera IP Address:">
+            <input type="submit" value="Submit" id="submit-button">
+            </form><div></div>
+        
+        <div id="go-button" ng-click="goButton()">GO</div>
+        <notification-bar><b>Command logs here</b></notification-bar>
+        <div id="emergency-stop" ng-click="eStopButton()">STOP</div>
+    </div>
 </body>
 </html>
