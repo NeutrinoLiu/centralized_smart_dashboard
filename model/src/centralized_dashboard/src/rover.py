@@ -15,11 +15,11 @@ class Rover:    # the object sending from local subscriber to the frontend
         self.ori = 0.0
         self.speed = []
         self.arm = []
-        self.remark = ''
+        self.remark = '<empty>'
         self.name = name
         
     def __repr__(self):
-        return "this is Rover_" + self.name + " !"
+        return "this is Rover " + self.name + " !"
 
 class Cmd:      # the object sending from frontend to the local publisher
     def __init__(self,  new_route=[], 

@@ -23,8 +23,11 @@ class Interface:
         return abs(a-b) <= error
 
     def debug_print(self, str):
-        print(str)
-        # self.rover.remark = self.rover.remark + '\n' + str
+        print(str)  # currently we just output to consol
+        # if self.rover.remark == '<empty>' : 
+        #   self.rover.remark = str
+        # else:
+        #   self.rover.remark = self.rover.remark + '\n' + str
 
     def nav_callback(self, nav_data):
         self.rover.ori = nav_data.heading
@@ -106,5 +109,5 @@ class Interface:
         return self.rover.remark
 
     def clear_notification_buffer(self):
-        self.rover.remark = ''
+        self.rover.remark = '<empty>'
 
