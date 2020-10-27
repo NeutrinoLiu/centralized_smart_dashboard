@@ -33,7 +33,7 @@
 		// Sending to ERDM
 		function ERDM() {
 			//$window.location.href = "/erdm";
-			$window.location.href = "/coming-soon";
+			$window.location.href = "/erdm";
 		}
 
 		// Sending to Maintenance

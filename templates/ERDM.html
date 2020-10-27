@@ -16,8 +16,40 @@
 </head>
 <body ng-controller="ERDMController">
     <div class="topnav">
-        <homepage href="#home">Homepage</homepage>
         <pageName href="#pageName">Extreme Retrieval</pageName>
+        <homepage ng-click="homepage()" href="#home">Homepage</homepage>
+    </div>
+
+    <div class="erdm">
+            <map > MAP GOES HERE <br><img src="{{ url_for('static', filename='imgs/invalid-access.svg') }}" width="300" height="300"/> </map>
+        <!--Coord-display will be a big table that includes current coord on top, and target coords and distance as two columns below-->
+        <coord-display>
+            <table>
+                <tr>
+                    <td>Current Coordinates:</td>
+                    <td>Latitude: &nbsp;&nbsp; Longitude: &nbsp;&nbsp;</td>
+                </tr>
+                <tr>
+                    <th>Target coordinates</th>
+                    <th>Distance</th>
+                </tr>
+                
+            </table>
+        </coord-display>
+        <enter-coord><form>
+            <input type="text" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
+            <input type="text" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
+            <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
+        </form></enter-coord>
+        
+        <form ng-submit="cameraIP()">
+            <input type="text" id="cameraIP" name="cameraIP" placeholder="Add Camera IP Address:">
+            <input type="submit" value="Submit" id="submit-button">
+            </form><div></div>
+        
+        <div></div>
+        <notification-bar><b>Command logs here</b></notification-bar>
+        <div id="emergency-stop" ng-click="eStopButton()">STOP</div>
     </div>
 </body>
 </html>
