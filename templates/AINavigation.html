@@ -22,7 +22,18 @@
     </div>
     
     <div class="ainav">
-        <map > MAP GOES HERE <br><img src="{{ url_for('static', filename='imgs/invalid-access.svg') }}" width="300" height="300"/> </map>
+        <!--<map > MAP GOES HERE <br><img src="{{ url_for('static', filename='imgs/invalid-access.svg') }}" width="300" height="300"/> </map> -->
+
+
+        <app-zoom-pan-container class="ainav map ainavmap--floor" #mapFloor>
+            <div>
+                <div ng-repeat="" style="position: absolute; left:250px; bottom: 250px; ">
+                    <div style="position: absolute; right: -250px; top: -100px">1</div>
+                    <div style="position: absolute; right: 100px; bottom:-10px">2</div>
+                </div>
+            </div>
+        </app-zoom-pan-container>
+
         <!--Coord-display will be a big table that includes current coord on top, and target coords and distance as two columns below-->
         <coord-display>
             <table>
@@ -38,20 +49,22 @@
                 <tr ng-repeat="waypoint in waypoints">
                     <td>{{ '{{waypoint.lat}}' }} &nbsp;&nbsp; {{ '{{waypoint.long}}' }} &nbsp;&nbsp;</td>
                 </tr>
-                
+
             </table>
         </coord-display>
-        <enter-coord><form>
-            <input type="number" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
-            <input type="number" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
-            <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
-        </form></enter-coord>
-        
+        <enter-coord>
+            <form>
+                <input type="number" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
+                <input type="number" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
+                <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
+            </form>
+        </enter-coord>
+
         <form ng-submit="cameraIP()">
             <!-- <input type="text" id="cameraIP" name="cameraIP" placeholder="Add Camera IP Address:">
-     <input type="submit" value="Submit" id="submit-button">-->
+        <input type="submit" value="Submit" id="submit-button">-->
         </form><div></div>
-        
+
         <div id="go-button" ng-click="goButton()">GO</div>
         <notification-bar><b>Command logs here</b></notification-bar>
         <div id="emergency-stop" ng-click="eStopButton()">STOP</div>

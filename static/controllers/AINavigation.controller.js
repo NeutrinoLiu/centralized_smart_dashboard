@@ -8,6 +8,7 @@
         $scope.cameraIP = cameraIP;
         $scope.goButton = goButton;
         $scope.eStopButton = eStopButton;
+        $scope.addingWaypointToMap = addingWaypointToMap;
 
         $scope.waypoints = []
 
@@ -33,6 +34,17 @@
                 }, (error) => {
                     connectionLost();
                 });
+        }
+
+        
+        function coordsToMapLocation(lat, long) {
+            /**
+            Here is the algorithm for the translation from lat and long to x and y coordinates
+            **/
+        }
+
+        function addingWaypointToMap(latitude, longitude) {
+            
         }
 
         //Adds waypoint coordinates to the list
@@ -61,11 +73,15 @@
                 )
                 .then( (response) => {
                     response = test_response // TODO: remove after back end is ready
+                    coordsToMapLocation(response.data.long,response.data.lat)
                     $scope.waypoints.push({'lat': response.data.lat, 'long': response.data.long})
+                    addingWaypointToMap(response.data.longitude,response.data.latitude);
                 }, (error) => {
                     connectionLost();
                 });
             }
+
+ 
         }
 
         //Opens a new window with a live stream of the camera at the IP address sent
