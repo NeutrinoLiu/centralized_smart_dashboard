@@ -15,7 +15,7 @@
 
 		//Adds waypoint coordinates to the list
 		function waypointNew() {
-			alert("The form was submitted");
+			alert("A New waypoint has been added to the list!");
 		}
 
 		function waypointDisplay() {
@@ -24,17 +24,17 @@
 
 		//Opens a new window with a live stream of the camera at the IP address sent
 		function cameraIP() {
-			alert("The second form was submitted");
+			alert("A new camera stream IP address has been opened.");
 		}
 
 		//Sends the first target waypoint in the list to the rover
 		function goButton() {
-			alert("POKEMON GO");
+			alert("GO Command Sent! The rover is moving to the top waypoint.");
 		}
 
 		//Sends a force restart command to the rover
 		function eStopButton() {
-			alert("POKEMON CRASH");
+			alert("ESTOP PRESSED! Rover is force restarting.");
 		}
 	}
 
