@@ -36,18 +36,19 @@
 		function eStopButton() {
 			alert("ESTOP PRESSED! Rover is force restarting.");
 		}
+		
+		function getLongitude(){
+
+		}
+
+		function getLatitude(){
+
+		}
+
+		function getCameraIP(){
+
+		}
 	}
 
-	function getLongitude(){
-
-	}
-
-	function getLatitude(){
-
-	}
-
-	function getCameraIP(){
-
-	}
 
 	})();
