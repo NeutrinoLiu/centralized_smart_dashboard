@@ -38,4 +38,16 @@
 		}
 	}
 
+	function getLongitude(){
+
+	}
+
+	function getLatitude(){
+
+	}
+
+	function getCameraIP(){
+
+	}
+
 	})();
