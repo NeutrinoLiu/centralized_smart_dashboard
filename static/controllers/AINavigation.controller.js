@@ -96,12 +96,28 @@
             latitude = Math.random() * map_width;
             longitude = Math.random()* map_height;
 
+            distanceScale = (11.1/0.1); // number of kilometers in a Latitude
+
+            /*
+            Formula for getting the pixel location of the image. These are absolute values 
+            from the bottom right of the image.
+            */
+
+            x_pos = (map_height/(260*distanceScale))*(latitude + 180)*distanceScale
+            y_pos = (map_width/(180*distanceScale))*(longitude + 90)*distanceScale
+
             console.log(latitude);
             console.log(longitude);
+            
+            console.log(x_pos);
+            console.log(y_pos);
+           
+            
 
+            */
             // -90 to 90, and longitudes range from -180 to 80.
 
-            return {'x': latitude, 'y': longitude};
+            return {'x': x_pos, 'y': y_pos};
         }
 
 
