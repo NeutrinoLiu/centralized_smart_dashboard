@@ -1,7 +1,7 @@
 ''' 
 standarize the communication between frontend and the local node 
 '''
-#from ui_nodes import *
+#from ui_nodes import * we do not need ui_nodes any more
 
 from math import sqrt
 
