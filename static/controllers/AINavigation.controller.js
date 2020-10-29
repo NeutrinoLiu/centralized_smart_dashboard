@@ -102,8 +102,8 @@
 
         // Removes the last waypoint added to our waypoints 
         function deleteLatestWaypoint() {
-            test_response {  //test response delete when backend ready
-                'data': {  //always true
+            test_response = {
+                'data': {
                     'success': true
                 }
             }
