@@ -7,6 +7,20 @@
     <link rel="stylesheet"
           href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/UIStyleSheet.css') }}">
+    <link rel = "stylesheet" href="{{ url_for('static', filename='css/panzoomwidget.css') }}">
+    <style type="text/css">
+        .pan-zoom-frame {
+            border: 2px solid black;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="http://monospaced.github.io/hamster.js/hamster.js"></script>
+    <script src="https://code.angularjs.org/1.3.13/angular.min.js"></script>
+    <script src="http://monospaced.github.io/angular-mousewheel/mousewheel.js"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='directives/panzoom.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='services/PanZoomService.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='directives/panzoomwidget.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
@@ -21,30 +35,48 @@
     </div>
 
     <div class="erdm">
-            <map > MAP GOES HERE <br><img src="{{ url_for('static', filename='imgs/invalid-access.svg') }}" width="300" height="300"/> </map>
+        <map > MAP <br>
+            <div style="position:relative">
+            <panzoomwidget panzoom-id="PanZoom" style="position:absolute;top:10px;left:10px;z-index:1"></panzoomwidget>
+                <panzoom id="PanZoom" config="panzoomConfig" model="panzoomModel" style="width:100%; height: 550px">
+                    <img src="https://raw.githubusercontent.com/mvindahl/angular-pan-zoom/master/demo/images/shark_attack.jpg" style="position:absolute" />
+                    <svg style="position:absolute" width="100%" height="550px">
+                        some
+                    </svg>
+                </panzoom>
+            </div>
+        </map>
         <!--Coord-display will be a big table that includes current coord on top, and target coords and distance as two columns below-->
         <coord-display>
             <table>
                 <tr>
                     <td>Current Coordinates:</td>
-                    <td>Latitude: &nbsp;&nbsp; Longitude: &nbsp;&nbsp;</td>
+                    <td>{{ '{{curr_coord.lat}}' }}  &nbsp;&nbsp; {{ '{{curr_coord.long}}' }}</td>
                 </tr>
                 <tr>
                     <th>Target coordinates</th>
-                    <th>Distance</th>
+                    <!--<th>Distance</th>-->
+                    <th><input type="button" ng-click="deleteLatestWaypoint()" value="Delete Latest Waypoint"></th>
                 </tr>
+
+                <tr ng-repeat="waypoint in waypoints">
+                    <td> {{ '{{waypoint.lat}}' }} &nbsp;&nbsp; {{ '{{waypoint.long}}' }} &nbsp;&nbsp;</td>
+                </tr>
+
                 
             </table>
         </coord-display>
-        <enter-coord><form>
-            <input type="text" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
-            <input type="text" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
-            <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
-        </form></enter-coord>
+        <enter-coord>
+            <form>
+                <input type="text" id="waypointNewLatitude" pattern="^\d*(\.\d*)?$" name="waypointNew" placeholder="Enter New Latitude:"><br>
+                <input type="text" id="waypointNewLongitude" pattern="^\d*(\.\d*)?$" name="waypointNew" placeholder="Enter New Longitude:"><br>
+                <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
+            </form>
+        </enter-coord>
         
         <form ng-submit="cameraIP()">
             <!--<input type="text" id="cameraIP" name="cameraIP" placeholder="Add Camera IP Address:">
-    <input type="submit" value="Submit" id="submit-button">-->
+        <input type="submit" value="Submit" id="submit-button">-->
         </form><div></div>
         
         <div></div>
