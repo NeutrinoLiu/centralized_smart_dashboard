@@ -86,6 +86,14 @@ h1 {
     text-align:center;
 }
 
+/* Creating the map CSS floor CSS*/
+.ainavmap--floor {
+    height: 30%;
+    width: 90%;
+    flex-grow: 1;
+    margin-bottom: 8px;
+}
+
 /*target coordinates? or just section for current coordinates and then table of targets below?*/
 .ainav coord-display{
     grid-row: 1;
@@ -120,6 +128,14 @@ h1 {
     grid-row: 1 / 3;
     border: 2px solid black;
     text-align:center;
+}
+
+/* Creating the map CSS floor CSS*/
+.erdmmap--floor {
+    height: 30%;
+    width: 90%;
+    flex-grow: 1;
+    margin-bottom: 8px;
 }
 
 /*target coordinates? or just section for current coordinates and then table of targets below?*/
