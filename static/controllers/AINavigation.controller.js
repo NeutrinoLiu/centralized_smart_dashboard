@@ -61,7 +61,13 @@
         function coordToXY(latitude, longitude) {
             /*
             Algorithm to change from coord to XY with the pixel scaling factor
+            Scaling factor for latitude and longitude was manually calculated from pixel length
+            and height of the map.
+            TODO: Take the difference from the current Latitude and longitude for the proper coordinates
             */
+            scalingFactorlat = 0.003
+            scalingFactorlong = 0.01
+            return scalingFactorlat*latitude,scalingFactorlong*long;
         }
 
 
