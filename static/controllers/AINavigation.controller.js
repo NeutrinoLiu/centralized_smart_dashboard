@@ -48,7 +48,6 @@
                 .then ((response) => {
                     response =test_response; // TODO: only for testing, delete when backend ready
                     response.data.waypoints.forEach(waypoint => $scope.waypoints.push(waypoint));
-                    console.log($scope.waypoints)
                 }, (error) => {
                     connectionLost();
                 });
