@@ -121,7 +121,9 @@ class Rover:
         error = 0.02    # gps error seting
         
         st_long = self.route_state[0].longt
-        st_lat = self.route_state[0].lati # start point
+        st_lat = self.route_state[0].lati 
+        # start point is reserved as the first element in route_State
+        # to judge whether the rover has deviated from its path
         cur_long = self.gps_longt
         cur_lat = self.gps_lati  # current point
         tar_long = self.buffer_longt
@@ -179,7 +181,24 @@ class Rover:
             drive_data.wheel5 = command.new_speed[5]
             self.driv_pub.publish(drive_data)
         
-        self.__debug_print("one command sent")
+        self.__debug_print("one command sent") 
+    
+    def set_new_route(self, new_route): # new_route should be a list of GPSPoint
+        self.route_state = [self.route_state[0]] + new_route # the start point is reserved 
+        nav_data = NavigationMsg()
+        nav_data.tar_lat = new_route[0].lati
+        nav_data.tar_long = new_route[0].longt
+        self.navi_pub.publish(nav_data)                                     
+    
+    def set_new_speed(self, new_speed):
+        drive_data = Drive()
+        drive_data.wheel0 = new_speed[0]
+        drive_data.wheel1 = new_speed[1]
+        drive_data.wheel2 = new_speed[2]
+        drive_data.wheel3 = new_speed[3]
+        drive_data.wheel4 = new_speed[4]
+        drive_data.wheel5 = new_speed[5]
+        self.driv_pub.publish(drive_data)
 
     def get_notification(self):
         remark = self.remark

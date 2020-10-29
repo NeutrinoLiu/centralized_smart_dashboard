@@ -1,8 +1,9 @@
 from rover import *
 
 mrRover = Rover("mrRover")
+
 while True:
-    readin = input("read rover status? (y/n)")
+    readin = input("read rover status? (y/n, or flow for a continous gps display)")
     if readin == "n":
         break
     if readin == "flow":
@@ -36,7 +37,7 @@ while True:
             route.append(GPSPoint(float(lati), float(longt)))
         print('we have new targets:' + route.__repr__())
         #set new route
-        mrRover.send_cmd(Cmd(new_route = route))
+        mrRover.send_cmd(Cmd(new_route = route)) 
 
 
 
