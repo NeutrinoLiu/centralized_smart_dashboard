@@ -11,27 +11,23 @@ class NavData:
 
     def __init__(self, topic_name='/nav_data', frequency=100):
         self.publisher = rospy.Publisher(topic_name, NavigationMsg, queue_size=1)
+        self.subscriber = rospy.Subscriber('/set_nav_data', NavigationMsg, self.set_target)
         self.rate = rospy.Rate(frequency)
+        self.tar_lat = 0
+        self.tar_long = 0
+        self.cur_lat = 43.075457
+        self.cur_long = -89.404166
+
+    def set_target(self, data):
+        self.tar_lat = data.tar_lat
+        self.tar_long = data.tar_long
 
     def get_target_coordinates(self):
-        '''
-        TODO: MAKE THIS CHANGE DYNAMICALLY 
-        '''
-        # Sample camp randall 
-        sample_lats = [43.070096]
-        sample_longs = [-89.412030] 
-        coords = {'lat': sample_lats[0], 'long': sample_longs[0]}
-        return coords
+        return {'lat': self.tar_lat, 'long': self.tar_long}
 
     def get_current_coordinates(self):
-        '''
-        TODO: make this change dynicamically
-        '''
         # Sample is Bascom Hall
-        sample_lats = [43.075457]
-        sample_longs = [-89.404166] 
-        coords = {'lat': sample_lats[0], 'long': sample_longs[0]}
-        return coords
+        return {'lat': self.cur_lat, 'long': self.cur_long}
 
     def get_heading(self):
         '''
@@ -68,16 +64,15 @@ class DriveData:
 
     def __init__(self, topic_name='/drive_data', frequency=100):
         self.publisher = rospy.Publisher(topic_name, Drive, queue_size=1)
+        self.subscriber = rospy.Subscriber('/set_drive_data', Drive, self.set_speed)
         self.rate = rospy.Rate(frequency)
+        self.wheel_speeds = [0, 0, 0, 0, 0, 0]
 
     def get_wheel_speeds(self):
-        ''' 
-        TODO: make this more dynamic
-        '''
-        wheel_speeds = [random.randrange(0, 101), random.randrange(0, 101), random.randrange(0, 101), \
-            random.randrange(0, 101), random.randrange(0, 101), random.randrange(0, 101)]
-
-        return wheel_speeds
+        return self.wheel_speeds
+    
+    def set_speed(self, data):
+        self.wheel_speeds = [data.wheel0, data.wheel1, data.wheel2, data.wheel3, data.wheel4, data.wheel5]
 
 
     def talker(self):

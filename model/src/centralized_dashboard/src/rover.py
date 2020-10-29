@@ -14,7 +14,7 @@ class Cmd:      # the object sending from frontend to the local publisher
                         new_arm=[], 
                         new_speed=[],
                         remark='<unclaimed>'):
-        self.new_route = new_route
+        self.new_route = new_route  
         self.new_arm = new_arm
         self.new_speed = new_speed
         self.remark = remark
@@ -44,13 +44,15 @@ class Rover:
         #           make sure you did not overwrite them mistakenly
         self.gps_longt = 0.0
         self.gps_lati = 0.0
+        self.buffer_longt = 0.0
+        self.buffer_lati = 0.0
         self.ori = 0.0
         self.speed = []
         self.arm = []
         self.remark = '<empty>'
         self.name = name
         self.warn_flag = False # indicate whenever there is a warning.
-        self.route_state = [GPSPoint(0,0)]   # rover only accept cur/target and cannot accept a full path
+        self.route_state = []   # rover only accept cur/target and cannot accept a full path
                                 # hence the path is stored locally
                                 # route_state[0] stores the start point and it gets updated everytime a passing point is achieved
                                 # 0-----*-O-------O--------O-------O------------O
@@ -78,7 +80,7 @@ class Rover:
 
     def __debug_print(self, str):
         pass
-        #print(str)  # currently we just output to consol
+        # print(str)  # currently we just output to consol
         # if self.remark == '<empty>' : 
         #   self.remark = str
         # else:
@@ -93,10 +95,14 @@ class Rover:
         self.ori = nav_data.heading
         self.gps_longt = nav_data.cur_long
         self.gps_lati = nav_data.cur_lat
-        self.check_route(nav_data.tar_long, nav_data.tar_lat) 
+        if self.route_state == []:
+            self.route_state = [GPSPoint(self.gps_lati, self.gps_longt)]
+        self.buffer_longt = nav_data.tar_long
+        self.buffer_lati = nav_data.tar_lat
+        self.check_route() 
         # check if the target info from rover is consistant with our local path record
         # and update the route whenever there is an arriving
-        self.__debug_print('nav data updated!\n')
+        #self.__debug_print('nav data updated!\n')
     
     def drive_callback(self, drive_data):
         self.speed = [      drive_data.wheel0,
@@ -107,7 +113,7 @@ class Rover:
                             drive_data.wheel5]
         self.__debug_print('drive data updated!\n')
 
-    def check_route(self, tar_long, tar_lat):   # target point, check if the rover is heading the correct direction
+    def check_route(self):   # target point, check if the rover is heading the correct direction
         
         error = 0.01    # gps error seting
         
@@ -115,6 +121,8 @@ class Rover:
         st_lat = self.route_state[0].lati # start point
         cur_long = self.gps_longt
         cur_lat = self.gps_lati  # current point
+        tar_long = self.buffer_longt
+        tar_lat = self.buffer_lati  # target point received from rover
 
         if (len(self.route_state) <= 1):
             self.__debug_print("no route available currently")
@@ -122,15 +130,15 @@ class Rover:
 
         if (tar_long != self.route_state[1].longt) or (tar_lat != self.route_state[1].lati):
             self.__debug_warn("target conflict, reset the rover route")
-            self.route_state = [GPSPoint(cur_lat, cur_long), GPSPoint(tar_lat, tar_long)]
+            self.send_cmd(Cmd(new_route=self.route_state[1:len(self.route_state)]))
             return
 
-        if      (dist_point2line(cur_long, cur_lat, st_long, st_lat, tar_long, tar_lat) <= error)                   \
+        if      (Rover.dist_point2line(cur_long, cur_lat, st_long, st_lat, tar_long, tar_lat) <= error)                   \
             and (cur_long >= min(tar_long, st_long) - error)    and (cur_long <= max(tar_long, st_long) + error)    \
             and (cur_lat >= min(tar_lat, st_lat) - error)       and (cur_lat <= max(tar_lat, st_lat)+ error):
             # if the currend pos is on the segment between start point and target point
 
-            if almost_equal(cur_long, tar_long, error) and almost_equal(cur_lat, tar_lat, error):   # we arrive the target point
+            if Rover.almost_equal(cur_long, tar_long, error) and Rover.almost_equal(cur_lat, tar_lat, error):   # we arrive the target point
                 self.__debug_print("arrive one station, heading to the next!")
                 self.route_state.pop(0)
                 self.pub.set_target_coordinates({'lat': self.route_state[1].lati, 'long': self.route_state[1].longt})   # let the next node on the route list become the target
@@ -140,19 +148,18 @@ class Rover:
                 return
 
         else:
-            self.__debug_warn("off the route, need manual intervene")
+            self.__debug_warn("off the route, reset the start point")
+            self.route_state[0].longt = cur_long
+            self.route_state[0].lati = cur_lat
             return
 
     def send_cmd(self, command): # the API that get command object from front end and send it to rover
         if command.cmd_code & 0b0001:    # if it is a route update command
-            self.local_route = command.new_route
-            # locally update: new_route[0] is the current gps, new_route[1] is the heading station
-
-            # remote update
+            self.route_state = [self.route_state[0]] + command.new_route                # locally update: new_route[0] is the current gps, new_route[1] is the heading station
             nav_data = NavigationMsg()
-            nav_data.tar_lat = command.new_route[1].lati
-            nav_data.tar_long = command.new_route[1].longt
-            self.navi_pub.publish(nav_data)
+            nav_data.tar_lat = command.new_route[0].lati
+            nav_data.tar_long = command.new_route[0].longt
+            self.navi_pub.publish(nav_data)                     # remote update
 
         if command.cmd_code & 0b0010:    # an arm gesture update command
             # pub.set_arm_gesture(command.new_arm) 
@@ -161,12 +168,12 @@ class Rover:
 
         if command.cmd_code & 0b0100:    # a speed update command
             drive_data = Drive()
-            drive_data.wheel0 = command.new_speeds[0]
-            drive_data.wheel1 = command.new_speeds[1]
-            drive_data.wheel2 = command.new_speeds[2]
-            drive_data.wheel3 = command.new_speeds[3]
-            drive_data.wheel4 = command.new_speeds[4]
-            drive_data.wheel5 = command.new_speeds[5]
+            drive_data.wheel0 = command.new_speed[0]
+            drive_data.wheel1 = command.new_speed[1]
+            drive_data.wheel2 = command.new_speed[2]
+            drive_data.wheel3 = command.new_speed[3]
+            drive_data.wheel4 = command.new_speed[4]
+            drive_data.wheel5 = command.new_speed[5]
             self.driv_pub.publish(drive_data)
         
         self.__debug_print("one command sent")
