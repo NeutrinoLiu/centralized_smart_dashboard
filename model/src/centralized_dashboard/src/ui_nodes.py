@@ -4,8 +4,10 @@ from centralized_dashboard.msg import Drive
 
 class Subscriber:
     
-    def __init__(self, nav_data_callback, drive_data_callback):
-        rospy.init_node('ui_subscriber', anonymous=False)
+    def __init__(self, nav_data_callback, drive_data_callback, name='ui_subscriber', inited_flag=False):
+        if not inited_flag:
+            rospy.init_node(name, anonymous=False)
+        self.node_name = name
         self.nav_data_callback = nav_data_callback
         self.drive_data_callback = drive_data_callback
         rospy.Subscriber('/nav_data', NavigationMsg, self.nav_data_subscriber)
@@ -21,10 +23,12 @@ class Subscriber:
 
 class Publisher:
 
-    def __init__(self, frequency=100):
-        rospy.init_node('ui_publisher', anonymous=False)
-        self.navigation_publisher = rospy.Publisher('/nav_data', NavigationMsg, queue_size=1)
-        self.drive_publisher = rospy.Publisher('/drive_data', Drive, queue_size=1)
+    def __init__(self, inited_flag=False, frequency=100, name='ui_publisher'):
+        if not inited_flag:
+            rospy.init_node(name, anonymous=False)
+        self.node_name = name
+        self.navigation_publisher = rospy.Publisher('/set_nav_data', NavigationMsg, queue_size=1)   # it is the topic that we send command to rover 
+        self.drive_publisher = rospy.Publisher('/set_drive_data', Drive, queue_size=1)              # so it should have a differnt name
         self.rate = rospy.Rate(frequency)
 
     def set_target_coordinates(self, target_coordinates):

@@ -45,17 +45,18 @@ class Rover:
         self.remark = '<empty>'
         self.name = name
         self.warn_flag = False # indicate whenever there is a warning.
-
-        self.sub = Subscriber(self.nav_callback, self.drive_callback)
-        self.pub = Publisher()
-
-        self.route_state = []   # rover only accept cur/target and cannot accept a full path
+        self.route_state = [GPSPoint(0,0)]   # rover only accept cur/target and cannot accept a full path
                                 # hence the path is stored locally
                                 # route_state[0] stores the start point and it gets updated everytime a passing point is achieved
                                 # 0-----*-O-------O--------O-------O------------O
                                 # r[0]    r[1]    r[2]                            for example: it get updated when rover arrive r[1]
                                 #         0--*----O--------O-------O------------O
                                 #         r[0]    r[1]     r[2]
+
+        self.sub = Subscriber(self.nav_callback, self.drive_callback, name='rover_node')
+        self.pub = Publisher(name='rover_node', inited_flag=True)                           # it is a subscriber and publisher combined node
+
+
     
     @staticmethod
     def almost_equal(a, b, error):    # error should be carfully chosed
@@ -66,7 +67,8 @@ class Rover:
         return abs((y1-y2)*x3 + (x2-x1)*y3 + x1*y2 - x2*y1) / sqrt((y1-y2)*(y1-y2) + (x1-x2)*(x1-x2))
 
     def __debug_print(self, str):
-        print(str)  # currently we just output to consol
+        pass
+        #print(str)  # currently we just output to consol
         # if self.remark == '<empty>' : 
         #   self.remark = str
         # else:
@@ -79,7 +81,7 @@ class Rover:
 
     def nav_callback(self, nav_data):
         self.ori = nav_data.heading
-        self.gps_longt = nav_data.cur_lang
+        self.gps_longt = nav_data.cur_long
         self.gps_lati = nav_data.cur_lat
         self.check_route(nav_data.tar_long, nav_data.tar_lat) 
         # check if the target info from rover is consistant with our local path record
@@ -132,16 +134,16 @@ class Rover:
             return
 
     def send_cmd(self, command): # the API that get command object from front end and send it to rover
-        if command & 0b0001:    # if it is a route update command
+        if command.cmd_code & 0b0001:    # if it is a route update command
             self.local_route = command.new_route
             tar_cord = {'lat': command.new_route[1].lati, 'long': command.new_route[1].longt} 
             # new_route[0] is the current gps, new_route[1] is the heading station
             self.pub.set_target_coordinates(tar_cord)
-        if command & 0b0010:    # an arm gesture update command
+        if command.cmd_code & 0b0010:    # an arm gesture update command
             # pub.set_arm_gesture(command.new_arm) 
             # local-rover interface not implemented
             pass
-        if command & 0b0100:    # a speed update command
+        if command.cmd_code & 0b0100:    # a speed update command
             self.pub.set_motor_power(list(range(5)), command.new_speed)
         self.__debug_print("one command sent")
 
