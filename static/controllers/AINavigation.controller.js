@@ -51,9 +51,9 @@
                 .then ((response) => {
                     response =test_response; // TODO: only for testing, delete when backend ready
                     for (index = 0; index < response.data.waypoints.length; index++) { 
-                        $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                        $scope.waypoints.push(fullWaypoint(response.data.waypoints[index], index));
                         console.log($scope.waypoints);
-                        addWaypointToMap($scope.waypoints[index]);
+                        // addWaypointToMap($scope.waypoints[index]);
                     }
 
                     $scope.curr_coord.lat = response.data.curr_coord.lat;
@@ -61,13 +61,21 @@
                 }, (error) => {
                     connectionLost();
                 });
+
+            $window.onload = function() {
+                for (index = 0; index < $scope.waypoints.length; index++) { 
+                    addWaypointToMap($scope.waypoints[index]);
+
+                }
+            }
         }
 
 
-        function fullWaypoint(waypoint) {
+        function fullWaypoint(waypoint, index) {
             position = coordToXY(waypoint.lat, waypoint.long);
             waypoint['x_pos'] = position['x'];
             waypoint['y_pos'] = position['y'];
+            waypoint['index'] = 'point-' + index;
             return waypoint;
         }
 
@@ -103,6 +111,12 @@
 
 
         function addWaypointToMap(waypoint) {
+                pos = ['100px', '234px', '32px'];
+                console.log(pos[parseInt(Math.random() * 3)]);
+                console.log(document.getElementById(waypoint['index']).style);
+                document.getElementById(waypoint['index']).style.position = 'absolute';
+                document.getElementById(waypoint['index']).style.top = waypoint['y_pos'];
+                document.getElementById(waypoint['index']).style.left = waypoint['x_pos'];
         }
 
         //Adds waypoint coordinates to the list
