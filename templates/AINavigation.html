@@ -52,23 +52,24 @@
             <table>
                 <tr>
                     <td>Current Coordinates:</td>
-                    <td>Latitude: &nbsp;&nbsp; Longitude: &nbsp;&nbsp;</td>
+                    <td>{{ '{{curr_coord.lat}}' }}  &nbsp;&nbsp; {{ '{{curr_coord.long}}' }}</td>
                 </tr>
                 <tr>
                     <th>Target coordinates</th>
-                    <th>Distance</th>
+                    <!--<th>Distance</th>-->
+                    <th><input type="button" ng-click="deleteLatestWaypoint()" value="Delete Latest Waypoint"></th>
                 </tr>
 
                 <tr ng-repeat="waypoint in waypoints">
-                    <td>{{ '{{waypoint.lat}}' }} &nbsp;&nbsp; {{ '{{waypoint.long}}' }} &nbsp;&nbsp;</td>
+                    <td> {{ '{{waypoint.lat}}' }} &nbsp;&nbsp; {{ '{{waypoint.long}}' }} &nbsp;&nbsp;</td>
                 </tr>
 
             </table>
         </coord-display>
         <enter-coord>
             <form>
-                <input type="number" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
-                <input type="number" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
+                <input type="text" id="waypointNewLatitude" pattern="^\d*(\.\d*)?$" name="waypointNew" placeholder="Enter New Latitude:"><br>
+                <input type="text" id="waypointNewLongitude" pattern="^\d*(\.\d*)?$" name="waypointNew" placeholder="Enter New Longitude:"><br>
                 <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
             </form>
         </enter-coord>
