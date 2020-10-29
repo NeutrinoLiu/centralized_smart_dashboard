@@ -52,8 +52,8 @@
             $http.get(PATH + '/api/waypoint')
                 .then ((response) => {
                     response =test_response; // TODO: only for testing, delete when backend ready
-                    for (index = 0; index < response.data.waypoints.length; index++) { 
-                        $scope.waypoints.push(fullWaypoint(response.data.waypoints[index], index));
+                    for (index = 0; index < response.data.waypoints.length; index++) {  
+                        $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
                         console.log($scope.waypoints);
                         // addWaypointToMap($scope.waypoints[index]);
                     }
@@ -74,11 +74,11 @@
         }
 
 
-        function fullWaypoint(waypoint, index) {
+        function fullWaypoint(waypoint) {
             position = coordToXY(waypoint.lat, waypoint.long);
             waypoint['x_pos'] = position['x'];
             waypoint['y_pos'] = position['y'];
-            waypoint['index'] = 'point-' + index;
+            waypoint['index'] = 'point-' + $scope.waypoints.length + 1;
             return waypoint;
         }
 
@@ -106,24 +106,16 @@
 
             distanceScale = (11.1/0.1); // number of kilometers in a Latitude
 
-            /*
-            Formula for getting the pixel location of the image. These are absolute values 
-            from the bottom right of the image.
-            */
+            // /*
+            // Formula for getting the pixel location of the image. These are absolute values 
+            // from the bottom right of the image.
+            // */
 
             x_pos = (map_height/(260*distanceScale))*(latitude + 180)*distanceScale
             y_pos = (map_width/(180*distanceScale))*(longitude + 90)*distanceScale
 
-            console.log(latitude);
-            console.log(longitude);
-            
-            console.log(x_pos);
-            console.log(y_pos);
            
-            
-
-            */
-            // -90 to 90, and longitudes range from -180 to 80.
+        
 
             return {'x': x_pos, 'y': y_pos};
         }
@@ -131,11 +123,13 @@
 
         function addWaypointToMap(waypoint) {
                 pos = ['100px', '234px', '32px'];
-                console.log(pos[parseInt(Math.random() * 3)]);
-                console.log(document.getElementById(waypoint['index']).style);
+                top_ = waypoint['y_pos'].toString();
+                top_ = top_ + 'px';
+                left_ = waypoint['x_pos'].toString();
+                left_ = left_ + 'px';
                 document.getElementById(waypoint['index']).style.position = 'absolute';
-                document.getElementById(waypoint['index']).style.top = waypoint['y_pos'];
-                document.getElementById(waypoint['index']).style.left = waypoint['x_pos'];
+                document.getElementById(waypoint['index']).style.top = top_; //toString(waypoint['y_pos']) + 'px';
+                document.getElementById(waypoint['index']).style.left = left_; //toString(waypoint['x_pos']) + 'px';
         }
 
         //Adds waypoint coordinates to the list
