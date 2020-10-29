@@ -15,6 +15,7 @@
         $scope.curr_coord = {'lat': 0, 'long':0};
         $scope.notifications = "none yet";
 
+
         // todo: check correct var for this
         var initial_zoom = {
             x: 391,
@@ -51,7 +52,12 @@
             $http.get(PATH + '/api/waypoint')
                 .then ((response) => {
                     response =test_response; // TODO: only for testing, delete when backend ready
-                    response.data.waypoints.forEach(waypoint => $scope.waypoints.push(waypoint));
+                    for (index = 0; index < response.data.waypoints.length; index++) { 
+                        $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                        console.log($scope.waypoints);
+                        addWaypointToMap($scope.waypoints[index]);
+                    }
+
                     $scope.curr_coord.lat = response.data.curr_coord.lat;
                     $scope.curr_coord.long = response.data.curr_coord.long;
                     $scope.notifications = response.data.notifications;
@@ -61,21 +67,45 @@
         }
 
 
+        function fullWaypoint(waypoint) {
+            position = coordToXY(waypoint.lat, waypoint.long);
+            waypoint['x_pos'] = position['x'];
+            waypoint['y_pos'] = position['y'];
+            return waypoint;
+        }
+
         function coordToXY(latitude, longitude) {
             /*
             Algorithm to change from coord to XY with the pixel scaling factor
             Scaling factor for latitude and longitude was manually calculated from pixel length
             and height of the map.
             TODO: Take the difference from the current Latitude and longitude for the proper coordinates
-            */
-            scalingFactorlat = 0.003
-            scalingFactorlong = 0.01
-            return scalingFactorlat*latitude,scalingFactorlong*long;
+            // */
+
+            map_width = document.getElementById("map").getBoundingClientRect().width;
+            map_height = document.getElementById("map").getBoundingClientRect().height;
+            // map_size_factor = 1000000
+            // lat_long_scale = 1.4444444444444444;
+
+            // lat_scale = 180 / (map_width * map_width * map_width * map_width);
+            // long_scale = 160 / (map_height * map_height * map_height * map_height);
+
+            // latitude = (latitude + 90) * lat_scale;
+            // longitude = (longitude + 180) * long_scale;
+
+            latitude = Math.random() * map_width;
+            longitude = Math.random()* map_height;
+
+            console.log(latitude);
+            console.log(longitude);
+
+            // -90 to 90, and longitudes range from -180 to 80.
+
+            return {'x': latitude, 'y': longitude};
         }
 
 
-        function addWaypointToMap() {
-
+        function addWaypointToMap(waypoint) {
         }
 
         //Adds waypoint coordinates to the list
