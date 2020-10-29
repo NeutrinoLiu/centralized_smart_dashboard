@@ -144,7 +144,7 @@ class Rover:
             if Rover.almost_equal(cur_long, tar_long, error) and Rover.almost_equal(cur_lat, tar_lat, error):   # we arrive the target point
                 self.__debug_print("arrive one station, heading to the next!")
                 self.route_state.pop(0)
-                self.pub.set_target_coordinates({'lat': self.route_state[1].lati, 'long': self.route_state[1].longt})   # let the next node on the route list become the target
+                self.send_cmd(Cmd(new_route=self.route_state[1:]))   # let the next node on the route list become the target
                 return
             else:
                 self.__debug_print("still on the way from start point to target point")

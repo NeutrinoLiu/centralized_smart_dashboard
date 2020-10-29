@@ -2,6 +2,8 @@
 
 import rospy
 import random
+
+from math import sqrt
 from threading import Thread
 
 from centralized_dashboard.msg import NavigationMsg
@@ -35,6 +37,14 @@ class NavData:
         '''
         return random.randrange(0, 360)
 
+    # a simulator of moving the mock rover car
+    def move_forward(self):
+        line_speed = 0.02
+        dist = sqrt((self.tar_lat - self.cur_lat)*(self.tar_lat - self.cur_lat) + (self.tar_long - self.cur_long)*(self.tar_long - self.cur_long))
+        delta_lat = (self.tar_lat - self.cur_lat)/dist * line_speed
+        delta_long = (self.tar_long - self.cur_long)/dist * line_speed
+        self.cur_lat += delta_lat
+        self.cur_long += delta_long
 
     def talker(self):
         ''''
@@ -57,6 +67,7 @@ class NavData:
 
             # Publish pose at f rate
             self.publisher.publish(msg)
+            self.move_forward() #simulator for moving forward
             self.rate.sleep()
 
 
