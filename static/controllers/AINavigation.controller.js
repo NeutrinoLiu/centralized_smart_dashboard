@@ -1,8 +1,9 @@
 (function() {
-    var app = angular.module('AINavigation', []);
-    app.controller('AINavigationController', ['$scope', '$window', '$http', AINavigationController]);
 
-    function AINavigationController($scope, $window, $http) {
+    var app = angular.module('AINavigation', ['panzoom', 'panzoomwidget']);
+    app.controller('AINavigationController', ['$scope', '$window', '$http', 'PanZoomService', AINavigationController]);
+
+    function AINavigationController($scope, $window, $http, PanZoomService) {
         $scope.homepage = homepage;
         $scope.waypointNew = waypointNew;
         $scope.cameraIP = cameraIP;
@@ -11,6 +12,23 @@
         $scope.deleteLatestWaypoint = deleteLatestWaypoint;
 
         $scope.waypoints = []
+
+        // todo: check correct var for this
+        var initial_zoom = {
+            x: 391,
+            y: 371,
+            width: 206,
+            height: 136
+        };
+
+        $scope.panzoomConfig = {
+            zoomLevels: 12,
+            neutralZoomLevel: 5,
+            scalePerZoomLevel: 1.5,
+            initialZoomToFit: initial_zoom
+        };
+
+        $scope.panzoomModel = {};
 
         const PATH = 'http://localhost:5000'
 
@@ -84,16 +102,14 @@
 
         // Removes the last waypoint added to our waypoints 
         function deleteLatestWaypoint() {
-            //test_response {
-
-            //}
-            $http.get(PATH + '/api/waypoint',
-                {
-
+            test_response = {
+                'data': {
+                    'success': true
                 }
-            )
+            }
+            $http.get(PATH + '/api/waypoint')
             .then( (response) => {
-                //response = test_response //TODO: remove after back end is done
+                response = test_response //TODO: remove after back end is done
                 if(response.data.success) {
                     $scope.waypoints.pop();
                 }
