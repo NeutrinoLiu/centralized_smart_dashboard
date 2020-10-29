@@ -1,6 +1,6 @@
 from rover import *
 
-mrRover = Rover("mr.Rover")
+mrRover = Rover("mrRover")
 while True:
     readin = input("read rover status? (y/n)")
     if readin == "n":

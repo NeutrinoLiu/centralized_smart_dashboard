@@ -1,8 +1,13 @@
 ''' 
 standarize the communication between frontend and the local node 
 '''
-from ui_nodes import *
+#from ui_nodes import *
+
 from math import sqrt
+
+import rospy
+from centralized_dashboard.msg import NavigationMsg
+from centralized_dashboard.msg import Drive
 
 class Cmd:      # the object sending from frontend to the local publisher
     def __init__(self,  new_route=[], 
@@ -34,7 +39,7 @@ class GPSPoint:
         return '(' + str(self.lati) + ',' + str(self.longt) + ')'
 
 class Rover:
-    def __init__(self, name):
+    def __init__(self, name, frequency=100):    # frequency is the commmand topic sending freq
         # NOTICE:   those fields are though read_only for outside program but not protected.
         #           make sure you did not overwrite them mistakenly
         self.gps_longt = 0.0
@@ -53,10 +58,15 @@ class Rover:
                                 #         0--*----O--------O-------O------------O
                                 #         r[0]    r[1]     r[2]
 
-        self.sub = Subscriber(self.nav_callback, self.drive_callback, name='rover_node')
-        self.pub = Publisher(name='rover_node', inited_flag=True)                           # it is a subscriber and publisher combined node
-
-
+        #ros init
+        rospy.init_node(name, anonymous=False)
+        #sub
+        rospy.Subscriber('/nav_data', NavigationMsg, self.nav_callback)
+        rospy.Subscriber('/drive_data', Drive, self.drive_callback)
+        #pub
+        self.navi_pub = rospy.Publisher('/set_nav_data', NavigationMsg, queue_size=1)   # it is the topic that we send command to rover 
+        self.driv_pub = rospy.Publisher('/set_drive_data', Drive, queue_size=1)              # so it should have a differnt name
+        self.timer = rospy.Rate(frequency)
     
     @staticmethod
     def almost_equal(a, b, error):    # error should be carfully chosed
@@ -136,15 +146,29 @@ class Rover:
     def send_cmd(self, command): # the API that get command object from front end and send it to rover
         if command.cmd_code & 0b0001:    # if it is a route update command
             self.local_route = command.new_route
-            tar_cord = {'lat': command.new_route[1].lati, 'long': command.new_route[1].longt} 
-            # new_route[0] is the current gps, new_route[1] is the heading station
-            self.pub.set_target_coordinates(tar_cord)
+            # locally update: new_route[0] is the current gps, new_route[1] is the heading station
+
+            # remote update
+            nav_data = NavigationMsg()
+            nav_data.tar_lat = command.new_route[1].lati
+            nav_data.tar_long = command.new_route[1].longt
+            self.navi_pub.publish(nav_data)
+
         if command.cmd_code & 0b0010:    # an arm gesture update command
             # pub.set_arm_gesture(command.new_arm) 
             # local-rover interface not implemented
-            pass
+            pass 
+
         if command.cmd_code & 0b0100:    # a speed update command
-            self.pub.set_motor_power(list(range(5)), command.new_speed)
+            drive_data = Drive()
+            drive_data.wheel0 = command.new_speeds[0]
+            drive_data.wheel1 = command.new_speeds[1]
+            drive_data.wheel2 = command.new_speeds[2]
+            drive_data.wheel3 = command.new_speeds[3]
+            drive_data.wheel4 = command.new_speeds[4]
+            drive_data.wheel5 = command.new_speeds[5]
+            self.driv_pub.publish(drive_data)
+        
         self.__debug_print("one command sent")
 
     def get_notification(self):
