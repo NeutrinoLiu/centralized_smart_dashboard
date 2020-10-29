@@ -84,16 +84,14 @@
 
         // Removes the last waypoint added to our waypoints 
         function deleteLatestWaypoint() {
-            //test_response {
-
-            //}
-            $http.get(PATH + '/api/waypoint',
-                {
-
+            test_response {  //test response delete when backend ready
+                'data': {  //always true
+                    'success': true
                 }
-            )
+            }
+            $http.get(PATH + '/api/waypoint')
             .then( (response) => {
-                //response = test_response //TODO: remove after back end is done
+                response = test_response //TODO: remove after back end is done
                 if(response.data.success) {
                     $scope.waypoints.pop();
                 }
