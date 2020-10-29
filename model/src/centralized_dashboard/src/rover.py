@@ -25,17 +25,20 @@ class Cmd:      # the object sending from frontend to the local publisher
     def __repr__(self):
         return "this cmd aims to " + remark
 
-class PosState:
+class GPSPoint:
     def __init__(self, lati, longt):
         self.lati = lati
         self.longt = longt
+
+    def __repr__(self):
+        return '(' + str(self.lati) + ',' + str(self.longt) + ')'
 
 class Rover:
     def __init__(self, name):
         # NOTICE:   those fields are though read_only for outside program but not protected.
         #           make sure you did not overwrite them mistakenly
         self.gps_longt = 0.0
-        self.gps_latit = 0.0
+        self.gps_lati = 0.0
         self.ori = 0.0
         self.speed = []
         self.arm = []
@@ -77,7 +80,7 @@ class Rover:
     def nav_callback(self, nav_data):
         self.ori = nav_data.heading
         self.gps_longt = nav_data.cur_lang
-        self.gps_latit = nav_data.cur_lat
+        self.gps_lati = nav_data.cur_lat
         self.check_route(nav_data.tar_long, nav_data.tar_lat) 
         # check if the target info from rover is consistant with our local path record
         # and update the route whenever there is an arriving
@@ -99,7 +102,7 @@ class Rover:
         st_long = self.route_state[0].longt
         st_lat = self.route_state[0].lati # start point
         cur_long = self.gps_longt
-        cur_lat = self.gps_latit  # current point
+        cur_lat = self.gps_lati  # current point
 
         if (len(self.route_state) <= 1):
             self.__debug_print("no route available currently")
@@ -107,7 +110,7 @@ class Rover:
 
         if (tar_long != self.route_state[1].longt) or (tar_lat != self.route_state[1].lati):
             self.__debug_warn("target conflict, reset the rover route")
-            self.route_state = [PosState(cur_lat, cur_long), PosState(tar_lat, tar_long)]
+            self.route_state = [GPSPoint(cur_lat, cur_long), GPSPoint(tar_lat, tar_long)]
             return
 
         if      (dist_point2line(cur_long, cur_lat, st_long, st_lat, tar_long, tar_lat) <= error)                   \
