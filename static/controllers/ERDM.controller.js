@@ -33,6 +33,5 @@
 			alert("ESTOP PRESSED! Rover is force restarting.");
 		}
 	}
-	}
 
 	})();
