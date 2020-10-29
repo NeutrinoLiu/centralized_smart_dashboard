@@ -118,7 +118,7 @@ class Rover:
 
     def check_route(self):   # target point, check if the rover is heading the correct direction
         
-        error = 0.01    # gps error seting
+        error = 0.02    # gps error seting
         
         st_long = self.route_state[0].longt
         st_lat = self.route_state[0].lati # start point
