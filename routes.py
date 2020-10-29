@@ -53,7 +53,7 @@ def api_route():
         return json.jsonify({"success": False})
 
 # route for adding a waypoint
-def api_waypoint():
+def api_add_waypoint():
     waypoint = json.loads(request.data.decode())
     lat = float(waypoint.get("lat"))
     long = float(waypoint.get("long"))
@@ -103,7 +103,7 @@ def init_website_routes(app):
         app.add_url_rule('/api/speed', 'api_speed', api_speed, methods=['GET'])
         app.add_url_rule('/api/route', 'api_route', api_route, methods=['POST'])
         app.add_url_rule('/api/gps', 'api_gps', api_gps, methods=['GET'])
-        app.add_url_rule('/api/waypoint', 'api_waypoint', api_waypoint, methods=['POST'])
-        app.add_url_rule('/api/delete_waypoint', 'api_delete_waypoint', api_delete_waypoint, methods=['POST'])
+        app.add_url_rule('/api/add-waypoint', 'api_add_waypoint', api_add_waypoint, methods=['POST'])
+        app.add_url_rule('/api/delete-waypoint', 'api_delete_waypoint', api_delete_waypoint, methods=['POST'])
 
         app.register_error_handler(404, error_handler)
