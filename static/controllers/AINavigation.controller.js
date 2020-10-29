@@ -11,7 +11,8 @@
         $scope.eStopButton = eStopButton;
         $scope.deleteLatestWaypoint = deleteLatestWaypoint;
 
-        $scope.waypoints = []
+        $scope.waypoints = [];
+        $scope.curr_coord = {'lat': 0, 'long':0};
 
         // todo: check correct var for this
         var initial_zoom = {
@@ -40,7 +41,8 @@
             // TODO: sample response, delete when backend ready, points are camprandall and bascom
             test_response = {
                 'data': {
-                    waypoints: [{'lat': 43.069939, 'long': -89.412116}, {'lat': 43.075441, 'long': -89.404075}]
+                    waypoints: [{'lat': 43.069939, 'long': -89.412116}, {'lat': 43.075441, 'long': -89.404075}],
+                    curr_coord: {'lat': 90.3456, 'long': -90.6543}
                 }
             }
 
@@ -48,6 +50,8 @@
                 .then ((response) => {
                     response =test_response; // TODO: only for testing, delete when backend ready
                     response.data.waypoints.forEach(waypoint => $scope.waypoints.push(waypoint));
+                    $scope.curr_coord.lat = response.data.curr_coord.lat;
+                    $scope.curr_coord.long = response.data.curr_coord.long;
                 }, (error) => {
                     connectionLost();
                 });
