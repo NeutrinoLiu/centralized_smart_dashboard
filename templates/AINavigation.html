@@ -7,13 +7,21 @@
     <link rel="stylesheet"
           href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/UIStyleSheet.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='controllers/AINavigation.controller.js') }}"></script>
+    <link rel = "stylesheet" href="{{ url_for('static', filename='css/panzoomwidget.css') }}">
+    <style type="text/css">
+        .pan-zoom-frame {
+            border: 2px solid black;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="http://monospaced.github.io/hamster.js/hamster.js"></script>
+    <script src="https://code.angularjs.org/1.3.13/angular.min.js"></script>
+    <script src="http://monospaced.github.io/angular-mousewheel/mousewheel.js"></script>
 
+    <script type="text/javascript" src="{{ url_for('static', filename='directives/panzoom.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='services/PanZoomService.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='directives/panzoomwidget.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='controllers/AINavigation.controller.js') }}"></script>
 </head>
 <body ng-controller="AINavigationController">
     <div class="topnav">
@@ -22,8 +30,18 @@
     </div>
     
     <div class="ainav">
-        <map > MAP GOES HERE <br><img src="{{ url_for('static', filename='imgs/invalid-access.svg') }}" width="300" height="300"/> </map>
-        <!--Coord-display will be a big table that includes current coord on top, and target coords and distance as two columns below-->
+        <map > MAP <br>
+            <div style="position:relative">
+            <panzoomwidget panzoom-id="PanZoom" style="position:absolute;top:10px;left:10px;z-index:1"></panzoomwidget>
+                <panzoom id="PanZoom" config="panzoomConfig" model="panzoomModel" style="width:100%; height: 550px">
+                    <img src="https://raw.githubusercontent.com/mvindahl/angular-pan-zoom/master/demo/images/shark_attack.jpg" style="position:absolute" />
+                    <svg style="position:absolute" width="100%" height="550px">
+                        some
+                    </svg>
+                </panzoom>
+            </div>
+        </map>
+        <!--Coord-display will be a big table that includes current coord on top, and target coords and distance as two columns below -->
         <coord-display>
             <table>
                 <tr>

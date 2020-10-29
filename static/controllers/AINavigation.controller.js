@@ -1,8 +1,9 @@
 (function() {
-    var app = angular.module('AINavigation', []);
-    app.controller('AINavigationController', ['$scope', '$window', '$http', AINavigationController]);
 
-    function AINavigationController($scope, $window, $http) {
+    var app = angular.module('AINavigation', ['panzoom', 'panzoomwidget']);
+    app.controller('AINavigationController', ['$scope', '$window', '$http', 'PanZoomService', AINavigationController]);
+
+    function AINavigationController($scope, $window, $http, PanZoomService) {
         $scope.homepage = homepage;
         $scope.waypointNew = waypointNew;
         $scope.cameraIP = cameraIP;
@@ -10,6 +11,23 @@
         $scope.eStopButton = eStopButton;
 
         $scope.waypoints = []
+
+        // todo: check correct var for this
+        var initial_zoom = {
+            x: 391,
+            y: 371,
+            width: 206,
+            height: 136
+        };
+
+        $scope.panzoomConfig = {
+            zoomLevels: 12,
+            neutralZoomLevel: 5,
+            scalePerZoomLevel: 1.5,
+            initialZoomToFit: initial_zoom
+        };
+
+        $scope.panzoomModel = {};
 
         const PATH = 'http://localhost:5000'
 
