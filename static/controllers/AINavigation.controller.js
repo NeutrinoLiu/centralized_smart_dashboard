@@ -36,6 +36,18 @@
                 });
         }
 
+
+        function coordToXY(latitude, longitude) {
+            /*
+            Algorithm to change from coord to XY with the pixel scaling factor
+            */
+        }
+
+
+        function addWaypointToMap() {
+
+        }
+
         //Adds waypoint coordinates to the list
         function waypointNew() {
             var latitude = document.getElementById("waypointNewLatitude").value;
@@ -62,6 +74,7 @@
                 )
                 .then( (response) => {
                     response = test_response // TODO: remove after back end is ready
+                    // translate to XY and then amend
                     $scope.waypoints.push({'lat': response.data.lat, 'long': response.data.long});
                 }, (error) => {
                     connectionLost();
