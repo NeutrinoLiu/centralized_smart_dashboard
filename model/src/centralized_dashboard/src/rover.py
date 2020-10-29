@@ -59,6 +59,7 @@ class Rover:
                                 # r[0]    r[1]    r[2]                            for example: it get updated when rover arrive r[1]
                                 #         0--*----O--------O-------O------------O
                                 #         r[0]    r[1]     r[2]
+        self.connected = False
 
         #ros init
         rospy.init_node(name, anonymous=False)
@@ -92,6 +93,7 @@ class Rover:
         # TODO: may need to implement warn buffer in the future
 
     def nav_callback(self, nav_data):
+        self.connected = True
         self.ori = nav_data.heading
         self.gps_longt = nav_data.cur_long
         self.gps_lati = nav_data.cur_lat
@@ -105,6 +107,7 @@ class Rover:
         #self.__debug_print('nav data updated!\n')
     
     def drive_callback(self, drive_data):
+        self.connected = True
         self.speed = [      drive_data.wheel0,
                             drive_data.wheel1,
                             drive_data.wheel2,
@@ -185,6 +188,9 @@ class Rover:
 
     def clear_noti_buffer(self):
         self.remark = '<empty>'
+
+    def clear_connect_flag(self):
+        self.connected = False      #TODO: try to using threading timer to check the connection
 
     def __repr__(self):
         return "this is Rover " + self.name + " !"
