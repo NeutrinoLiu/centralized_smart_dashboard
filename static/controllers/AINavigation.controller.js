@@ -13,6 +13,7 @@
 
         $scope.waypoints = [];
         $scope.curr_coord = {'lat': 0, 'long':0};
+        $scope.notifications = "none yet";
 
         // todo: check correct var for this
         var initial_zoom = {
@@ -42,7 +43,8 @@
             test_response = {
                 'data': {
                     waypoints: [{'lat': 43.069939, 'long': -89.412116}, {'lat': 43.075441, 'long': -89.404075}],
-                    curr_coord: {'lat': 90.3456, 'long': -90.6543}
+                    curr_coord: {'lat': 90.3456, 'long': -90.6543},
+                    notifications: ""
                 }
             }
 
@@ -52,6 +54,7 @@
                     response.data.waypoints.forEach(waypoint => $scope.waypoints.push(waypoint));
                     $scope.curr_coord.lat = response.data.curr_coord.lat;
                     $scope.curr_coord.long = response.data.curr_coord.long;
+                    $scope.notifications = response.data.notifications;
                 }, (error) => {
                     connectionLost();
                 });
@@ -103,6 +106,7 @@
                     response = test_response // TODO: remove after back end is ready
                     // translate to XY and then amend
                     $scope.waypoints.push({'lat': response.data.lat, 'long': response.data.long});
+                    $scope.notifications += "New Waypoint Added" + '\n';
                 }, (error) => {
                     connectionLost();
                 });
@@ -121,6 +125,7 @@
                 response = test_response //TODO: remove after back end is done
                 if(response.data.success) {
                     $scope.waypoints.pop();
+                    $scope.notifications += "Deleted Waypoint" + '\n';
                 }
                 else {
                     connectionLost();
@@ -156,6 +161,7 @@
             alert("ESTOP PRESSED! Rover is force restarting.");
             $http.get(PATH + '/api/emergency-stop')
                 .then ((response) => {
+                    $scope.notifications += "ESTOP PRESSED! Rover is force restarting." + '\n';
                 }, (error) => {
                     connectionLost();
                 });

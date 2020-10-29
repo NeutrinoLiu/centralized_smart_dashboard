@@ -74,7 +74,7 @@
         </form><div></div>
 
         <div id="go-button" ng-click="goButton()">GO</div>
-        <notification-bar><b>Command logs here</b></notification-bar>
+        <notification-bar id="notification-bar"><div id="notices">{{ '{{notifications}}' }}</div></notification-bar>
         <div id="emergency-stop" ng-click="eStopButton()">STOP</div>
     </div>
 </body>
