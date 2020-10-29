@@ -8,6 +8,7 @@
         $scope.cameraIP = cameraIP;
         $scope.goButton = goButton;
         $scope.eStopButton = eStopButton;
+        $scope.deleteLatestWaypoint = deleteLatestWaypoint;
 
         $scope.waypoints = []
 
@@ -33,6 +34,18 @@
                 }, (error) => {
                     connectionLost();
                 });
+        }
+
+
+        function coordToXY(latitude, longitude) {
+            /*
+            Algorithm to change from coord to XY with the pixel scaling factor
+            */
+        }
+
+
+        function addWaypointToMap() {
+
         }
 
         //Adds waypoint coordinates to the list
@@ -61,15 +74,39 @@
                 )
                 .then( (response) => {
                     response = test_response // TODO: remove after back end is ready
-                    $scope.waypoints.push({'lat': response.data.lat, 'long': response.data.long})
+                    // translate to XY and then amend
+                    $scope.waypoints.push({'lat': response.data.lat, 'long': response.data.long});
                 }, (error) => {
                     connectionLost();
                 });
             }
         }
 
+        // Removes the last waypoint added to our waypoints 
+        function deleteLatestWaypoint() {
+            //test_response {
+
+            //}
+            $http.get(PATH + '/api/waypoint',
+                {
+
+                }
+            )
+            .then( (response) => {
+                //response = test_response //TODO: remove after back end is done
+                if(response.data.success) {
+                    $scope.waypoints.pop();
+                }
+                else {
+                    connectionLost();
+                }
+            }, (error) => {
+                connectionLost();
+            });
+        }
+
         //Opens a new window with a live stream of the camera at the IP address sent
-        function cameraIP() {
+        function cameraIP() {  // future iteration item
             alert("A new camera stream IP address has been opened.");
         }
 
@@ -99,7 +136,7 @@
                 });
         }
 
-        function getCameraIP(){
+        function getCameraIP(){  //future iteration item
 
         }
 
