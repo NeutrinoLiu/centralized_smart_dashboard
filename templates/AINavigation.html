@@ -62,8 +62,8 @@
         </coord-display>
         <enter-coord>
             <form>
-                <input type="number" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
-                <input type="number" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
+                <input type="text" id="waypointNewLatitude" pattern="^\d*(\.\d*)?$" name="waypointNew" placeholder="Enter New Latitude:"><br>
+                <input type="text" id="waypointNewLongitude" pattern="^\d*(\.\d*)?$" name="waypointNew" placeholder="Enter New Longitude:"><br>
                 <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
             </form>
         </enter-coord>
