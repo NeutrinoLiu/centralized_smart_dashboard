@@ -18,10 +18,10 @@
 
         // todo: check correct var for this
         var initial_zoom = {
-            x: 391,
-            y: 371,
+            x: 10,
+            y: -84,
             width: 206,
-            height: 136
+            height: 336
         };
 
         $scope.panzoomConfig = {
@@ -43,7 +43,7 @@
             // TODO: sample response, delete when backend ready, points are camprandall and bascom
             test_response = {
                 'data': {
-                    waypoints: [{'lat': 43.069939, 'long': -89.412116}, {'lat': 43.075441, 'long': -89.404075}],
+                    waypoints: [{'lat': 9.958869, 'long': -83.985763}, {'lat': 43.075441, 'long': -89.404075}],
                     curr_coord: {'lat': 90.3456, 'long': -90.6543},
                     notifications: ""
                 }
@@ -82,6 +82,9 @@
             return waypoint;
         }
 
+        function lat2y(lat) { return Math.log(Math.tan((lat / 90 + 1) * PI_4 )) * RAD2DEG; }
+        function lon2x(lon) { return lon; }
+
         function coordToXY(latitude, longitude) {
             /*
             Algorithm to change from coord to XY with the pixel scaling factor
@@ -90,31 +93,17 @@
             TODO: Take the difference from the current Latitude and longitude for the proper coordinates
             // */
 
-            map_width = document.getElementById("map").getBoundingClientRect().width;
-            map_height = document.getElementById("map").getBoundingClientRect().height;
-            // map_size_factor = 1000000
-            // lat_long_scale = 1.4444444444444444;
+            RAD2DEG = 180 / Math.PI;
+            PI_4 = Math.PI / 4;
+            console.log(latitude);
+            console.log(longitude);
+            console.log(lat2y(latitude));
+            console.log(lon2x(longitude));
 
-            // lat_scale = 180 / (map_width * map_width * map_width * map_width);
-            // long_scale = 160 / (map_height * map_height * map_height * map_height);
+            x_pos = lon2x(longitude);
+            y_pos =  lat2y(latitude);
 
-            // latitude = (latitude + 90) * lat_scale;
-            // longitude = (longitude + 180) * long_scale;
 
-            latitude = Math.random() * map_width;
-            longitude = Math.random()* map_height;
-
-            distanceScale = (11.1/0.1); // number of kilometers in a Latitude
-
-            // /*
-            // Formula for getting the pixel location of the image. These are absolute values 
-            // from the bottom right of the image.
-            // */
-
-            x_pos = (map_height/(260*distanceScale))*(latitude + 180)*distanceScale
-            y_pos = (map_width/(180*distanceScale))*(longitude + 90)*distanceScale
-
-           
         
 
             return {'x': x_pos, 'y': y_pos};
@@ -122,7 +111,6 @@
 
 
         function addWaypointToMap(waypoint) {
-                pos = ['100px', '234px', '32px'];
                 top_ = waypoint['y_pos'].toString();
                 top_ = top_ + 'px';
                 left_ = waypoint['x_pos'].toString();
