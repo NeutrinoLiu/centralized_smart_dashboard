@@ -1,7 +1,10 @@
 from flask import render_template, json, abort, request
-from rover import rover, GPSPoint
+from model.src.centralized_dashboard.src.rover import Rover, GPSPoint
 
 GPS_ERROR_VALUE = None
+
+my_rover = Rover("rover1")
+
 # Render templates
 def home():
     return render_template('homepage.html')
@@ -34,8 +37,8 @@ def coming_soon():
 
 # return rover heading and speed
 def api_speed():
-    orientation = rover.ori
-    speed = rover.speed
+    orientation = my_rover.ori
+    speed = my_rover.speed
     return json.jsonify({"success": True, "data": {"orientation": orientation,
                                                    "speed1": speed[0], "speed2": speed[1],
                                                    "speed3": speed[2], "speed4": speed[3],
@@ -43,7 +46,7 @@ def api_speed():
 
 # returns full list of all waypoint on route
 def api_route():
-    route = rover.route_state
+    route = my_rover.route_state
     route_to_send = []
     for point in route:
         route_to_send.append({"lat": point.lati, "long": point.longt})
@@ -57,8 +60,9 @@ def api_add_waypoint():
     waypoint = json.loads(request.data.decode())
     lat = float(waypoint.get("lat"))
     long = float(waypoint.get("long"))
-    rover.route_state.append(GPSPoint(lat, long))
-    return "not sure what you want"
+    new_route = my_rover.route_state.append(GPSPoint(lat, long))
+    my_rover.set_new_route(new_route[1:])
+    return json.jsonify({"success": True})
 
 # route for deleting a waypoint
 def api_delete_waypoint():
@@ -66,17 +70,17 @@ def api_delete_waypoint():
     lat = float(waypoint.get("lat"))
     long = float(waypoint.get("long"))
     success = False
-    for i, point in enumerate(rover.route_state):
+    for i, point in enumerate(my_rover.route_state):
         if point.lati == lat and point.longt == long:
-            rover.route_state.pop()
+            my_rover.route_state.pop()
             success = True
             break
     return json.jsonify({"success": success})
 
 # route for getting the latitude and longitude of the rover
 def api_gps():
-    lat = rover.gps_lati
-    long = rover.gps_longt
+    lat = my_rover.gps_lati
+    long = my_rover.gps_longt
     # get in format specified by server
     if lat != GPS_ERROR_VALUE and long != GPS_ERROR_VALUE:
         return json.jsonify({"success": True, "data": {"lat": lat, "long": long}})
@@ -103,7 +107,7 @@ def init_website_routes(app):
         app.add_url_rule('/api/speed', 'api_speed', api_speed, methods=['GET'])
         app.add_url_rule('/api/route', 'api_route', api_route, methods=['POST'])
         app.add_url_rule('/api/gps', 'api_gps', api_gps, methods=['GET'])
-        app.add_url_rule('/api/add-waypoint', 'api_add_waypoint', api_add_waypoint, methods=['POST'])
-        app.add_url_rule('/api/delete-waypoint', 'api_delete_waypoint', api_delete_waypoint, methods=['POST'])
+        app.add_url_rule('/api/waypoint', 'api_add_waypoint', api_add_waypoint, methods=['POST'])
+        app.add_url_rule('/api/waypoint', 'api_delete_waypoint', api_delete_waypoint, methods=['GET'])
 
         app.register_error_handler(404, error_handler)
