@@ -81,6 +81,12 @@ def api_delete_waypoint():
             break
     return json.jsonify({"success": success})
 
+
+def api_get_route():
+    return json.jsonify({"waypoints": [{'lat': 9.958869, 'long': -83.985763},
+                                       {'lat': 43.075441, 'long': -89.404075}],
+                         "curr_coord": {'lat': 90.3456, 'long': -90.6543}, "notifications": ""})
+
 # route for getting the latitude and longitude of the rover
 def api_gps():
     lat = my_rover.gps_lati
@@ -111,7 +117,7 @@ def init_website_routes(app):
         app.add_url_rule('/api/route', 'api_route', api_route, methods=['POST'])
         app.add_url_rule('/api/gps', 'api_gps', api_gps, methods=['GET'])
         app.add_url_rule('/api/waypoint', 'api_add_waypoint', api_add_waypoint, methods=['POST'])
-        app.add_url_rule('/api/waypoint', 'api_delete_waypoint', api_delete_waypoint, methods=['GET'])
+        app.add_url_rule('/api/waypoint', 'api_get_route', api_get_route, methods=['GET'])
 
 
         app.register_error_handler(404, error_handler)
