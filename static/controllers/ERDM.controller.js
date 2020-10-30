@@ -92,7 +92,7 @@
             var latitude = document.getElementById("waypointNewLatitude").value;
             var longitude = document.getElementById("waypointNewLongitude").value;
 
-            var invalidInput = !(latitude || longitude) || latitude < -180 || latitude > 180 
+            var invalidInput = (latitude == ""|| longitude == "") || latitude < -180 || latitude > 180 
                 || longitude < -180 || longitude > 180;
             if (invalidInput) {
                 alert("Invalid coordinates for new waypoint");

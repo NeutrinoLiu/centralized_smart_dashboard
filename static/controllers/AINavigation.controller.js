@@ -113,9 +113,9 @@
         function waypointNew() {
             var latitude = document.getElementById("waypointNewLatitude").value;
             var longitude = document.getElementById("waypointNewLongitude").value;
-
-            var invalidInput = !(latitude || longitude) || latitude < -180 || latitude > 180 
+            var invalidInput = (latitude == "" || longitude == "") || latitude < -180 || latitude > 180 
                 || longitude < -180 || longitude > 180;
+
             if (invalidInput) {
                 alert("Invalid coordinates for new waypoint");
             } else {
@@ -173,18 +173,22 @@
 
         //Sends the first target waypoint in the list to the rover
         function goButton() {
-            alert("GO Command Sent! The rover is moving to the top waypoint.");
-            // todo: POST to fo button endpoint
-            $http.get(PATH + '/api/go-button')
-                .then ((response) => {
-                    if ( response.data.success) {
-                        // todo: change colors of waypoints, or something in map
-                    } else {
+            if ($scope.waypoints.length != 0) {
+                alert("GO Command Sent! The rover is moving to the top waypoint.");
+                // todo: POST to fo button endpoint
+                $http.get(PATH + '/api/go-button')
+                    .then ((response) => {
+                        if ( response.data.success) {
+                            // todo: change colors of waypoints, or something in map
+                        } else {
+                            connectionLost();
+                        }
+                    }, (error) => {
                         connectionLost();
-                    }
-                }, (error) => {
-                    connectionLost();
-                });
+                    });
+            } else {
+                alert("No waypoint added. Set a waypoint first");
+            }
         }
 
         //Sends a force restart command to the rover

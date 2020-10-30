@@ -61,11 +61,15 @@ def api_route():
 
 # route for adding a waypoint
 def api_add_waypoint():
-    waypoint = json.loads(request.data.decode())
-    lat = float(waypoint.get("lat"))
-    long = float(waypoint.get("long"))
-    new_route = my_rover.route_state.append(GPSPoint(lat, long))
-    my_rover.set_new_route(new_route[1:])
+    # waypoint = json.loads(request.data.decode())
+    # lat = float(waypoint.get("lat"))
+    # long = float(waypoint.get("long"))
+    # new_route = my_rover.route_state.append(GPSPoint(lat, long))
+    # my_rover.set_new_route(new_route[1:])
+    return json.jsonify({"success": True})
+
+def api_go_button():
+    # TODO: implement in iteration 2
     return json.jsonify({"success": True})
 
 # route for deleting a waypoint
@@ -118,6 +122,7 @@ def init_website_routes(app):
         app.add_url_rule('/api/gps', 'api_gps', api_gps, methods=['GET'])
         app.add_url_rule('/api/waypoint', 'api_add_waypoint', api_add_waypoint, methods=['POST'])
         app.add_url_rule('/api/waypoint', 'api_get_route', api_get_route, methods=['GET'])
+        app.add_url_rule('/api/go-button', 'api_go_button', api_go_button, methods=['GET'])
 
 
         app.register_error_handler(404, error_handler)
