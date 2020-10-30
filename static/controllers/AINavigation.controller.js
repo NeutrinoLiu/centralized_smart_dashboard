@@ -20,8 +20,8 @@
         var initial_zoom = {
             x: 10,
             y: -84,
-            width: 206,
-            height: 336
+            width: 250,
+            height: 350
         };
 
         $scope.panzoomConfig = {
@@ -54,8 +54,6 @@
                     response =test_response; // TODO: only for testing, delete when backend ready
                     for (index = 0; index < response.data.waypoints.length; index++) {  
                         $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
-                        console.log($scope.waypoints);
-                        // addWaypointToMap($scope.waypoints[index]);
                     }
 
                     $scope.curr_coord.lat = response.data.curr_coord.lat;
@@ -116,8 +114,8 @@
                 left_ = waypoint['x_pos'].toString();
                 left_ = left_ + 'px';
                 document.getElementById(waypoint['index']).style.position = 'absolute';
-                document.getElementById(waypoint['index']).style.top = top_; //toString(waypoint['y_pos']) + 'px';
-                document.getElementById(waypoint['index']).style.left = left_; //toString(waypoint['x_pos']) + 'px';
+                document.getElementById(waypoint['index']).style.top = top_;
+                document.getElementById(waypoint['index']).style.left = left_;
         }
 
         //Adds waypoint coordinates to the list

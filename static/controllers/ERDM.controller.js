@@ -1,9 +1,9 @@
 (function() {
 
-	var app = angular.module('ERDM', ['panzoom', 'panzoomwidget']));
+	var app = angular.module('ERDM', ['panzoom', 'panzoomwidget']);
 	app.controller('ERDMController', ['$scope', '$window', '$http', 'PanZoomService', ERDMController]);
 
-	function ERDMController($scope, $window) {
+	function ERDMController($scope, $window, $http) {
 		$scope.homepage = homepage;
 		$scope.waypointNew = waypointNew;
 		$scope.cameraIP = cameraIP;
@@ -15,10 +15,10 @@
 
         // todo: check correct var for this
         var initial_zoom = {
-            x: 391,
-            y: 371,
-            width: 206,
-            height: 136
+            x: 45,
+            y: -85,
+            width: 250,
+            height: 350
         };
 
         $scope.panzoomConfig = {
@@ -54,6 +54,13 @@
                 }, (error) => {
                     connectionLost();
                 });
+
+            $window.onload = function() {
+                for (index = 0; index < $scope.waypoints.length; index++) { 
+                    addWaypointToMap($scope.waypoints[index]);
+
+                }
+            }
         }
 
 
@@ -71,7 +78,13 @@
 
 
         function addWaypointToMap() {
-
+            top_ = waypoint['y_pos'].toString();
+            top_ = top_ + 'px';
+            left_ = waypoint['x_pos'].toString();
+            left_ = left_ + 'px';
+            document.getElementById(waypoint['index']).style.position = 'absolute';
+            document.getElementById(waypoint['index']).style.top = top_;
+            document.getElementById(waypoint['index']).style.left = left_;
         }
 
         //Adds waypoint coordinates to the list
