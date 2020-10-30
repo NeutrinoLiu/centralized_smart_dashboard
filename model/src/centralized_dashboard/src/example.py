@@ -1,10 +1,15 @@
 from rover import *
 
 mrRover = Rover("mrRover")
+
 while True:
-    readin = input("read rover status? (y/n)")
+    readin = input("read rover status? (y/n, or flow for a continous gps display)")
     if readin == "n":
         break
+    if readin == "flow":
+        while not input(""):
+            print("mrRover is at (%f,%f) , it is heading to (%f,%f)" %(mrRover.gps_lati, mrRover.gps_longt, mrRover.buffer_lati, mrRover.buffer_longt))
+
     #get the rover status
     print("mrRover is at (%f,%f) , it is heading to (%f,%f)" %(mrRover.gps_lati, mrRover.gps_longt, mrRover.buffer_lati, mrRover.buffer_longt))
     print("current route is:", mrRover.route_state)
@@ -24,7 +29,7 @@ while True:
     if readin == "y":
         route = []
         readin = input("type in new routes (in the format of \'(x1, y1),(x2,y2)\'): ")
-        raw_point = readin.split('),')
+        raw_point = readin.replace(" ","").split('),')
         for point in raw_point:
             cord = list(point.split(','))
             lati = cord[0].replace("(", "").replace(")", "")
@@ -32,7 +37,7 @@ while True:
             route.append(GPSPoint(float(lati), float(longt)))
         print('we have new targets:' + route.__repr__())
         #set new route
-        mrRover.send_cmd(Cmd(new_route = route))
+        mrRover.send_cmd(Cmd(new_route = route)) 
 
 
 

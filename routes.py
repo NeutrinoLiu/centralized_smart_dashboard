@@ -1,6 +1,7 @@
 from flask import render_template, json, abort, request
 from model.src.centralized_dashboard.src.rover import Rover, GPSPoint
 
+
 GPS_ERROR_VALUE = None
 
 my_rover = Rover("rover1")
@@ -28,6 +29,7 @@ def maintenance():
 
 def science():
     return render_template("Science.html")
+
 
 
 def coming_soon():
@@ -102,6 +104,7 @@ def init_website_routes(app):
         app.add_url_rule('/erdm', 'erdm', erdm, methods=['GET'])
         app.add_url_rule('/maintenance', 'maintenance',  maintenance, methods=['GET'])
         app.add_url_rule('/science', 'science', science, methods=['GET'])
+
         app.add_url_rule('/coming-soon', 'coming-soon', coming_soon, methods=['GET'])
 
         app.add_url_rule('/api/speed', 'api_speed', api_speed, methods=['GET'])
@@ -109,5 +112,6 @@ def init_website_routes(app):
         app.add_url_rule('/api/gps', 'api_gps', api_gps, methods=['GET'])
         app.add_url_rule('/api/waypoint', 'api_add_waypoint', api_add_waypoint, methods=['POST'])
         app.add_url_rule('/api/waypoint', 'api_delete_waypoint', api_delete_waypoint, methods=['GET'])
+
 
         app.register_error_handler(404, error_handler)
