@@ -93,20 +93,11 @@
 
             RAD2DEG = 180 / Math.PI;
             PI_4 = Math.PI / 4;
-            console.log(latitude);
-            console.log(longitude);
-            console.log(lat2y(latitude));
-            console.log(lon2x(longitude));
-
             x_pos = lon2x(longitude);
             y_pos =  lat2y(latitude);
 
-
-        
-
             return {'x': x_pos, 'y': y_pos};
         }
-
 
         function addWaypointToMap(waypoint) {
                 top_ = waypoint['y_pos'].toString();
