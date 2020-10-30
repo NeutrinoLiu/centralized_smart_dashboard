@@ -30,8 +30,7 @@ def coming_soon():
 
 # TODO: might be useful to add server-side error handlers
 def error_handler(error):
-    return render_template('invalid-page.html')
-
+    return render_template('ComingSoon.html')
 
 def init_website_routes(app):
     if app:
@@ -43,5 +42,4 @@ def init_website_routes(app):
         app.add_url_rule('/maintenance', 'maintenance',  maintenance, methods=['GET'])
         app.add_url_rule('/science', 'science', science, methods=['GET'])
         app.add_url_rule('/coming-soon', 'coming_soon', coming_soon, methods=['GET'])
-
         app.register_error_handler(404, error_handler)

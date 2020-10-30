@@ -1,5 +1,6 @@
 # Set the base image to Ubuntu
 FROM ubuntu:latest
+FROM ros:noetic
 
 ENV TZ=Americas/Chicago
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -15,7 +16,8 @@ RUN apt-get update && \
     git \
     wget \
     cmake \
-    python-dev
+    python-dev \
+    ros-noetic-desktop-full
 
 COPY requirements.txt /root/
 
