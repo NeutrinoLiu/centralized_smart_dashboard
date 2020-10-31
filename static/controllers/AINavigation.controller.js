@@ -138,6 +138,7 @@
                     // translate to XY and then amend
                     $scope.waypoints.push({'lat': response.data.lat, 'long': response.data.long});
                     $scope.notifications += "New Waypoint Added" + '\n';
+                    addWaypointToMap(fullWaypoint(response.data));
                 }, (error) => {
                     connectionLost();
                 });
@@ -180,6 +181,8 @@
                     .then ((response) => {
                         if ( response.data.success) {
                             // todo: change colors of waypoints, or something in map
+                            $scope.notifications += "GO button pressed! Rover is moving." + '\n';
+
                         } else {
                             connectionLost();
                         }

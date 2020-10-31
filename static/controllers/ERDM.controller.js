@@ -13,10 +13,13 @@
         $scope.waypoints = [];
         $scope.curr_coord = {'lat': 0, 'long':0};
 
+        $scope.notifications = "none yet";
+
+
         // todo: check correct var for this
         var initial_zoom = {
-            x: 45,
-            y: -85,
+            x: 10,
+            y: -84,
             width: 250,
             height: 350
         };
@@ -40,29 +43,44 @@
             // TODO: sample response, delete when backend ready, points are camprandall and bascom
             test_response = {
                 'data': {
-                    waypoints: [{'lat': 43.069939, 'long': -89.412116}, {'lat': 43.075441, 'long': -89.404075}],
-                    curr_coord: {'lat': 90.3456, 'long': -90.6543}
+                    waypoints: [{'lat': 9.958869, 'long': -83.985763}, {'lat': 43.075441, 'long': -89.404075}],
+                    curr_coord: {'lat': 90.3456, 'long': -90.6543},
+                    notifications: ""
                 }
             }
 
             $http.get(PATH + '/api/waypoint')
                 .then ((response) => {
                     response =test_response; // TODO: only for testing, delete when backend ready
-                    response.data.waypoints.forEach(waypoint => $scope.waypoints.push(waypoint));
+                    for (index = 0; index < response.data.waypoints.length; index++) {  
+                        $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                    }
+
                     $scope.curr_coord.lat = response.data.curr_coord.lat;
                     $scope.curr_coord.long = response.data.curr_coord.long;
+                    $scope.notifications = response.data.notifications;
                 }, (error) => {
                     connectionLost();
                 });
 
             $window.onload = function() {
                 for (index = 0; index < $scope.waypoints.length; index++) { 
+                    console.log($scope.waypoints[index]);
                     addWaypointToMap($scope.waypoints[index]);
-
                 }
             }
         }
 
+        function lat2y(lat) { return Math.log(Math.tan((lat / 90 + 1) * PI_4 )) * RAD2DEG; }
+        function lon2x(lon) { return lon; }
+        
+        function fullWaypoint(waypoint) {
+            position = coordToXY(waypoint.lat, waypoint.long);
+            waypoint['x_pos'] = position['x'];
+            waypoint['y_pos'] = position['y'];
+            waypoint['index'] = 'point-' + $scope.waypoints.length + 1;
+            return waypoint;
+        }
 
         function coordToXY(latitude, longitude) {
             /*
@@ -71,13 +89,16 @@
             and height of the map.
             TODO: Take the difference from the current Latitude and longitude for the proper coordinates
             */
-            scalingFactorlat = 0.003
-            scalingFactorlong = 0.01
-            return scalingFactorlat*latitude,scalingFactorlong*long;
+            RAD2DEG = 180 / Math.PI;
+            PI_4 = Math.PI / 4;
+            x_pos = lon2x(longitude);
+            y_pos =  lat2y(latitude);
+
+            return {'x': x_pos, 'y': y_pos};
         }
 
 
-        function addWaypointToMap() {
+        function addWaypointToMap(waypoint) {
             top_ = waypoint['y_pos'].toString();
             top_ = top_ + 'px';
             left_ = waypoint['x_pos'].toString();
@@ -115,6 +136,9 @@
                     response = test_response // TODO: remove after back end is ready
                     // translate to XY and then amend
                     $scope.waypoints.push({'lat': response.data.lat, 'long': response.data.long});
+                    $scope.notifications += "New Waypoint Added" + '\n';
+                    addWaypointToMap(fullWaypoint(response.data));
+                    console.log("adding waypoint");
                 }, (error) => {
                     connectionLost();
                 });
@@ -133,6 +157,7 @@
                 response = test_response //TODO: remove after back end is done
                 if(response.data.success) {
                     $scope.waypoints.pop();
+                    $scope.notifications += "Deleted Waypoint" + '\n';
                 }
                 else {
                     connectionLost();
@@ -152,6 +177,7 @@
             alert("ESTOP PRESSED! Rover is force restarting.");
             $http.get(PATH + '/api/emergency-stop')
                 .then ((response) => {
+                    $scope.notifications += "ESTOP PRESSED! Rover is force restarting." + '\n';
                 }, (error) => {
                     connectionLost();
                 });
