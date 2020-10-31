@@ -3,6 +3,7 @@
 .gitconfig
 .ros/*
 .vs/*
+.bash_history
 __pycache__/
 static/.DS_Store
 model/build/*
