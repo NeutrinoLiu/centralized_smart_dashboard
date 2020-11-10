@@ -7,3 +7,19 @@ test('test ai-nav called', () => {
 	homepageFunctions.homepageController.aiNav = mockFunc;
 	expect(mockFunc).toHaveBeenCalled()
 })
+
+test('test equipment servicing called', () => {
+
+})
+
+test('test Science called', () => {
+
+})
+
+test('test ERDM called', () => {
+
+})
+
+test('test Maintenance called', () => {
+
+})
