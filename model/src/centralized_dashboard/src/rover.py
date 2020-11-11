@@ -160,11 +160,7 @@ class Rover:
 
     def send_cmd(self, command): # the API that get command object from front end and send it to rover
         if command.cmd_code & 0b0001:    # if it is a route update command
-            self.route_state = [self.route_state[0]] + command.new_route                # locally update: new_route[0] is the current gps, new_route[1] is the heading station
-            nav_data = NavigationMsg()
-            nav_data.tar_lat = command.new_route[0].lati
-            nav_data.tar_long = command.new_route[0].longt
-            self.navi_pub.publish(nav_data)                     # remote update
+            self.set_new_route(command.new_route)                    # remote update
 
         if command.cmd_code & 0b0010:    # an arm gesture update command
             # pub.set_arm_gesture(command.new_arm) 
@@ -172,14 +168,7 @@ class Rover:
             pass 
 
         if command.cmd_code & 0b0100:    # a speed update command
-            drive_data = Drive()
-            drive_data.wheel0 = command.new_speed[0]
-            drive_data.wheel1 = command.new_speed[1]
-            drive_data.wheel2 = command.new_speed[2]
-            drive_data.wheel3 = command.new_speed[3]
-            drive_data.wheel4 = command.new_speed[4]
-            drive_data.wheel5 = command.new_speed[5]
-            self.driv_pub.publish(drive_data)
+            self.set_new_speed(command.new_speed)
         
         self.__debug_print("one command sent") 
     
