@@ -181,11 +181,11 @@ class Rover:
             self.set_new_speed(command.new_speed)
         
         self.__debug_print("one command sent") 
-    
+'''    
     def set_new_route(self, new_route): # new_route should be a list of GPSPoint
         self.route_state = [self.route_state[0]] + new_route # the start point(current pos) is reserved 
         self.set_new_target(new_route[0])
-
+'''
     def set_new_target(self, new_target):
         nav_data = NavigationMsg()
         nav_data.tar_lat = new_target.lati
