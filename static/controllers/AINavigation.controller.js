@@ -15,8 +15,7 @@
         $scope.curr_coord = {'lat': 0, 'long':0};
         $scope.notifications = "none yet";
 
-
-        // todo: check correct var for this
+        // todo: add a zoomtofit after each addition
         var initial_zoom = {
             x: -41.26540000000034,
             y: -6.979799999999869,
