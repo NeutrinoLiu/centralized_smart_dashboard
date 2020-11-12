@@ -16,3 +16,5 @@ model/build/*
 model/devel/*
 model/install/*
 model/.catkin_workspace
+node_modules/
+package-lock.json
