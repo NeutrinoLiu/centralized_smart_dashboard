@@ -58,17 +58,18 @@ describe('testing init function', () => {
 	});
 });
 
-describe('Testing fullWaypoint', () => {  // coordToXY is tied into this function
+describe('Testing fullWaypoint', () => {  // coordToXY is tied into this function.  Output for these tests may be wrong due to not understanding coordToXY
+	// TODO Make a mock waypoints array to test with
 	test('test full waypoint returns expected value', () => {  // TODO
 		const input = ({'lat': 85, 'long': 47});
-		const output = ({'lat': 85, 'long': 47, 'x_pos': 5, 'y_pos': 7, 'index': blah});  // TODO:  Fix this and mock the index
+		const output = ({'lat': 85, 'long': 47, 'x_pos': 0, 'y_pos': 0, 'index': blah});  // TODO:  Fix this and mock the index
 
 		expect(fullWaypoint(input)).toEqual(output);
 	});
 
 	test('test full waypoint with negative numbers', () => {  // TODO
 		const input = ({'lat': -85.4132, 'long': -47.2151});
-		const output = ();
+		const output = ({'lat': -85.4132, 'long': -47.2151, 'x_pos': 21.51, 'y_pos': 41.32, 'index': blah});
 
 		expect(fullWaypoint(input)).toEqual(output);
 	});
@@ -82,21 +83,21 @@ describe('Testing fullWaypoint', () => {  // coordToXY is tied into this functio
 
 	test('test full waypoint with large numbers', () => {  // TODO
 		const input = ({'lat': 135278129, 'long': 143187123});
-		const output = ();
+		const output = ({'lat': 135278129, 'long': 143187123, 'x_pos': 0, 'y_pos': 0, 'index': blah});
 
 		expect(fullWaypoint(input)).toEqual(output);
 	});
 
 	test('test full waypoint with very small positive numbers', () => {  // TODO
 		const input = ({'lat': 0.000201313131, 'long': 0.00001312512});
-		const output = ();
+		const output = ({'lat': 0.000201313131, 'long': 0.00001312512, 'x_pos': 0.0001312512, 'y_pos': 0.00201313131, 'index': blah});
 
 		expect(fullWaypoint(input)).toEqual(output);
 	});
 
 	test('test full waypoint with very negative numbers', () => {  // TODO
-		const input = ({'lat': 85, 'long': 47}):
-		const output = ();
+		const input = ({'lat': -854142, 'long': -478787}):
+		const output = ({'lat': -854142, 'long': -478787, 'x_pos': 0, 'y_pos': 0, 'index': blah});
 
 		expect(fullWaypoint(input)).toEqual(output);
 	})
@@ -114,11 +115,11 @@ describe('testing GO button', () => {
 	});
 });
 
-describe('Testing coordToXY', () => {
+describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected output for these may be wrong
 	test('test with regular input', () => {
 		const lat = 53.687;
 		const long = 37.993;
-		const output = ({'x_pos': x_pos, 'y_pos': y_pos});
+		const output = ({'x_pos': 68.7, 'y_pos': 99.3});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
@@ -126,15 +127,15 @@ describe('Testing coordToXY', () => {
 	test('test with null input', () => {
 		const lat = null;
 		const long = null;
-		const output = ({'x_pos': x_pos, 'y_pos': y_pos});
+		const output = ({'x_pos': null, 'y_pos': null});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
 
 	test('test with negative input', () => {
-		const lat = -72;
-		const long = -89;
-		const output = ({'x_pos': x_pos, 'y_pos': y_pos});
+		const lat = -72.12;
+		const long = -89.23;
+		const output = ({'x_pos': 12, 'y_pos': 23});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
@@ -142,15 +143,15 @@ describe('Testing coordToXY', () => {
 	test('test with very large input', () => {
 		const lat = 757124;
 		const long = 999138;
-		const output = ({'x_pos': x_pos, 'y_pos': y_pos});
+		const output = ({'x_pos': 0, 'y_pos': 0});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
 
 	test('test with very small positive input', () => {
-		const lat = 0.0000001230;
+		const lat = 0.000000123;
 		const long = 0.000000516;
-		const output = ({'x_pos': x_pos, 'y_pos': y_pos});
+		const output = ({'x_pos': 0.00000123, 'y_pos': 0.00000516});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
@@ -158,7 +159,7 @@ describe('Testing coordToXY', () => {
 	test('test with same input', () => {
 		const lat = 55;
 		const long = 55;
-		const output = ({'x_pos': x_pos, 'y_pos': y_pos});
+		const output = ({'x_pos': 0, 'y_pos': 0});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
@@ -235,20 +236,27 @@ describe('Testing waypointNew', () => {
 	});
 });
 
-describe('Testing deleteLatestWaypoint', () => {
+describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoint functionality
+	// TODO:  Make a mock of the waypoints array to test with
 	test('test with normal waypoint', () => {
-
+		expect(deleteLatestWaypoint()).toHaveReturnedWith(0);
 	});
 
 	test('test with no waypoints', () => {
-
+		expect(deleteLatestWaypoint()).toHaveReturnedWith(0);
 	});
 
-	test('test delete then add then delete waypoint', () => {
-
+	test('test delete then add then delete waypoint', () => {  // calls deleteLatestWaypoint twice and adds a waypoint between the calls
+		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(1, 0);  // should return 0 each time
+		
+		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(2, 0);  // should return 0 each time
 	});
 
-	test('test with many waypoints', () => {
-
+	test('test with many waypoints', () => {  // calls many times in a row with many waypoints in array
+		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(1, 0);  // should return 0 each time
+		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(2, 0);  // should return 0 each time
+		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(3, 0);  // should return 0 each time
+		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(4, 0);  // should return 0 each time
+		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(5, 0);  // should return 0 each time
 	});
 });

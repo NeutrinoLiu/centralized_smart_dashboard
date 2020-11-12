@@ -174,7 +174,7 @@
             }
         }
 
-        // Removes the last waypoint added to our waypoints 
+        // Removes the last waypoint added to our waypoints.  Returns 0 on success -1 on fail
         function deleteLatestWaypoint() {
             test_response = {
                 'data': {
@@ -187,12 +187,15 @@
                 if(response.data.success) {
                     $scope.waypoints.pop();
                     $scope.notifications += "Deleted Waypoint" + '\n';
+                    return 0
                 }
                 else {
                     connectionLost();
+                    return -1
                 }
             }, (error) => {
                 connectionLost();
+                return -1
             });
         }
 
