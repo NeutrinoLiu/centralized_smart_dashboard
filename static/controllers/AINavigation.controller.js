@@ -143,7 +143,7 @@
                     } 
                     ).then((response) => {
                         $scope.waypoints = response.data.waypoints;
-                        $scope.notifications += "New Waypoint Added" + '\n'; // todo: add this through a http call
+                        addNotification("New Waypoint Added");
                         addWaypointToMap($scope.waypoints[$scope.waypoints.length - 1]);
                     }, (error) => {
                         connectionLost();
@@ -160,7 +160,7 @@
                 } 
                 ).then((response) => {
                     $scope.waypoints = response.data.waypoints;
-                    $scope.notifications += "Deleted Waypoint" + '\n'; // todo: add this through a http call
+                    addNotification("Deleted Waypoint");
                     addWaypointToMap($scope.waypoints[$scope.waypoints.length - 1]);
                 }, (error) => {
                     connectionLost();
@@ -170,6 +170,17 @@
         //Opens a new window with a live stream of the camera at the IP address sent
         function cameraIP() {  // future iteration item
             alert("A new camera stream IP address has been opened.");
+        }
+
+        function addNotification(newNotification) {
+            $scope.notifications += (newNotification + '\n');
+            $http.post(PATH + '/api/notifications', {
+                'notifications': $scope.notifications
+            }).then((response) => {
+                $scope.notifications = response.data.notifications;
+            }, (error) => {
+                connectionLost();
+            })
         }
 
         //Sends the first target waypoint in the list to the rover
@@ -182,8 +193,7 @@
                         if ( response.data.success) {
                             // TODO: change colors of waypoints, or something in map
                             // TODO: add notigiation through http call 
-                            $scope.notifications += "GO button pressed! Rover is moving." + '\n';
-
+                            addNotification("GO button pressed! Rover is moving.");
                         } else {
                             connectionLost();
                         }
@@ -202,7 +212,7 @@
                 .then ((response) => {
                     if (response.data.success) {
                         // TODO: add notigiation through http call 
-                        $scope.notifications += "ESTOP PRESSED! Rover is force restarting." + '\n';
+                        addNotification("ESTOP PRESSED! Rover is force restarting.");
                     } else {
                         connectionLost();
                     }
