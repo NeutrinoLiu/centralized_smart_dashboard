@@ -159,7 +159,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 	test('test with same input', () => {
 		const lat = 55;
 		const long = 55;
-		const output = ({'x_pos': 0, 'y_pos': 0});
+		const output = ({'x_pos': 55, 'y_pos': 55});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
