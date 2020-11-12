@@ -39,8 +39,13 @@
         }
 
         function init() {
+            // TODO: delete test responses after testing is done
+            test_response_route = {'data': {'waypoints': [{'lat': 43.076163, 'long': -89.400227}, {'lat': 43.069798, 'long': -89.412654}]}};
+            test_response_gps = {'data': {'lat': 90.3456, 'long': -90.6543}};
+            test_response_notifications = {'data': {'notifications': "New waypoint \nWaypoint removed \n"}};
             $http.get(PATH + '/api/route')
                 .then((response) => {
+                    response = test_response_route
                     for (index = 0; index < response.data.waypoints.length; index++) {  
                         $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
                     }
@@ -50,6 +55,7 @@
 
             $http.get(PATH + '/api/gps')
                 .then((response) => {
+                    response = test_response_gps;
                     $scope.curr_coord.lat = response.data.lat;
                     $scope.curr_coord.long = response.data.long;
                 }, (error) => {
@@ -58,6 +64,7 @@
 
             $http.get(PATH + '/api/notifications')
                 .then((response) => {
+                    response = test_response_notifications;
                     $scope.notifications = response.data.notifications;
                 }, (error) => {
                     connectionLost();
