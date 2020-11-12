@@ -81,15 +81,79 @@ describe('Testing coordToXY', () => {
 })
 
 describe('Testing addWaypointToMap', () => {
+	test('test null waypoint', () => {
 
+	})
+
+	test('test normal waypoint', () => {
+
+	})
+
+	test('test many waypoints', () => {
+
+	})
+
+	test('test very large waypoint', () => {
+
+	})
+
+	test('test improper waypoint', () => {
+
+	})
+
+	test('test many same waypoints', () => {
+
+	})
+
+	test('test many close waypoints', () => {
+
+	})
+
+	test('test many distant waypoints', () => {
+
+	})
 })
 
 describe('Testing waypointNew', () => {
+	test('test with invalid input', () => {
 
+	})
+
+	test('test with valid input', () => {
+
+	})
+
+	test('test with valid input, then invalid input, then valid input', () => {
+
+	})
+
+	test('test with slightly invalid input', () => {
+
+	})
+
+	test('test with very small input', () => {
+
+	})
+
+	test('test with very large input', () => {
+
+	})
 })
 
-describe('Testing deleteWaypoint', () => {
+describe('Testing deleteLatestWaypoint', () => {
 	test('test with normal waypoint', () => {
+
+	})
+
+	test('test with no waypoints', () => {
+
+	})
+
+	test('test delete then add then delete waypoint', () => {
+
+	})
+
+	test('test with many waypoints', () => {
 
 	})
 })

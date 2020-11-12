@@ -56,7 +56,7 @@ class Rover:
         self.arm = []
         self.remark = '<empty>'
         self.name = name
- #      self.warn_flag = False # indicate whenever there is a warning.
+        # self.warn_flag = False # indicate whenever there is a warning.
         self.route_state = []   # rover only accept cur/target and cannot accept a full path
                                 # hence the path is stored locally
                                 # route_state[0] stores the start point and it gets updated everytime a passing point is achieved
@@ -64,7 +64,7 @@ class Rover:
                                 # r[0]    r[1]    r[2]                            for example: it get updated when rover arrive r[1]
                                 #         0--*----O--------O-------O------------O
                                 #         r[0]    r[1]     r[2]
- #      self.connected = False
+        # self.connected = False
 
         #ros init
         rospy.init_node(name, anonymous=False)
@@ -75,7 +75,7 @@ class Rover:
         self.navi_pub = rospy.Publisher('/set_nav_data', NavigationMsg, queue_size=1)   # it is the topic that we send command to rover 
         self.driv_pub = rospy.Publisher('/set_drive_data', Drive, queue_size=1)              # so it should have a differnt name
         self.timer = rospy.Rate(frequency)
-'''    
+    '''    
     @staticmethod
     def almost_equal(a, b, error):    # error should be carfully chosed
         return abs(a-b) <= error
@@ -83,7 +83,7 @@ class Rover:
     @staticmethod
     def dist_point2line(x3, y3, x1, y1, x2, y2): # distance from point p3 to the line(p1, p2)
         return abs((y1-y2)*x3 + (x2-x1)*y3 + x1*y2 - x2*y1) / sqrt((y1-y2)*(y1-y2) + (x1-x2)*(x1-x2))
-'''
+    '''
     def __debug_print(self, str):
         pass
         # print(str)  # currently we just output to consol
@@ -124,7 +124,7 @@ class Rover:
                             drive_data.wheel5]
         self.__debug_print('drive data updated!\n')
 
-'''
+    '''
     def check_route(self):   # target point, check if the rover is heading the correct direction
         
         error = 0.02    # gps error seting
@@ -166,7 +166,7 @@ class Rover:
             self.route_state[0].longt = cur_long
             self.route_state[0].lati = cur_lat
             return
-'''
+    '''
 
     def send_cmd(self, command): # the API that get command object from front end and send it to rover
         if command.cmd_code & 0b0001:    # if it is a route update command
@@ -181,11 +181,11 @@ class Rover:
             self.set_new_speed(command.new_speed)
         
         self.__debug_print("one command sent") 
-'''    
+    '''    
     def set_new_route(self, new_route): # new_route should be a list of GPSPoint
         self.route_state = [self.route_state[0]] + new_route # the start point(current pos) is reserved 
         self.set_new_target(new_route[0])
-'''
+    '''
     def set_new_target(self, new_target):
         nav_data = NavigationMsg()
         nav_data.tar_lat = new_target.lati
