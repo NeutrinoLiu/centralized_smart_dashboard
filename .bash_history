@@ -30,3 +30,8 @@ ls
 source /opt/ros/noetic/setup.bash
 cd centralized_dashboard/
 exit
+source /opt/ros/noetic/setup.bash
+cd model
+catkin_make
+catkin_make
+exit
