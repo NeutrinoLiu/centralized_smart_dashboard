@@ -62,7 +62,7 @@ def api_get_route():
     for point in route:
         route_to_send.append({"lat": point.lati, "long": point.longt})
     if len(route_to_send) > 0:
-        return json.jsonify({"success": True, "data": route_to_send})
+        return json.jsonify({"success": True, "waypoints": route_to_send})
     else:
         return json.jsonify({"success": False})
 
