@@ -353,6 +353,38 @@ describe('Testing waypointNew', () => {
 		expect($scope.waypoints).toEqual(output1);
 	});
 
+	//Test with long that's too negative
+	test('test with too small input', () => {
+		//Call with invalid input with null longitude;
+		waypointNew(1, -2000);
+
+		expect($scope.waypoints).toEqual(output1);
+	});
+
+	//Test with long that's too large and positive
+	test('test with too large input', () => {
+		//Call with invalid input with null longitude;
+		waypointNew(1, 2000);
+
+		expect($scope.waypoints).toEqual(output1);
+	});
+
+	//Test with lat that's too negative
+	test('test with too small input', () => {
+		//Call with invalid input with null longitude;
+		waypointNew(-2000, 1);
+
+		expect($scope.waypoints).toEqual(output1);
+	});
+
+	//Test with lat that's too large and positive
+	test('test with too large input', () => {
+		//Call with invalid input with null longitude;
+		waypointNew(2000, 1);
+
+		expect($scope.waypoints).toEqual(output1);
+	})
+
 	//Ensures test with valid input adds point; TODO: ensure that output constants are correct
 	test('test with valid input', () => {
 		waypointNew(23, 23);

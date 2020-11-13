@@ -176,10 +176,10 @@
         }
 
         //Opens a new window with a live stream of the camera at the IP address sent
-        function cameraIP() {  // future iteration item
+ /*       function cameraIP() {  // future iteration item
             alert("A new camera stream IP address has been opened.");
         }
-
+*/
         function addNotification(newNotification) {
             $scope.notifications += (newNotification + '\n');
             $http.post(PATH + '/api/notifications', {
@@ -229,9 +229,9 @@
                 });
         }
 
-        function getCameraIP(){  //future iteration item
+/*        function getCameraIP(){  //future iteration item
 
-        }
+        } */
 
         function connectionLost() {
             alert("Connection lost to server");
