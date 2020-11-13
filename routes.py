@@ -37,6 +37,14 @@ def coming_soon():
 def coming_soon():
     return render_template('ComingSoon.html')
 
+# helper method for getting the route in format for
+def get_format_route():
+    route = my_rover.route_state
+    route_to_send = []
+    for point in route:
+        route_to_send.append({"lat": point.lati, "long": point.longt})
+    return route_to_send
+
 # API routes
 
 def api_add_notifications():
@@ -57,10 +65,7 @@ def api_emergency_stop():
 
 # returns full list of all waypoint on route
 def api_get_route():
-    route = my_rover.route_state
-    route_to_send = []
-    for point in route:
-        route_to_send.append({"lat": point.lati, "long": point.longt})
+    route_to_send = get_format_route()
     if len(route_to_send) > 0:
         return json.jsonify({"success": True, "waypoints": route_to_send})
     else:
@@ -73,9 +78,9 @@ def api_set_route():
     route_to_set = []
     for point in new_route["waypoints"]:
         route_to_set.append(GPSPoint(point["lat"], point["long"]))
-    my_rover.set_new_route(route_to_set)
+    my_rover.set_new_route(new_route)
 
-    return json.jsonify({"success": True})
+    return json.jsonify({"success": True, "waypoints": get_format_route()})
 
 # route for getting the latitude and longitude of the rover
 def api_gps():
