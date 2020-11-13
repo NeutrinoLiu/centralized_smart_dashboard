@@ -103,6 +103,37 @@ describe('Testing fullWaypoint', () => {  // coordToXY is tied into this functio
 	})
 });
 
+describe('testing addNotification', () => {  // testing the addNotification function
+	
+	beforeEach(() => {
+		$scope.notifications = "none yet";
+	});
+
+	const output1 = "none yetNew Notification Sent To Server\n";
+	const output2 = "none yetHello\nThis\nIS A New\nNotification\nThat We\nSent!\n";
+	const output3 = "none yet\n";
+
+	test('Notifications are as expected after call', () => {  //test after 1 call that notifications matches
+		addNotification("New Notification Sent To Server");
+		expect($scope.notifications).toEqual(output1);
+	});
+
+	test('Notifications are as expected after several calls', () => {  //test after several calls that notifications matches
+		addNotification("Hello");
+		addNotification("This");
+		addNotification("Is A New");
+		addNotification("Notification");
+		addNotification("That We");
+		addNotification("Sent!");
+		expect($scope.notifications).toEqual(output2);
+	});
+
+	test('Notifications are as expected after empty string', () => {  //test after 1 call that notifications matches
+		addNotification("");
+		expect($scope.notifications).toEqual(output3);
+	});
+});
+
 describe('testing ESTOP button', () => {
 	test('Estop button called', () => {
 
