@@ -47,7 +47,7 @@ def test_speed_route(testNode):
     # no specific io test for speed or route
 
 def test_remark(testNode):
-    assert testNode.remark == '<empty>'
+    assert testNode.remark == ''
     testNode.remark = 'test remark content'
     assert testNode.remark == 'test remark content'
 
