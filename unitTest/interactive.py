@@ -1,3 +1,5 @@
+import sys
+sys.path.append('../model/src/centralized_dashboard/src') # change dir to rover.py dir
 from rover import *
 
 mrRover = Rover("mrRover")
