@@ -56,8 +56,11 @@ def api_send_notifications():
     return json.jsonify({"success": True, "notifications": notifications})
 # send rover to next waypoint
 def api_go_button():
-    my_rover.set_new_target(my_rover.route_state[1])
-    return json.jsonify({"success": True})
+    if len(my_rover.route_state) > 0:
+        my_rover.set_new_target(my_rover.route_state[0])
+        return json.jsonify({"success": True})
+    else:
+        return json.jsonify({"success": False})
 
 # emergency stop not implemented yet
 def api_emergency_stop():
