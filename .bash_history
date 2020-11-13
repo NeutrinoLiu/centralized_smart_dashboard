@@ -35,3 +35,7 @@ cd model
 catkin_make
 catkin_make
 exit
+source /opt/ros/noetic/setup.bash
+cd model
+catkin_make
+exit

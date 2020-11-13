@@ -71,7 +71,10 @@
             }
         }
 
-
+        /*
+        The fullWaypoint method is a dictionary to hold the latitude, longitude, x and y position of a Waypoint
+        @author: piedras77
+        */
         function fullWaypoint(waypoint) {
             waypoint['lat'] = parseFloat(waypoint['lat'])
             waypoint['long'] = parseFloat(waypoint['long'])
@@ -83,6 +86,11 @@
             return waypoint;
         }
 
+        /*
+        The coordToXY method takes in latitude and longitude and translates to a x and y position for the map.
+        The positions are relative positioning and not absolute positioning on the map
+        @author: piedras77, prao7
+        */
         function coordToXY(latitude, longitude) {
             /*
             Algorithm to change from coord to XY with the pixel scaling factor

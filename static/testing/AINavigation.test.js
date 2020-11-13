@@ -115,56 +115,107 @@ describe('testing GO button', () => {
 	});
 });
 
+/*
+This below is the unit testing just for coordToXY. 
+*/
 describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected output for these may be wrong
+	//Tests math completed in coordToXY
 	test('test with regular input', () => {
 		const lat = 53.687;
 		const long = 37.993;
+		//TODO: Once Docker is up and running, the xpos and ypos can be determined from this. 
 		const output = ({'x_pos': 68.7, 'y_pos': 99.3});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
 
-	test('test with null input', () => {
-		const lat = null;
-		const long = null;
-		const output = ({'x_pos': null, 'y_pos': null});
-
-		expect(coordToXY(lat, long)).toEqual(output);
-	});
-
-	test('test with negative input', () => {
-		const lat = -72.12;
-		const long = -89.23;
-		const output = ({'x_pos': 12, 'y_pos': 23});
-
-		expect(coordToXY(lat, long)).toEqual(output);
-	});
-
-	test('test with very large input', () => {
-		const lat = 757124;
-		const long = 999138;
+	// Testing output for input of 0,0
+	test('test with inputs of 0', () => {
+		const lat = 0;
+		const long = 0;
 		const output = ({'x_pos': 0, 'y_pos': 0});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
 
-	test('test with very small positive input', () => {
-		const lat = 0.000000123;
-		const long = 0.000000516;
-		const output = ({'x_pos': 0.00000123, 'y_pos': 0.00000516});
-
+	// Tests for Null Input in coordToXY
+	test('test with null input', () => {
+		const lat = null;
+		const long = null;
+		const output = ({'x_pos': null, 'y_pos': null});
+		//TODO: To check what the null value should return
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
 
+	//Test that x_pos is greater than 0 with a negative value entered
+	test('test xpos is positive with negative value', () => {
+		const lat = 0;
+		const long = -334;
+		const output = ({'x_pos': 0, 'y_pos': 0});
+
+		expect(coordToXY(lat,long)).toBeGreaterThan(output);
+	});
+
+	//Test that x_pos is greater than 0 with a positive value entered
+	test('test xpos is positive with positive value', () => {
+		const lat = 0;
+		const long = 10;
+		const output = ({ 'x_pos': 0, 'y_pos': 0 });
+
+		expect(coordToXY(lat, long)).toBeGreaterThan();
+	})
+
+	//Test that y_pos is less than 0 with a negative value entered
+	test('test ypos is negative with negative value', () => {
+		const lat = -10;
+		const long = 0;
+		const output = ({ 'x_pos': 0, 'y_pos': 0 });
+
+		expect(coordToXY(lat, long)).toBeLessThan();
+	})
+
+	//Test that y_pos is less than 0 with a positive value entered
+	test('test ypos is negative with positive value', () => {
+		const lat = 10;
+		const long = 0;
+		const output = ({ 'x_pos': 0, 'y_pos': 0 });
+
+		expect(coordToXY(lat, long)).toBeLessThan();
+	})
+
+	//Tests the output with max latitude (90) and max long (180) inputs
+	/*test('test with very max input', () => {
+		const lat = 757124;
+		const long = 999138;
+		const output = ({ 'x_pos': 0, 'y_pos': 0 });
+
+		expect(coordToXY(lat, long)).toEqual(output);
+	});*/
+	/*
+	The minmum value should be at the 
+	*/
+	test('test with very large negative input', () => {
+		const lat = -90.000000;
+		const long = -180.00000;
+		const output = ({'x_pos': 0, 'y_pos': 0});
+
+		expect(coordToXY(lat, long)).toBeGreaterThan(output);
+	});
+
+	/*
+	Making sure that identical waypoints will be added to the same x and y_pos
+	DONE
+	*/
 	test('test with same input', () => {
 		const lat = 55;
 		const long = 55;
-		const output = ({'x_pos': 55, 'y_pos': 55});
+		const lat1 = 55;
+		const long2 = 55;
 
-		expect(coordToXY(lat, long)).toEqual(output);
+		expect(coordToXY(lat, long)).toEqual(coordToXY(lat1,long1));
 	});
 
-	test('test with improper input', () => {  // TODO Might be supposed to throw an error or something
+	/*test('test with improper input', () => {  // TODO Might be supposed to throw an error or something
 		const lat = 'abc';
 		const long = 'easy as one two';
 		const output = ();
@@ -173,7 +224,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		};
 
 		expect(coordToXY(lat, long)).toEqual(output);
-	});
+	});*/
 });
 
 describe('Testing addWaypointToMap', () => {
