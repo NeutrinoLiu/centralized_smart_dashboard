@@ -7,8 +7,11 @@ standarize the communication between frontend and the local node
 from math import sqrt
 
 import rospy
+from functools import reduce
 from centralized_dashboard.msg import NavigationMsg
 from centralized_dashboard.msg import Drive
+
+from userErr import * 
 
 class Cmd:      # the object sending from frontend to the local publisher
     def __init__(self,  new_route=[], 
@@ -52,7 +55,7 @@ class Rover:
         self.ori = 0.0
         self.speed = []
         # self.arm = []
-        self.remark = '<empty>'
+        self.remark = ''
         self.name = name
         # self.warn_flag = False # indicate whenever there is a warning.
         self.route_state = []   # rover only accept cur/target and cannot accept a full path
@@ -68,6 +71,7 @@ class Rover:
     def ros_init(self):
         #ros init
         rospy.init_node(self.name, anonymous=False)
+        print("ros node init successfully")
         #sub
         rospy.Subscriber('/nav_data', NavigationMsg, self.nav_callback)
         rospy.Subscriber('/drive_data', Drive, self.drive_callback)
@@ -78,15 +82,10 @@ class Rover:
     def __debug_print(self, str):
         pass
         # print(str)  # currently we just output to consol
-        # if self.remark == '<empty>' : 
+        # if self.remark == '' : 
         #   self.remark = str
         # else:
         #   self.remark = self.remark + '\n' + str
-
-    def __debug_warn(self, str):
-        print("warn: " + str)  # currently we just output to consol
-        self.warn_flag = True
-        # TODO: may need to implement warn buffer in the future
 
     def nav_callback(self, nav_data):
         self.ori = nav_data.heading
@@ -125,12 +124,20 @@ class Rover:
         self.set_new_target(new_route[0])
 
     def set_new_target(self, new_target):
+        # invalid if it is not number
+        if not isinstance(new_target, GPSPoint):
+            raise InvalidTarget("non GPS format input")
         nav_data = NavigationMsg()
         nav_data.tar_lat = new_target.lati
         nav_data.tar_long = new_target.longt
         self.navi_pub.publish(nav_data) 
     
     def set_new_speed(self, new_speed):
+        # invalid if it is not number
+        if len(new_speed) != 6:
+            raise InvalidSpeed("incorrect num of speed")
+        if not reduce(lambda a,b: a and b, map(lambda a: a>=0 , new_speed)):
+            raise InvalidSpeed("negative speed")
         drive_data = Drive()
         drive_data.wheel0 = new_speed[0]
         drive_data.wheel1 = new_speed[1]
@@ -146,7 +153,7 @@ class Rover:
         return remark
 
     def clear_noti_buffer(self):
-        self.remark = '<empty>'
+        self.remark = ''
 
     def __repr__(self):
         return "this is Rover " + self.name + " !"
