@@ -98,6 +98,7 @@
             and height of the map.
             */
 
+            // South is positive, east is positive
             scale_factor = 1;
             x_pos = Math.abs(parseInt(longitude) - longitude);
             y_pos = Math.abs(parseInt(latitude) - latitude);
