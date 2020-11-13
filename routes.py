@@ -78,7 +78,7 @@ def api_set_route():
     route_to_set = []
     for point in new_route["waypoints"]:
         route_to_set.append(GPSPoint(point["lat"], point["long"]))
-    my_rover.set_new_route(new_route)
+    my_rover.set_new_route(route_to_set)
 
     return json.jsonify({"success": True, "waypoints": get_format_route()})
 
