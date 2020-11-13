@@ -54,7 +54,7 @@ class Rover:
         self.ori = 0.0
         self.speed = []
         self.arm = []
-        self.remark = '<empty>'
+        self.remark = ''
         self.name = name
         # self.warn_flag = False # indicate whenever there is a warning.
         self.route_state = []   # rover only accept cur/target and cannot accept a full path
