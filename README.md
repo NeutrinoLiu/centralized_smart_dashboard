@@ -1,12 +1,11 @@
-this branch is for Unit Testing of backend
-
 # Centralized Smart Dashboard
 Centralized Smart Dashboard developed for the rover of Wisconsin Robotics team. 
-Iteration number 1 for COMPSCI 506: Software Engineer. 
-Code cutoff date: Friday, October 30, 2020
+Iteration number 2 for COMPSCI 506: Software Engineer. 
+Code cutoff date: Friday, November 13, 2020
 
 # Prerequisites
 [Docker](https://docs.docker.com/get-started)
+Notice that currently is only set to work for a unix-based OS. This is fine in our case, since our client's rover runs in a Unix-based OS
 
 # Setup 
 The image only needs to be built once, per each new change we make in the container. However, you need to run the image each time.
