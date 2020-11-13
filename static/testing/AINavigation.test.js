@@ -131,6 +131,11 @@ describe('testing addNotification', () => {  // testing the addNotification func
 		addNotification("");
 		expect($scope.notifications).toEqual(output3);
 	});
+
+	//Defaults global notifications variable
+	afterAll(() => {
+		$scope.notifications = "none yet";
+	});
 });
 
 describe('testing ESTOP button', () => {  // tests the ESTOP button javscript function
@@ -171,15 +176,6 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		const long = 37.993;
 		//TODO: Once Docker is up and running, the xpos and ypos can be determined from this. 
 		const output = ({'x_pos': 68.7, 'y_pos': 99.3});
-
-		expect(coordToXY(lat, long)).toEqual(output);
-	});
-
-	// Testing output for input of 0,0
-	test('test with inputs of 0', () => {
-		const lat = 0;
-		const long = 0;
-		const output = ({'x_pos': 0, 'y_pos': 0});
 
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
@@ -287,17 +283,8 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		expect(coordToXY(lat, long)).toEqual(coordToXY(lat1,long1));
 	});
 
-	/*test('test with improper input', () => {  // TODO Might be supposed to throw an error or something
-		const lat = 'abc';
-		const long = 'easy as one two';
-		const output = ();
-		const err = () => {
-			throw new TypeError;
-		};
-
-		expect(coordToXY(lat, long)).toEqual(output);
-	});*/
 });
+
 //Not testing this function for now because it's officially terrible to test
 describe('Testing addWaypointToMap', () => {
 	test('test null waypoint', () => {
@@ -333,6 +320,10 @@ describe('Testing addWaypointToMap', () => {
 	});
 });
 
+/*
+ * This tests adding valid waypoints. I'm going to pretend the function call is waypointNew(lat, long) simply because
+ * I'm not sure how to simulate the document.getElementById
+ */
 describe('Testing waypointNew', () => {
 
 	beforeEach(() => {
@@ -340,35 +331,67 @@ describe('Testing waypointNew', () => {
 	});
 
 	const output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
-	const output2 = ;
-	const output3 = ;
-	const output4 = ;
-	const output5 = ;
+	const output2 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
+	const output3 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': -90, 'long': -180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
+	const output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 90, 'long': 180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
+	const output5 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 0, 'long': 0, 'x_pos': 0, 'y_pos': 0, 'index': 2 }];
 	const output6 = ;
 
-	test('test with invalid input', () => {
-		//TODO: Call with invalid input
+	//Null input tests invalid and doesn't add a waypoint
+	test('test with null latitude', () => {
+		//Call with invalid input with null latitude;
+		waypointNew("", 1);
+
 		expect($scope.waypoints).toEqual(output1);
 	});
 
-	test('test with valid input', () => {
+	//Null input tests invalid and doesn't add a waypoint
+	test('test with null longitude', () => {
+		//Call with invalid input with null longitude;
+		waypointNew(1, "");
 
+		expect($scope.waypoints).toEqual(output1);
 	});
 
+	//Ensures test with valid input adds point; TODO: ensure that output constants are correct
+	test('test with valid input', () => {
+		waypointNew(23, 23);
+
+		expect($scope.waypoints).toEqual(output2);
+	});
+
+	//Test with invalid input within a few valid entries
+	//only concerned about statement coverage for now... Brenna very tired
 	test('test with valid input, then invalid input, then valid input', () => {
 
 	});
 
-	test('test with slightly invalid input', () => {
+	//Tests valid input with most negative input; 
+	test('test with most negative input', () => {
+		waypointNew(-90, -180);
 
+		expect($scope.waypoints).toEqual(output3);
 	});
 
-	test('test with very small input', () => {
+	//Tests valid input with most positive input
+	test('test with most positive input', () => {
+		waypointNew(90, 180);
 
+		expect($scope.waypoints).toEqual(output4);
 	});
 
-	test('test with very large input', () => {
+	// Testing output for input of 0,0
+	test('test with inputs of 0', () => {
+		waypointNew(0, 0);
 
+		expect(coordToXY(lat, long)).toEqual(output5);
+	});
+
+	//Test with many valid inputs (many = 5?)
+
+	//Empties global waypoints variable
+	afterAll(() => {
+		$scope.waypoints = [];
 	});
 });
 
@@ -412,5 +435,10 @@ describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoi
 		deleteLatestWaypoint();
 		deleteLatestWaypoint();
 		expect($scope.waypoints).toEqual(output4);
+	});
+
+	//Empties global waypoints variable
+	afterAll(() => {
+		$scope.waypoints = [];
 	});
 });
