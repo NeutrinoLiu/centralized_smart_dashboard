@@ -300,7 +300,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 	});*/
 });
 
-describe('Testing addWaypointToMap', () => {
+describe('Testing addWaypointToMap', () => {  //TODO: Figure out how to test this
 	test('test null waypoint', () => {
 
 	});
@@ -335,8 +335,21 @@ describe('Testing addWaypointToMap', () => {
 });
 
 describe('Testing waypointNew', () => {
-	test('test with invalid input', () => {
 
+	beforeEach(() => {
+		$scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}]
+	});
+
+	const output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
+	const output2 = ;
+	const output3 = ;
+	const output4 = ;
+	const output5 = ;
+	const output6 = ;
+
+	test('test with invalid input', () => {
+		//TODO: Call with invalid input
+		expect($scope.waypoints).toEqual(output1);
 	});
 
 	test('test with valid input', () => {
