@@ -18,7 +18,7 @@ def testNode():
     del testNode
     print("<<< test node shuts down <<<")
 
-################# CLASS FIELD TEST ####################
+################### METHOD TEST ######################
 
 def test_clear_noti(testNode):
     testNode.remark = ''.join(random.sample('abcdefghijklmnopqrstuvwxyz', random.randrange(1,26)))
