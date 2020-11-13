@@ -41,8 +41,11 @@
         function init() {
             $http.get(PATH + '/api/route')
                 .then((response) => {
-                    for (index = 0; index < response.data.waypoints.length; index++) {  
-                        $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                    if (response.data.success){
+                        console.log(response);
+                        for (index = 0; index < response.data.waypoints.length; index++) {  
+                            $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                        }
                     }
                 }, (error) => {
                     connectionLost()
@@ -50,15 +53,19 @@
 
             $http.get(PATH + '/api/gps')
                 .then((response) => {
-                    $scope.curr_coord.lat = response.data.lat;
-                    $scope.curr_coord.long = response.data.long;
+                    if (response.data.success) {
+                        $scope.curr_coord.lat = response.data.lat;
+                        $scope.curr_coord.long = response.data.long;
+                    }
                 }, (error) => {
                     connectionLost();
                 });
 
             $http.get(PATH + '/api/notifications')
                 .then((response) => {
-                    $scope.notifications = response.data.notifications;
+                    if (response.data.success) {
+                        $scope.notifications = response.data.notifications;
+                    }
                 }, (error) => {
                     connectionLost();
                 });
@@ -114,14 +121,15 @@
         }
 
         function addWaypointToMap(waypoint) {
-                $scope.$apply();
-                top_ = waypoint['y_pos'].toString();
-                top_ = top_ + 'px';
-                left_ = waypoint['x_pos'].toString();
-                left_ = left_ + 'px';
-                document.getElementById(waypoint['index']).style.position = 'absolute';
-                document.getElementById(waypoint['index']).style.top = top_;
-                document.getElementById(waypoint['index']).style.left = left_;
+            $scope.$apply();
+            top_ = waypoint['y_pos'].toString();
+            top_ = top_ + 'px';
+            left_ = waypoint['x_pos'].toString();
+            left_ = left_ + 'px';
+            console.log(waypoint)
+            document.getElementById(waypoint['index']).style.position = 'absolute';
+            document.getElementById(waypoint['index']).style.top = top_;
+            document.getElementById(waypoint['index']).style.left = left_;
         }
 
         //Adds waypoint coordinates to the list
@@ -143,7 +151,7 @@
                     ).then((response) => {
                         $scope.waypoints = response.data.waypoints;
                         addNotification("New Waypoint Added");
-                        addWaypointToMap($scope.waypoints[$scope.waypoints.length - 1]);
+                        addWaypointToMap(fullWaypoint($scope.waypoints[$scope.waypoints.length - 1]));
                     }, (error) => {
                         connectionLost();
                     });
@@ -160,7 +168,7 @@
                 ).then((response) => {
                     $scope.waypoints = response.data.waypoints;
                     addNotification("Deleted Waypoint");
-                    addWaypointToMap($scope.waypoints[$scope.waypoints.length - 1]);
+                    // addWaypointToMap($scope.waypoints[$scope.waypoints.length - 1]);
                 }, (error) => {
                     connectionLost();
                 });

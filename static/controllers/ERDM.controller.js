@@ -45,9 +45,11 @@
             test_response_notifications = {'data': {'notifications': "New waypoint \nWaypoint removed \n"}};
             $http.get(PATH + '/api/route')
                 .then((response) => {
-                    response = test_response_route
-                    for (index = 0; index < response.data.waypoints.length; index++) {  
-                        $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                    if (response.data.success) {
+                        response = test_response_route
+                        for (index = 0; index < response.data.waypoints.length; index++) {  
+                            $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                        }
                     }
                 }, (error) => {
                     connectionLost()
