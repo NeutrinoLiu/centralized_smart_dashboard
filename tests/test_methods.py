@@ -97,7 +97,7 @@ def almostEqual(a, b, error = 0.1):
     return abs(a-b) <= error
 
 def test_mock_car_moving(testNode):
-    target = GPSPoint(random.uniform(-5, 5), random.uniform(-5, 5))
+    target = GPSPoint(random.uniform(-2, 2), random.uniform(-2, 2))
     testNode.set_new_target(target)
     time.sleep(5) # sleep for a long time to let it arrive
     assert almostEqual(testNode.gps_lati, target.lati) and almostEqual(testNode.gps_lati, target.lati)
