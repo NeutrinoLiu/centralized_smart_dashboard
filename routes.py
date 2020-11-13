@@ -93,7 +93,7 @@ def api_gps():
     long = my_rover.gps_longt
     # get in format specified by server
     #try:
-    return json.jsonify({"success": True, "data": {"lat": lat, "long": long}})
+    return json.jsonify({"success": True, "lat": lat, "long": long})
     #except ValueError:
 
    #else:
