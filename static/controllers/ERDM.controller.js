@@ -32,21 +32,17 @@
 
         $scope.panzoomModel = {};
 
-        const PATH = 'http://localhost:5000'
+        const PATH = 'http://localhost:5000';
+        const GPS_INTERVAL = 500; // in milliseconds
 
         function homepage() {
             $window.location.href = "/home";
         }
 
         function init() {
-            // TODO: delete test responses after testing is done
-            test_response_route = {'data': {'waypoints': [{'lat': 43.076163, 'long': -89.400227}, {'lat': 43.069798, 'long': -89.412654}]}};
-            test_response_gps = {'data': {'lat': 90.3456, 'long': -90.6543}};
-            test_response_notifications = {'data': {'notifications': "New waypoint \nWaypoint removed \n"}};
             $http.get(PATH + '/api/route')
                 .then((response) => {
                     if (response.data.success) {
-                        response = test_response_route
                         for (index = 0; index < response.data.waypoints.length; index++) {  
                             $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
                         }
@@ -57,27 +53,39 @@
 
             $http.get(PATH + '/api/gps')
                 .then((response) => {
-                    response = test_response_gps;
-                    $scope.curr_coord.lat = response.data.lat;
-                    $scope.curr_coord.long = response.data.long;
+                    if (response.data.success) {
+                        setInterval(updateRoverCoordinates, GPS_INTERVAL);
+                        $scope.curr_coord.lat = response.data.lat;
+                        $scope.curr_coord.long = response.data.long;
+                    }
                 }, (error) => {
                     connectionLost();
                 });
 
             $http.get(PATH + '/api/notifications')
                 .then((response) => {
-                    response = test_response_notifications;
-                    $scope.notifications = response.data.notifications;
+                    if (response.data.success) {
+                        $scope.notifications = response.data.notifications;
+                    }
                 }, (error) => {
                     connectionLost();
                 });
 
             $window.onload = function() {
-                for (index = 0; index < $scope.waypoints.length; index++) { 
-                    addWaypointToMap($scope.waypoints[index]);
-
-                }
+                addWaypointToMap();
             }
+        }
+
+        function updateRoverCoordinates() {
+            $http.get(PATH + '/api/gps')
+                .then((response) => {
+                    if (response.data.success) {
+                        $scope.curr_coord.lat = response.data.lat;
+                        $scope.curr_coord.long = response.data.long;
+                    }
+                }, (error) => {
+                    connectionLost();
+                });
         }
         
         function fullWaypoint(waypoint) {
@@ -123,15 +131,30 @@
         }
 
 
-        function addWaypointToMap(waypoint) {
-                $scope.$apply();
-                top_ = waypoint['y_pos'].toString();
-                top_ = top_ + 'px';
-                left_ = waypoint['x_pos'].toString();
-                left_ = left_ + 'px';
-                document.getElementById(waypoint['index']).style.position = 'absolute';
-                document.getElementById(waypoint['index']).style.top = top_;
-                document.getElementById(waypoint['index']).style.left = left_;
+        function addWaypointToMap() {
+            for (index = 0; index < $scope.waypoints.length; index++) { 
+                    waypoint = $scope.waypoints[index];
+                    top_ = waypoint['y_pos'].toString();
+                    top_ = top_ + 'px';
+                    left_ = waypoint['x_pos'].toString();
+                    left_ = left_ + 'px';
+                    document.getElementById(waypoint['index']).style.position = 'absolute';
+                    document.getElementById(waypoint['index']).style.top = top_;
+                    document.getElementById(waypoint['index']).style.left = left_;
+            }
+
+            if ($scope.waypoints.length > 0) {
+                var point_location = {
+                    x: $scope.waypoints[0]['x_pos'],
+                    y: $scope.waypoints[0]['y_pos'],
+                    width: 5,
+                    height: 5
+                };
+
+                PanZoomService.getAPI('PanZoom').then(function (api) {
+                    api.zoomToFit(point_location);
+                });
+            }
         }
 
         //Adds waypoint coordinates to the list
@@ -151,9 +174,14 @@
                         'waypoints': $scope.waypoints
                     } 
                     ).then((response) => {
-                        $scope.waypoints = response.data.waypoints;
-                        addNotification("New Waypoint Added");
-                        addWaypointToMap($scope.waypoints[$scope.waypoints.length - 1]);
+                        if (response.data.success) {
+
+                            $scope.waypoints = response.data.waypoints;
+                            addNotification("New Waypoint Added");
+                            addWaypointToMap();
+                        } else {
+                            connectionLost();
+                        }
                     }, (error) => {
                         connectionLost();
                     });
@@ -168,9 +196,12 @@
                     'waypoints': $scope.waypoints
                 } 
                 ).then((response) => {
-                    $scope.waypoints = response.data.waypoints;
-                    addNotification("Deleted Waypoint");
-                    addWaypointToMap($scope.waypoints[$scope.waypoints.length - 1]);
+                    if (response.data.success) {
+                        $scope.waypoints = response.data.waypoints;
+                        addNotification("Deleted Waypoint");
+                    } else {
+                        connectionLost();
+                    }
                 }, (error) => {
                     connectionLost();
                 });
@@ -191,7 +222,11 @@
             $http.post(PATH + '/api/notifications', {
                 'notifications': $scope.notifications
             }).then((response) => {
-                $scope.notifications = response.data.notifications;
+                if (response.data.success){
+                    $scope.notifications = response.data.notifications;
+                } else {
+                    connectionLost();
+                }
             }, (error) => {
                 connectionLost();
             })

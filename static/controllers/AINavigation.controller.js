@@ -17,8 +17,8 @@
 
         // todo: add a zoomtofit after each addition
         var initial_zoom = {
-            x: -41.26540000000034,
-            y: -6.979799999999869,
+            x: -98.32,
+            y: -99.39,
             width: 5,
             height: 5
         };
@@ -33,6 +33,7 @@
         $scope.panzoomModel = {};
 
         const PATH = 'http://localhost:5000'
+        const GPS_INTERVAL = 500; // in milliseconds
 
         function homepage() {
             $window.location.href = "/home";
@@ -42,7 +43,6 @@
             $http.get(PATH + '/api/route')
                 .then((response) => {
                     if (response.data.success){
-                        console.log(response);
                         for (index = 0; index < response.data.waypoints.length; index++) {  
                             $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
                         }
@@ -54,6 +54,7 @@
             $http.get(PATH + '/api/gps')
                 .then((response) => {
                     if (response.data.success) {
+                        setInterval(updateRoverCoordinates, GPS_INTERVAL);
                         $scope.curr_coord.lat = response.data.lat;
                         $scope.curr_coord.long = response.data.long;
                     }
@@ -71,11 +72,20 @@
                 });
 
             $window.onload = function() {
-                for (index = 0; index < $scope.waypoints.length; index++) { 
-                    addWaypointToMap($scope.waypoints[index]);
-
-                }
+                addWaypointToMap();
             }
+        }
+
+        function updateRoverCoordinates() {
+            $http.get(PATH + '/api/gps')
+                .then((response) => {
+                    if (response.data.success) {
+                        $scope.curr_coord.lat = response.data.lat;
+                        $scope.curr_coord.long = response.data.long;
+                    }
+                }, (error) => {
+                    connectionLost();
+                });
         }
 
         /*
@@ -129,16 +139,30 @@
             return {'x': x_pos, 'y': y_pos};
         }
 
-        function addWaypointToMap(waypoint) {
-            $scope.$apply();
-            top_ = waypoint['y_pos'].toString();
-            top_ = top_ + 'px';
-            left_ = waypoint['x_pos'].toString();
-            left_ = left_ + 'px';
-            console.log(waypoint)
-            document.getElementById(waypoint['index']).style.position = 'absolute';
-            document.getElementById(waypoint['index']).style.top = top_;
-            document.getElementById(waypoint['index']).style.left = left_;
+        function addWaypointToMap() {
+            for (index = 0; index < $scope.waypoints.length; index++) { 
+                    waypoint = $scope.waypoints[index];
+                    top_ = waypoint['y_pos'].toString();
+                    top_ = top_ + 'px';
+                    left_ = waypoint['x_pos'].toString();
+                    left_ = left_ + 'px';
+                    document.getElementById(waypoint['index']).style.position = 'absolute';
+                    document.getElementById(waypoint['index']).style.top = top_;
+                    document.getElementById(waypoint['index']).style.left = left_;
+            }
+
+            if ($scope.waypoints.length > 0) {
+                var point_location = {
+                    x: $scope.waypoints[0]['x_pos'],
+                    y: $scope.waypoints[0]['y_pos'],
+                    width: 5,
+                    height: 5
+                };
+
+                PanZoomService.getAPI('PanZoom').then(function (api) {
+                    api.zoomToFit(point_location);
+                });
+            }
         }
 
         //Adds waypoint coordinates to the list
@@ -159,9 +183,12 @@
                     } 
                     ).then((response) => {
                         if (response.data.success) {
-                            $scope.waypoints = response.data.waypoints;
+                            $scope.waypoints = []
+                            for (index = 0; index < response.data.waypoints.length; index++) {  
+                                $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                            }
                             addNotification("New Waypoint Added");
-                            addWaypointToMap(fullWaypoint($scope.waypoints[$scope.waypoints.length - 1]));
+                            addWaypointToMap();
                         } else {
                             connectionLost();
                         }
@@ -173,17 +200,29 @@
 
         // Removes the last waypoint added to our waypoints 
         function deleteLatestWaypoint() {
-            $scope.waypoints.pop();
-            $http.post(PATH + '/api/route',
-                {
-                    'waypoints': $scope.waypoints
-                } 
-                ).then((response) => {
-                    $scope.waypoints = response.data.waypoints;
-                    addNotification("Deleted Waypoint");
-                }, (error) => {
-                    connectionLost();
-                });
+            if ($scope.waypoints.length != 0) {
+                $scope.waypoints.pop();
+                $http.post(PATH + '/api/route',
+                    {
+                        'waypoints': $scope.waypoints
+                    } 
+                    ).then((response) => {
+                        if (response.data.success) {
+                            $scope.waypoints = []
+                            for (index = 0; index < response.data.waypoints.length; index++) {  
+                                $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                            }
+
+                            addNotification("Deleted Waypoint");
+                        } else {
+                            connectionLost();
+                        }
+                    }, (error) => {
+                        connectionLost();
+                    });
+            } else {
+                alert("No waypoint added. So we cannot remove anything");
+            }
         }
 
         //Opens a new window with a live stream of the camera at the IP address sent
@@ -192,12 +231,10 @@
         }
 
         function addNotification(newNotification) {
-            console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
             $scope.notifications += (newNotification + '\n');
             $http.post(PATH + '/api/notifications', {
                 'notifications': $scope.notifications
             }).then((response) => {
-                console.log(response);
                 if (response.data.success){
                     $scope.notifications = response.data.notifications;
                 } else {
