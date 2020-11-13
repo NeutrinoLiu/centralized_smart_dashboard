@@ -158,9 +158,13 @@
                         'waypoints': $scope.waypoints
                     } 
                     ).then((response) => {
-                        $scope.waypoints = response.data.waypoints;
-                        addNotification("New Waypoint Added");
-                        addWaypointToMap(fullWaypoint($scope.waypoints[$scope.waypoints.length - 1]));
+                        if (response.data.success) {
+                            $scope.waypoints = response.data.waypoints;
+                            addNotification("New Waypoint Added");
+                            addWaypointToMap(fullWaypoint($scope.waypoints[$scope.waypoints.length - 1]));
+                        } else {
+                            connectionLost();
+                        }
                     }, (error) => {
                         connectionLost();
                     });
@@ -188,22 +192,17 @@
         }
 
         function addNotification(newNotification) {
+            console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
             $scope.notifications += (newNotification + '\n');
             $http.post(PATH + '/api/notifications', {
                 'notifications': $scope.notifications
             }).then((response) => {
-                $scope.notifications = response.data.notifications;
-            }, (error) => {
-                connectionLost();
-            })
-        }
-
-        function addNotification(newNotification) {
-            $scope.notifications += (newNotification + '\n');
-            $http.post(PATH + '/api/notifications', {
-                'notifications': $scope.notifications
-            }).then((response) => {
-                $scope.notifications = response.data.notifications;
+                console.log(response);
+                if (response.data.success){
+                    $scope.notifications = response.data.notifications;
+                } else {
+                    connectionLost();
+                }
             }, (error) => {
                 connectionLost();
             })
