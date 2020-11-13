@@ -75,15 +75,6 @@ class Rover:
         self.navi_pub = rospy.Publisher('/set_nav_data', NavigationMsg, queue_size=1)   # it is the topic that we send command to rover 
         self.driv_pub = rospy.Publisher('/set_drive_data', Drive, queue_size=1)              # so it should have a differnt name
         self.timer = rospy.Rate(frequency)
-    '''    
-    @staticmethod
-    def almost_equal(a, b, error):    # error should be carfully chosed
-        return abs(a-b) <= error
-
-    @staticmethod
-    def dist_point2line(x3, y3, x1, y1, x2, y2): # distance from point p3 to the line(p1, p2)
-        return abs((y1-y2)*x3 + (x2-x1)*y3 + x1*y2 - x2*y1) / sqrt((y1-y2)*(y1-y2) + (x1-x2)*(x1-x2))
-    '''
     def __debug_print(self, str):
         pass
         # print(str)  # currently we just output to consol
@@ -106,14 +97,7 @@ class Rover:
             self.route_state = [GPSPoint(self.gps_lati, self.gps_longt)]
         self.buffer_longt = nav_data.tar_long
         self.buffer_lati = nav_data.tar_lat
-        '''
-        if self.__auto_update:
-            self.check_route()
-        ''' 
-        # check if the target info from rover is consistant with our local path record
-        # and update the route whenever there is an arriving
-        #self.__debug_print('nav data updated!\n')
-    
+
     def drive_callback(self, drive_data):
         self.connected = True
         self.speed = [      drive_data.wheel0,
@@ -123,50 +107,6 @@ class Rover:
                             drive_data.wheel4,
                             drive_data.wheel5]
         self.__debug_print('drive data updated!\n')
-
-    '''
-    def check_route(self):   # target point, check if the rover is heading the correct direction
-        
-        error = 0.02    # gps error seting
-        
-        st_long = self.route_state[0].longt
-        st_lat = self.route_state[0].lati 
-        # start point is reserved as the first element in route_State
-        # to judge whether the rover has deviated from its path
-        cur_long = self.gps_longt
-        cur_lat = self.gps_lati  # current point
-        tar_long = self.buffer_longt
-        tar_lat = self.buffer_lati  # target point received from rover
-
-        if (len(self.route_state) <= 1):
-            self.__debug_print("no route available currently")
-            return
-
-        if (tar_long != self.route_state[1].longt) or (tar_lat != self.route_state[1].lati):
-            self.__debug_warn("target conflict, reset the rover route")
-            self.send_cmd(Cmd(new_route=self.route_state[1:len(self.route_state)]))
-            return
-
-        if      (Rover.dist_point2line(cur_long, cur_lat, st_long, st_lat, tar_long, tar_lat) <= error)                   \
-            and (cur_long >= min(tar_long, st_long) - error)    and (cur_long <= max(tar_long, st_long) + error)    \
-            and (cur_lat >= min(tar_lat, st_lat) - error)       and (cur_lat <= max(tar_lat, st_lat)+ error):
-            # if the currend pos is on the segment between start point and target point
-
-            if Rover.almost_equal(cur_long, tar_long, error) and Rover.almost_equal(cur_lat, tar_lat, error):   # we arrive the target point
-                self.__debug_print("arrive one station, heading to the next!")
-                self.route_state.pop(0)
-                self.send_cmd(Cmd(new_route=self.route_state[1:]))   # let the next node on the route list become the target
-                return
-            else:
-                self.__debug_print("still on the way from start point to target point")
-                return
-
-        else:
-            self.__debug_warn("off the route, reset the start point")
-            self.route_state[0].longt = cur_long
-            self.route_state[0].lati = cur_lat
-            return
-    '''
 
     def send_cmd(self, command): # the API that get command object from front end and send it to rover
         if command.cmd_code & 0b0001:    # if it is a route update command
@@ -181,11 +121,11 @@ class Rover:
             self.set_new_speed(command.new_speed)
         
         self.__debug_print("one command sent") 
-    '''    
+    
     def set_new_route(self, new_route): # new_route should be a list of GPSPoint
         self.route_state = [self.route_state[0]] + new_route # the start point(current pos) is reserved 
         self.set_new_target(new_route[0])
-    '''
+
     def set_new_target(self, new_target):
         nav_data = NavigationMsg()
         nav_data.tar_lat = new_target.lati
