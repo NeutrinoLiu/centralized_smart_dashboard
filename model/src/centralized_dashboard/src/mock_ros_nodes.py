@@ -41,8 +41,12 @@ class NavData:
     def move_forward(self):
         line_speed = 0.01
         dist = sqrt((self.tar_lat - self.cur_lat)*(self.tar_lat - self.cur_lat) + (self.tar_long - self.cur_long)*(self.tar_long - self.cur_long))
-        delta_lat = (self.tar_lat - self.cur_lat)/dist * line_speed
-        delta_long = (self.tar_long - self.cur_long)/dist * line_speed
+        if dist != 0 :
+            delta_lat = (self.tar_lat - self.cur_lat)/dist * line_speed
+            delta_long = (self.tar_long - self.cur_long)/dist * line_speed
+        else:
+            delta_lat = 0
+            delta_long = 0
         self.cur_lat += delta_lat
         self.cur_long += delta_long
 
