@@ -20,4 +20,4 @@ model/.catkin_workspace
 model/src/centralized_dashboard/src/__pycache__/*
 .cache/*
 tests/__pycache__/*
-tests/.coverage/*
+tests/.coverage
