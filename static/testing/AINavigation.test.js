@@ -138,7 +138,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		expect(coordToXY(lat, long)).toEqual(output);
 	});
 
-	// Tests for Null Input in coordToXY
+	// Tests for Null Input in coordToXY (not for coordToXY; using as reminder for waypointNew)
 	test('test with null input', () => {
 		const lat = null;
 		const long = null;
@@ -169,18 +169,18 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 	test('test ypos is negative with negative value', () => {
 		const lat = -10;
 		const long = 0;
-		const output = ({ 'x_pos': 0, 'y_pos': 0 });
+		const testOut = coordToXY(lat, long);
 
-		expect(coordToXY(lat, long)).toBeLessThan();
+		expect(testOut['y']).toBeLessThan(0);
 	})
 
 	//Test that y_pos is less than 0 with a positive value entered
 	test('test ypos is negative with positive value', () => {
 		const lat = 10;
 		const long = 0;
-		const output = ({ 'x_pos': 0, 'y_pos': 0 });
+		const testOut = coordToXY(lat, long);
 
-		expect(coordToXY(lat, long)).toBeLessThan();
+		expect(testOut['y']).toBeLessThan(0);
 	})
 
 	//Tests the output with max latitude (90) and max long (180) inputs

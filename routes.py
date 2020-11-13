@@ -1,10 +1,10 @@
 from flask import render_template, json, abort, request
-from model.src.centralized_dashboard.src.rover import Rover, GPSPoint
+#from model.src.centralized_dashboard.src.rover import Rover, GPSPoint
 
 
 GPS_ERROR_VALUE = None
 
-my_rover = Rover("rover1")
+#my_rover = Rover("rover1")
 
 # Render templates
 def home():
