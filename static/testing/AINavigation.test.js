@@ -134,15 +134,31 @@ describe('testing addNotification', () => {  // testing the addNotification func
 	});
 });
 
-describe('testing ESTOP button', () => {
-	test('Estop button called', () => {
+describe('testing ESTOP button', () => {  // tests the ESTOP button javscript function
 
+	beforeEach(() => {
+		$scope.notifications = "none yet";
+	});
+
+	const output1 = "none yetESTOP PRESSED! Rover is force restarting.\n"
+
+	test('Estop button notification called', () => {  // checks that the notification popped up when the function called
+		eStopButton();
+		expect($scope.notifications).toEqual(output1);
 	});
 });
 
-describe('testing GO button', () => {
-	test('Go button called', () => {
+describe('testing GO button', () => {  // tests the GO button javascript function
 
+	beforeEach(() => {
+		$scope.notifications = "none yet";
+	});
+
+	const output1 = "none yetGO button pressed! Rover is moving.\n"
+
+	test('Go button notification called', () => {  // checks that the notification popped up when the function called
+		goButton();
+		expect($scope.notifications).toEqual(output1);
 	});
 });
 
