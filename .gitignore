@@ -18,3 +18,5 @@ model/install/*
 model/.catkin_workspace
 .bash_history
 model/src/centralized_dashboard/src/__pycache__/*
+.cache/*
+unitTest/__pycache__/*
