@@ -59,4 +59,16 @@ To start the model server, we need to run roscore you can run it in the backgrou
 ```
 roscore &
 ```
+
+# Running the backend tests
+```
+ cd model/src/centralized_dashboard/src/
+```
+
+Inside here, we should find a file called rover.py, which is the one we want to test. Thus, we run:
+```
+pytest --cov=rover
+```
+
+For this iteration, we have achieved an 88% code coverage. 
 </ol>
