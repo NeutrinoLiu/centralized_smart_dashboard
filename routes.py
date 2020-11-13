@@ -49,7 +49,7 @@ def get_format_route():
 
 def api_add_notifications():
     response = json.loads(request.data.decode())
-    my_rover.remark += response["notifications"]
+    my_rover.remark = response["notifications"]
     return json.jsonify({"success": True, "notifications": my_rover.remark})
 
 # send the notification to
