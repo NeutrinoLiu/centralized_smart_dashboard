@@ -1,5 +1,9 @@
+this branch is for Unit Testing of backend
+
 # Centralized Smart Dashboard
 Centralized Smart Dashboard developed for the rover of Wisconsin Robotics team. 
+Iteration number 1 for COMPSCI 506: Software Engineer. 
+Code cutoff date: Friday, October 30, 2020
 
 # Prerequisites
 [Docker](https://docs.docker.com/get-started)

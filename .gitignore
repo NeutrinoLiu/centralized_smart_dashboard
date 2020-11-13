@@ -10,9 +10,11 @@
 .gitconfig
 .ros/*
 .vs/*
-__pycache__/
+__pycache__/*
 static/.DS_Store
 model/build/*
 model/devel/*
 model/install/*
 model/.catkin_workspace
+.bash_history
+model/src/centralized_dashboard/src/__pycache__/*
