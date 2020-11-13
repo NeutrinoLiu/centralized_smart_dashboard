@@ -176,13 +176,14 @@
                 });
         }
 
-        //Opens a new window with a live stream of the camera at the IP address sent
+ /*       //Opens a new window with a live stream of the camera at the IP address sent
+ */
         function cameraIP() {  // future iteration item
             alert("A new camera stream IP address has been opened.");
         }
 
         function getCameraIP(){  //future iteration item
-
+        
         }
 
         function addNotification(newNotification) {

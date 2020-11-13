@@ -4,7 +4,6 @@
 
 /.vs/slnx.sqlite
 /.vs/centralized_smart_dashboard/v16/.suo
-=======
 .DS_Store
 .python_history
 .gitconfig
@@ -18,3 +17,6 @@ model/install/*
 model/.catkin_workspace
 .bash_history
 model/src/centralized_dashboard/src/__pycache__/*
+node_modules/
+package-lock.json
+.bash_history

@@ -78,7 +78,10 @@
             }
         }
 
-
+        /*
+        The fullWaypoint method is a dictionary to hold the latitude, longitude, x and y position of a Waypoint
+        @author: piedras77
+        */
         function fullWaypoint(waypoint) {
             waypoint['lat'] = parseFloat(waypoint['lat'])
             waypoint['long'] = parseFloat(waypoint['long'])
@@ -90,6 +93,11 @@
             return waypoint;
         }
 
+        /*
+        The coordToXY method takes in latitude and longitude and translates to a x and y position for the map.
+        The positions are relative positioning and not absolute positioning on the map
+        @author: piedras77, prao7
+        */
         function coordToXY(latitude, longitude) {
             /*
             Algorithm to change from coord to XY with the pixel scaling factor
@@ -97,6 +105,7 @@
             and height of the map.
             */
 
+            // South is positive, east is positive
             scale_factor = 1;
             x_pos = Math.abs(parseInt(longitude) - longitude);
             y_pos = Math.abs(parseInt(latitude) - latitude);
@@ -168,7 +177,6 @@
                 ).then((response) => {
                     $scope.waypoints = response.data.waypoints;
                     addNotification("Deleted Waypoint");
-                    // addWaypointToMap($scope.waypoints[$scope.waypoints.length - 1]);
                 }, (error) => {
                     connectionLost();
                 });
@@ -177,6 +185,17 @@
         //Opens a new window with a live stream of the camera at the IP address sent
         function cameraIP() {  // future iteration item
             alert("A new camera stream IP address has been opened.");
+        }
+
+        function addNotification(newNotification) {
+            $scope.notifications += (newNotification + '\n');
+            $http.post(PATH + '/api/notifications', {
+                'notifications': $scope.notifications
+            }).then((response) => {
+                $scope.notifications = response.data.notifications;
+            }, (error) => {
+                connectionLost();
+            })
         }
 
         function addNotification(newNotification) {
@@ -228,9 +247,9 @@
                 });
         }
 
-        function getCameraIP(){  //future iteration item
+/*        function getCameraIP(){  //future iteration item
 
-        }
+        } */
 
         function connectionLost() {
             alert("Connection lost to server");
