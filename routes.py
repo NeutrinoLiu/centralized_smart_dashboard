@@ -48,11 +48,13 @@ def get_format_route():
 # API routes
 
 def api_add_notifications():
+    response = json.loads(request.data.decode())
+    my_rover.remark += response["notifications"]
     return json.jsonify({"success": True})
 
 # send the notification to
 def api_send_notifications():
-    notifications = my_rover.get_notification()
+    notifications = my_rover.remark
     return json.jsonify({"success": True, "notifications": notifications})
 # send rover to next waypoint
 def api_go_button():
@@ -113,8 +115,8 @@ def init_website_routes(app):
         app.add_url_rule('/science', 'science', science, methods=['GET'])
         app.add_url_rule('/coming-soon', 'coming-soon', coming_soon, methods=['GET'])
 
-        app.add_url_rule('/api/notification', 'api_send_notifications', api_send_notifications, methods=['GET'])
-        app.add_url_rule('/api/notification', 'api_add_notifications', api_add_notifications, methods=['POST'])
+        app.add_url_rule('/api/notifications', 'api_send_notifications', api_send_notifications, methods=['GET'])
+        app.add_url_rule('/api/notifications', 'api_add_notifications', api_add_notifications, methods=['POST'])
         app.add_url_rule('/api/emergency-stop', 'api_emergency_stop', api_emergency_stop, methods=['GET'])
         app.add_url_rule('/api/gps', 'api_gps', api_gps, methods=['GET'])
         app.add_url_rule('/api/route', 'api_set_route', api_set_route, methods=['POST'])
