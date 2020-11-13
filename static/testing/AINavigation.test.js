@@ -319,26 +319,44 @@ describe('Testing waypointNew', () => {
 });
 
 describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoint functionality
-	// TODO:  Make a mock of the waypoints array to test with
-	test('test with normal waypoint', () => {
-		expect(deleteLatestWaypoint()).toHaveReturnedWith(0);
+	
+	beforeEach(() => {  // setup initial waypoints array
+		$scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+	})
+
+	const output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
+	const output2 = [];
+	const output3 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
+	const output4 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+
+	test('test with normal waypoint', () => {  // just test with removing 1 waypoint
+		deleteLatestWaypoint();
+		expect($scope.waypoints).toEqual(output1);
 	});
 
 	test('test with no waypoints', () => {
-		expect(deleteLatestWaypoint()).toHaveReturnedWith(0);
+		$scope.waypoints = []  // empty array out since we need it empty for this test
+		deleteLatestWaypoint();
+		expect($scope.waypoints).toEqual(output2);
 	});
 
 	test('test delete then add then delete waypoint', () => {  // calls deleteLatestWaypoint twice and adds a waypoint between the calls
-		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(1, 0);  // should return 0 each time
-		
-		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(2, 0);  // should return 0 each time
+		deleteLatestWaypoint();
+		$scope.waypoints.push({'lat': 56, 'long': 43, 'x_pos': 7, 'y_pos': 8,'index': 2})
+		deleteLatestWaypoint();
+		expect($scope.waypoints).toEqual(output3);
 	});
 
 	test('test with many waypoints', () => {  // calls many times in a row with many waypoints in array
-		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(1, 0);  // should return 0 each time
-		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(2, 0);  // should return 0 each time
-		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(3, 0);  // should return 0 each time
-		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(4, 0);  // should return 0 each time
-		expect(deleteLatestWaypoint()).toHaveNthReturnedWith(5, 0);  // should return 0 each time
+		$scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2},
+		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 3}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 4},
+		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 5}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6},
+		{'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}]
+		deleteLatestWaypoint();
+		deleteLatestWaypoint();
+		deleteLatestWaypoint();
+		deleteLatestWaypoint();
+		deleteLatestWaypoint();
+		expect($scope.waypoints).toEqual(output4);
 	});
 });
