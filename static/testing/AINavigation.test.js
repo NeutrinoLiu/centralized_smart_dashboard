@@ -183,6 +183,32 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		expect(testOut['y']).toBeLessThan(0);
 	})
 
+	//Test that when point A is more west than point B, x_pos for A is less than x_pos for B
+	test('west point A.xpos less than east point B.xpos', () => {
+		const latA = 0;
+		const longA = 40;
+		const latB = 0;
+		const longB = 80;
+
+		const testA = coordToXY(latA, longA);
+		const testB = coordToXY(latB, longB);
+
+		expect(testA['x']).toBeLessThan(testB['x']);
+	})
+
+	//Test that when point A is more north than point B, y_pos for A is less than y_pos for B
+	test('north point A.xpos less than south point B.xpos', () => {
+		const latA = 80;
+		const longA = 0;
+		const latB = 40;
+		const longB = 0;
+
+		const testA = coordToXY(latA, longA);
+		const testB = coordToXY(latB, longB);
+
+		expect(testA['y']).toBeLessThan(testB['y']);
+	})
+
 	//Tests the output with max latitude (90) and max long (180) inputs
 	/*test('test with very max input', () => {
 		const lat = 757124;
@@ -192,7 +218,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		expect(coordToXY(lat, long)).toEqual(output);
 	});*/
 	/*
-	The minmum value should be at the 
+	The minimum value (save for waypointNew?)
 	*/
 	test('test with very large negative input', () => {
 		const lat = -90.000000;
