@@ -15,10 +15,10 @@ class NavData:
         self.publisher = rospy.Publisher(topic_name, NavigationMsg, queue_size=1)
         self.subscriber = rospy.Subscriber('/set_nav_data', NavigationMsg, self.set_target)
         self.rate = rospy.Rate(frequency)
+        self.cur_lat = 0
+        self.cur_long = 0
         self.tar_lat = 0
         self.tar_long = 0
-        self.cur_lat = 43.075457
-        self.cur_long = -89.404166
 
     def set_target(self, data):
         self.tar_lat = data.tar_lat
@@ -39,7 +39,7 @@ class NavData:
 
     # a simulator of moving the mock rover car
     def move_forward(self):
-        line_speed = 0.02
+        line_speed = 0.01
         dist = sqrt((self.tar_lat - self.cur_lat)*(self.tar_lat - self.cur_lat) + (self.tar_long - self.cur_long)*(self.tar_long - self.cur_long))
         delta_lat = (self.tar_lat - self.cur_lat)/dist * line_speed
         delta_long = (self.tar_long - self.cur_long)/dist * line_speed

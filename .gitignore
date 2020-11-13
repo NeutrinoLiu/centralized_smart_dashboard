@@ -19,4 +19,4 @@ model/.catkin_workspace
 .bash_history
 model/src/centralized_dashboard/src/__pycache__/*
 .cache/*
-unitTest/__pycache__/*
+tests/__pycache__/*

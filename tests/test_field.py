@@ -16,7 +16,7 @@ def testNode():
 
 @pytest.fixture(scope="function")
 def r():
-    return (random.uniform(-180, 180), random.uniform(-180, 180)) 
+    return (random.uniform(-180, 180), random.uniform(-90, 90)) 
 
 ################# CLASS FIELD TEST ####################
 

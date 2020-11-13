@@ -80,14 +80,14 @@ def test_set_speed_illegal2(testNode):
         assert False
 
 def test_set_target(testNode):
-    target = GPSPoint(random.uniform(-10, 10), random.uniform(-10, 10))
+    target = GPSPoint(random.uniform(-90, 90), random.uniform(-180, 180))
     testNode.set_new_target(target)
     time.sleep(1)
     assert (testNode.buffer_lati == target.lati) and (testNode.buffer_longt == target.longt)
 
 def test_set_target_illegal(testNode):
     try:
-        testNode.set_new_target(random.uniform(-180, 180))
+        testNode.set_new_target(random.uniform(-90, 90))
     except InvalidTarget as e:
         assert e.msg == "[InvalidTarget] non GPS format input"
     else:
