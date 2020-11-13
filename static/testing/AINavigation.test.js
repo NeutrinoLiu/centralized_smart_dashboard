@@ -58,49 +58,48 @@ describe('testing init function', () => {
 	});
 });
 
-describe('Testing fullWaypoint', () => {  // coordToXY is tied into this function.  Output for these tests may be wrong due to not understanding coordToXY
-	// TODO Make a mock waypoints array to test with
-	test('test full waypoint returns expected value', () => {  // TODO
-		const input = ({'lat': 85, 'long': 47});
-		const output = ({'lat': 85, 'long': 47, 'x_pos': 0, 'y_pos': 0, 'index': blah});  // TODO:  Fix this and mock the index
-
-		expect(fullWaypoint(input)).toEqual(output);
+//This test ensures that each field of waypoint is not null
+describe('Testing fullWaypoint', () => {
+	//Gives a waypoint with only latitude and longitude to the function
+	beforeEach(() => {
+		testWaypoint = { 'lat': 10, 'long': 20 };
 	});
 
-	test('test full waypoint with negative numbers', () => {  // TODO
-		const input = ({'lat': -85.4132, 'long': -47.2151});
-		const output = ({'lat': -85.4132, 'long': -47.2151, 'x_pos': 21.51, 'y_pos': 41.32, 'index': blah});
+	//Tests that lat is not null
+	test('testWaypoint[lat] not null', () => {
+		fullWaypoint(testWaypoint);
 
-		expect(fullWaypoint(input)).toEqual(output);
+		expect(testWaypoint['lat']).not.toBeNull();
 	});
 
-	test('test full waypoint with null input', () => {  // TODO
-		const input = null;
-		const output = null;
+	//Tests that long is not null
+	test('testWaypoint[long] not null', () => {
+		fullWaypoint(testWaypoint);
 
-		expect(fullWaypoint(input)).toEqual(output);
+		expect(testWaypoint['long']).not.toBeNull();
 	});
 
-	test('test full waypoint with large numbers', () => {  // TODO
-		const input = ({'lat': 135278129, 'long': 143187123});
-		const output = ({'lat': 135278129, 'long': 143187123, 'x_pos': 0, 'y_pos': 0, 'index': blah});
+	//Tests that index is not null
+	test('testWaypoint[index] not null', () => {
+		fullWaypoint(testWaypoint);
 
-		expect(fullWaypoint(input)).toEqual(output);
+		expect(testWaypoint['index']).not.toBeNull();
 	});
 
-	test('test full waypoint with very small positive numbers', () => {  // TODO
-		const input = ({'lat': 0.000201313131, 'long': 0.00001312512});
-		const output = ({'lat': 0.000201313131, 'long': 0.00001312512, 'x_pos': 0.0001312512, 'y_pos': 0.00201313131, 'index': blah});
+	//Tests that x_pos is not null
+	test('testWaypoint[x_pos] not null', () => {
+		fullWaypoint(testWaypoint);
 
-		expect(fullWaypoint(input)).toEqual(output);
+		expect(testWaypoint['x_pos']).not.toBeNull();
 	});
 
-	test('test full waypoint with very negative numbers', () => {  // TODO
-		const input = ({'lat': -854142, 'long': -478787}):
-		const output = ({'lat': -854142, 'long': -478787, 'x_pos': 0, 'y_pos': 0, 'index': blah});
+	//Tests that y_pos is not null
+	test('testWaypoint[y_pos] not null', () => {
+		fullWaypoint(testWaypoint);
 
-		expect(fullWaypoint(input)).toEqual(output);
+		expect(testWaypoint['y_pos']).not.toBeNull();
 	})
+
 });
 
 describe('testing addNotification', () => {  // testing the addNotification function
@@ -299,8 +298,8 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		expect(coordToXY(lat, long)).toEqual(output);
 	});*/
 });
-
-describe('Testing addWaypointToMap', () => {  //TODO: Figure out how to test this
+//Not testing this function for now because it's officially terrible to test
+describe('Testing addWaypointToMap', () => {
 	test('test null waypoint', () => {
 
 	});
