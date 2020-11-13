@@ -16,15 +16,15 @@ class Cmd:      # the object sending from frontend to the local publisher
                         new_speed=[],
                         remark='<unclaimed>'):
         self.new_route = new_route  
-        self.new_arm = new_arm
+        # self.new_arm = new_arm
         self.new_speed = new_speed
         self.remark = remark
         self.cmd_code = 0           # the code indicates which type of command it is
 
         if new_route != []:
             self.cmd_code = self.cmd_code | 0b0001  # last bit: new route setting cmd
-        if new_arm != []:
-            self.cmd_code = self.cmd_code | 0b0010  # 2nd bit: new arm gesture setting
+        # if new_arm != []:
+        #     self.cmd_code = self.cmd_code | 0b0010  # 2nd bit: new arm gesture setting
         if new_speed != []:
             self.cmd_code = self.cmd_code | 0b0100  # 3rd bit: 
 
@@ -40,11 +40,9 @@ class GPSPoint:
         return '(' + str(self.lati) + ',' + str(self.longt) + ')'
 
 class Rover:
-    def __init__(self, name, frequency=100, auto_update=False):    # frequency is the commmand topic sending freq
+    def __init__(self, name, frequency=100, auto_init=True):    # frequency is the commmand topic sending freq
         # NOTICE:   those fields are though read_only for outside program but not protected.
         #           make sure you did not overwrite them mistakenly
-        self.__auto_update = auto_update
-        # disable the route auto updating for iteration2
         self.gps_longt = 0.0
         self.gps_lati = 0.0
         # the current pos of the car
@@ -53,7 +51,7 @@ class Rover:
         # the target pos of the car
         self.ori = 0.0
         self.speed = []
-        self.arm = []
+        # self.arm = []
         self.remark = '<empty>'
         self.name = name
         # self.warn_flag = False # indicate whenever there is a warning.
@@ -64,17 +62,19 @@ class Rover:
                                 # r[0]    r[1]    r[2]                            for example: it get updated when rover arrive r[1]
                                 #         0--*----O--------O-------O------------O
                                 #         r[0]    r[1]     r[2]
-        # self.connected = False
+        if auto_init:
+            self.ros_init()
 
+    def ros_init(self):
         #ros init
-        rospy.init_node(name, anonymous=False)
+        rospy.init_node(self.name, anonymous=False)
         #sub
         rospy.Subscriber('/nav_data', NavigationMsg, self.nav_callback)
         rospy.Subscriber('/drive_data', Drive, self.drive_callback)
         #pub
         self.navi_pub = rospy.Publisher('/set_nav_data', NavigationMsg, queue_size=1)   # it is the topic that we send command to rover 
         self.driv_pub = rospy.Publisher('/set_drive_data', Drive, queue_size=1)              # so it should have a differnt name
-        self.timer = rospy.Rate(frequency)
+
     def __debug_print(self, str):
         pass
         # print(str)  # currently we just output to consol
@@ -89,7 +89,6 @@ class Rover:
         # TODO: may need to implement warn buffer in the future
 
     def nav_callback(self, nav_data):
-        self.connected = True
         self.ori = nav_data.heading
         self.gps_longt = nav_data.cur_long
         self.gps_lati = nav_data.cur_lat
@@ -99,7 +98,6 @@ class Rover:
         self.buffer_lati = nav_data.tar_lat
 
     def drive_callback(self, drive_data):
-        self.connected = True
         self.speed = [      drive_data.wheel0,
                             drive_data.wheel1,
                             drive_data.wheel2,
@@ -150,9 +148,8 @@ class Rover:
     def clear_noti_buffer(self):
         self.remark = '<empty>'
 
-    def clear_connect_flag(self):
-        self.connected = False      #TODO: try to using threading timer to check the connection
-
     def __repr__(self):
         return "this is Rover " + self.name + " !"
 
+    def shut_down(self):
+        rospy.signal_shutdown(self.name + " is off.")
