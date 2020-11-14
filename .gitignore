@@ -22,3 +22,6 @@ package-lock.json
 .bash_history
 .cache/*
 tests/__pycache__/*
+.cache/*
+unitTest/__pycache__/*
+unitTest/.coverage
