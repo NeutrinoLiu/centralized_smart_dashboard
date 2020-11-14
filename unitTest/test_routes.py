@@ -93,7 +93,7 @@ def test_go_button_if_empty(client):
 
 # TODO make a verification that the rover is actually moving towards the new target
 def test_go_button(client):
-    url = "/api/set-route"
+    url = "/api/route"
     mock_request_data = {"waypoints": [{"lat": 23, "long": -52}, {"lat": -58.72, "long": 23.65}]}
     response = client.post(url, data=json.dumps(mock_request_data))
     url = "/api/go-button"
