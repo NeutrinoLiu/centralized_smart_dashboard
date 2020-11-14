@@ -1,7 +1,10 @@
 from flask import Flask, json
 import pytest
 from routes import init_website_routes, my_rover, get_format_route
-from model.src.centralized_dashboard.src.rover import GPSPoint
+import sys
+sys.path.append('../model/src/centralized_dashboard/src')
+from rover import GPSPoint
+#from model.src.centralized_dashboard.src.rover import GPSPoint
 
 @pytest.fixture
 def client():
