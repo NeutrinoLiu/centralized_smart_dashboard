@@ -14,6 +14,7 @@ def client():
     app.config['TESTING'] = True
     init_website_routes(app)
     client = app.test_client()
+    return client
 
 
 
