@@ -70,5 +70,11 @@ Inside here, we should find a file called rover.py, which is the one we want to 
 pytest --cov=rover
 ```
 
+For the flask tests go to the unitTest folder and run:
+
+```
+pytest --cov=routes
+```
+
 For this iteration, we have achieved an 88% code coverage. 
 </ol>
