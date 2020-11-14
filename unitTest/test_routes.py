@@ -29,7 +29,7 @@ def client(flask_app):
 def test_gps1(client):
     url = "/api/gps"
     response = client.get(url)
-    assert response.get_data() == (json.dumps({"success": True, "lat": 0, "long": 0})+"\n").encode("UTF-8")
+    assert json.loads(response.get_data()) == {"success": True, "lat": 0, "long": 0}
 
 
 def test_get_route_without_setting(client):
@@ -57,7 +57,7 @@ def test_set_and_get_route(client):
                                        {"lat": -33.72, "long": 56.65}]}
     response = client.post(url, data=json.dumps(mock_request_data))
     # verify response is correct
-    assert json.loads(response.get_data) == {"success": True, "waypoints": [{"lat": 0, "long": 0},
+    assert json.loads(response.get_data()) == {"success": True, "waypoints": [{"lat": 0, "long": 0},
                                                                               {"lat": -58.72, "long": 23.65},
                                                                               {"lat": -58, "long": 23},
                                                                               {"lat": -33.72, "long": 56.65}]}
