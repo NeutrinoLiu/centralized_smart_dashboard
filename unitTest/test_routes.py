@@ -111,14 +111,14 @@ def test_add_notifications(client):
     url = "/api/notifications"
     mock_request_data = {"notifications": "\nnotification1\nnotification2"}
     response = client.post(url, data=json.dumps(mock_request_data))
-    assert json.loads(response.get_data()) == {"success": True, "\nnotifications": "notification1\nnotification2"}
+    assert json.loads(response.get_data()) == {"success": True, "notifications": "\nnotification1\nnotification2"}
     mock_request_data = {"notifications": "\nnotification3\nnotification4"}
     response = client.post(url, data=json.dumps(mock_request_data))
     assert json.loads(response.get_data()) == {"success": True, "notifications":
-        "notification1\nnotification2\nnotification3\nnotification4"}
+        "\nnotification1\nnotification2\nnotification3\nnotification4"}
     response = client.get(url)
     assert json.loads(response.get_data()) == {"success": True, "notifications":
-        "notification1\nnotification2\nnotification3\nnotification4"}
+        "\nnotification1\nnotification2\nnotification3\nnotification4"}
 
 # check to make sure get format route works
 def test_get_format_route(client):
