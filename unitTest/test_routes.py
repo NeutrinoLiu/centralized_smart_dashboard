@@ -13,8 +13,10 @@ def flask_app():
     app = Flask(__name__)
     app.config['TESTING'] = True
     init_website_routes(app)
+    with app.app_context():
+        yield app
     #client = app.test_client()
-    yield app
+
 
 @pytest.fixture
 def client(flask_app):
