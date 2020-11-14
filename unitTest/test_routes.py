@@ -1,7 +1,9 @@
 from flask import Flask, json
 import pytest
-from routes import init_website_routes, my_rover, get_format_route
 import sys
+sys.path.append('..')
+from routes import init_website_routes, my_rover, get_format_route
+
 sys.path.append('../model/src/centralized_dashboard/src')
 from rover import GPSPoint
 #from model.src.centralized_dashboard.src.rover import GPSPoint
