@@ -1,7 +1,5 @@
 from flask import Flask, json
 import pytest
-import coverage
-import app
 from routes import init_website_routes, my_rover, get_format_route
 from model.src.centralized_dashboard.src.rover import GPSPoint
 
