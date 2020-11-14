@@ -41,18 +41,11 @@
             <div id="map" style="background-color:#DEB887; position:relative">
             <panzoomwidget panzoom-id="PanZoom" style="background-color:#DEB887; position:absolute;top:10px;left:10px;z-index:1"></panzoomwidget>
                 <panzoom id="PanZoom" config="panzoomConfig" model="panzoomModel" style="background-color:#DEB887; width:100%; height: 550px">
-<<<<<<< HEAD
-                    <svg style="position:absolute;" width="100%" height="550px">
-                       <div id="{{ '{{point.index}}' }}" ng-repeat="point in waypoints" ng-attr-x="{{ '{{point.x_pos}}' }}" ng-attr-y="{{ '{{point.y_pos}}' }}" ng-attr-width="10" ng-attr-height="10" rx="10" ry="10" style="fill:red;stroke-width:2;stroke:rgb(255,0,0)">
-                        <img style="z-index: -1;" src="{{ url_for('static', filename='imgs/pin.svg') }}" width="1" height="1"><br>
-                       </div> 
-=======
                     <svg id="map" style="position:absolute;" width="100%" height="550px">
                         <div ng-repeat="point in waypoints" ng-attr-x="{{ '{{point.x_pos}}' }}" ng-attr-y="{{ '{{point.y_pos}}' }}" ng-attr-width="10" ng-attr-height="10" rx="10" ry="10" style="fill:red;stroke-width:2;stroke:rgb(255,0,0)">
                             <img ng-attr-id="{{ '{{point.index}}' }}" src="{{ url_for('static', filename='imgs/pin.svg') }}" width="1" height="1"><br>
 
                         </div>
->>>>>>> 62d1862bd8c8d939b33ed379ccc2658f07a453af
                     </svg>
                 </panzoom>
             </div>

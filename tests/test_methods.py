@@ -4,8 +4,8 @@ import time
 
 import sys
 sys.path.append('../model/src/centralized_dashboard/src') # change dir to rover.py dir
-from rover import Rover, GPSPoint
-from userErr import * 
+from rover import * 
+# from userErr import * 
 
 ############## FIXTURE WITHOUT INIT ROS ##############
 

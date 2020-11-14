@@ -11,7 +11,22 @@ from functools import reduce
 from centralized_dashboard.msg import NavigationMsg
 from centralized_dashboard.msg import Drive
 
-from userErr import * 
+# from userErr import * 
+
+class Err(Exception):
+    '''
+    base class
+    '''
+    pass
+
+class InvalidSpeed(Err):
+    def __init__(self, msg):
+        self.msg = "[InvalidSpeed] " + msg
+
+class InvalidTarget(Err):
+    def __init__(self, msg):
+        self.msg = "[InvalidTarget] " + msg
+        
 
 class Cmd:      # the object sending from frontend to the local publisher
     def __init__(self,  new_route=[], 

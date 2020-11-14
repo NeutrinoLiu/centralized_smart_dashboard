@@ -3,7 +3,7 @@
 	var app = angular.module('ERDM', ['panzoom', 'panzoomwidget']);
 	app.controller('ERDMController', ['$scope', '$window', '$http', 'PanZoomService', ERDMController]);
 
-	function ERDMController($scope, $window, $http) {
+	function ERDMController($scope, $window, $http, PanZoomService) {
 		$scope.homepage = homepage;
 		$scope.waypointNew = waypointNew;
 		$scope.cameraIP = cameraIP;
