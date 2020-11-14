@@ -11,6 +11,7 @@ from rover import GPSPoint
 @pytest.fixture
 def client():
     app = Flask(__name__)
+    app.config['TESTING'] = True
     init_website_routes(app)
     client = app.test_client()
 
