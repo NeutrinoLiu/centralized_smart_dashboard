@@ -115,15 +115,15 @@ def test_add_notifications(client):
     mock_request_data = {"notifications": "\nnotification3\nnotification4"}
     response = client.post(url, data=json.dumps(mock_request_data))
     assert json.loads(response.get_data()) == {"success": True, "notifications":
-        "\nnotification1\nnotification2\nnotification3\nnotification4"}
+        "notification1\nnotification2\nnotification3\nnotification4"}
     response = client.get(url)
     assert json.loads(response.get_data()) == {"success": True, "notifications":
-        "\nnotification1\nnotification2\nnotification3\nnotification4"}
+        "notification1\nnotification2\nnotification3\nnotification4"}
 
 # check to make sure get format route works
 def test_get_format_route(client):
     route = [GPSPoint(23, -52), GPSPoint(-58.72, 23.65), GPSPoint(0, -34.231564), GPSPoint(-10.123412, 24.6555)]
-    correct_formatted_route = {"waypoints": [{"lat": 23, "long": -52}, {"lat": -58.72, "long": 23.65},
-                                             {"lat": 0, "long": -34.231564}, {"lat": -10.123412, "long": 24.6555}]}
+    correct_formatted_route = [{"lat": 23, "long": -52}, {"lat": -58.72, "long": 23.65},
+                                             {"lat": 0, "long": -34.231564}, {"lat": -10.123412, "long": 24.6555}]
     my_rover.route_state = route
     assert get_format_route() == correct_formatted_route
