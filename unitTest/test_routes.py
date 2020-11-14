@@ -9,13 +9,16 @@ from rover import GPSPoint
 #from model.src.centralized_dashboard.src.rover import GPSPoint
 
 @pytest.fixture
-def client():
+def flask_app():
     app = Flask(__name__)
     app.config['TESTING'] = True
     init_website_routes(app)
-    client = app.test_client()
-    return client
+    #client = app.test_client()
+    yield app
 
+@pytest.fixture
+def client(flask_app):
+    return flask_app.test_client()
 
 
 
