@@ -66,7 +66,7 @@ def test_set_and_get_route(client):
     assert my_rover.route_state == mock_correct_route2
     response = client.get(url)
     # verify get route still gets the correct one
-    assert json.loads(response.get_data) == {"success": True, "waypoints": [{"lat": 0, "long": 0},
+    assert json.loads(response.get_data()) == {"success": True, "waypoints": [{"lat": 0, "long": 0},
                                                                              {"lat": -58.72, "long": 23.65},
                                                                              {"lat": -58, "long": 23},
                                                                              {"lat": -33.72, "long": 56.65}]}
