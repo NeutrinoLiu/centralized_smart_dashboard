@@ -112,7 +112,7 @@ def test_add_notifications(client):
     mock_request_data = {"notifications": "\nnotification1\nnotification2"}
     response = client.post(url, data=json.dumps(mock_request_data))
     assert json.loads(response.get_data()) == {"success": True, "notifications": "\nnotification1\nnotification2"}
-    mock_request_data = {"notifications": "\nnotification3\nnotification4"}
+    mock_request_data = {"notifications": "\nnotification1\nnotification2\nnotification3\nnotification4"}
     response = client.post(url, data=json.dumps(mock_request_data))
     assert json.loads(response.get_data()) == {"success": True, "notifications":
         "\nnotification1\nnotification2\nnotification3\nnotification4"}
