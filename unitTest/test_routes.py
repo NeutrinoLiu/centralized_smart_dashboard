@@ -15,6 +15,8 @@ def flask_app():
     init_website_routes(app)
     with app.app_context():
         yield app
+    my_rover.route_state = []
+    my_rover.remark = ''# reset after each testcase
     #client = app.test_client()
 
 
