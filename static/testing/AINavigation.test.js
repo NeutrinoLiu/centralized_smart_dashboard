@@ -1,12 +1,13 @@
 // Unit testing file for the AI Navigation controller
 
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-
+ //import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+ import { createTestApp } from 'angularjs-jest';
 /*
 This is a module just for grabbing the onClick in HTML
 source: https://stackoverflow.com/questions/40093013/unit-testing-click-event-in-angular
 This lets us instantiate the actual button
 */
+/*
 describe('', () => { //TODO: Adapt for the homepagebutton
   let fixture: ComponentFixture<home>; // home field is supposed to be the homepage instantiated
   let component: home;
@@ -22,7 +23,7 @@ describe('', () => { //TODO: Adapt for the homepagebutton
     });
   }));
 });
-
+*/
 
 describe('testing homepage function', () => { //TODO Check for onClick Functions
 	
@@ -335,7 +336,7 @@ describe('Testing waypointNew', () => {
 	const output3 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': -90, 'long': -180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
 	const output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 90, 'long': 180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
 	const output5 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 0, 'long': 0, 'x_pos': 0, 'y_pos': 0, 'index': 2 }];
-	const output6 = ;
+	//const output6 = ;
 
 	//Null input tests invalid and doesn't add a waypoint
 	test('test with null latitude', () => {

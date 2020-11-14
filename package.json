@@ -1,5 +1,8 @@
 {
   "name": "csd-application",
+  "jest": {
+    "verbose": true
+  },
   "description": "Sample app for CSD for AngularJS",
   "version": "1.0.2",
   "type": "module",
@@ -9,5 +12,8 @@
   "devDependencies": {
     "angular-mocks": "^1.8.2",
     "jest-cli": "^26.6.3"
+  },
+  "dependencies": {
+    "angular": "^1.8.2"
   }
 }

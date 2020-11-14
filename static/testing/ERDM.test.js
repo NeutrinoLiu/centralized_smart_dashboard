@@ -1,52 +1,52 @@
-// Unit testing file for the ERDM controller
+// unit testing file for the erdm controller
 
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-
+//import { testbed, async, componentfixture } from '@angular/core/testing';
+import { createtestapp } from 'angularjs-jest';
 /*
-This is a module just for grabbing the onClick in HTML
+this is a module just for grabbing the onclick in html
 source: https://stackoverflow.com/questions/40093013/unit-testing-click-event-in-angular
-This lets us instantiate the actual button
+this lets us instantiate the actual button
 */
-describe('', () => { //TODO: Adapt for the homepagebutton
-	let fixture: ComponentFixture<home>; // home field is supposed to be the homepage instantiated
+/*
+describe('', () => { //todo: adapt for the homepagebutton
+	let fixture: componentfixture<home>; // home field is supposed to be the homepage instantiated
 	let component: home;
 
-	beforeEach(async(() => {
-		TestBed.configureTestingModule({
+	beforeeach(async(() => {
+		testbed.configuretestingmodule({
 			imports: [],
 			declarations: [home],
 			providers: []
-		}).compileComponents().then(() => {
-			fixture = TestBed.createComponent(home);
-			component = fixture.componentInstance;
+		}).compilecomponents().then(() => {
+			fixture = testbed.createcomponent(home);
+			component = fixture.componentinstance;
 		});
 	}));
 });
+*/
+describe('testing homepage function', () => { //todo check for onclick functions
 
-
-describe('testing homepage function', () => { //TODO Check for onClick Functions
-
-	// Every instance of home refers to the HTML Homepage, 'homepage' means for the controller method
+	// every instance of home refers to the html homepage, 'homepage' means for the controller method
 	it('should', async(() => {
-		spyOn(home, 'homepage');
+		spyon(home, 'homepage');
 
-		let button = fixture.debugElement.nativeElement.querySelector('button');
+		let button = fixture.debugelement.nativeelement.queryselector('button');
 		button.click();
 
-		fixture.whenStable().then(() => {
-			expect(home.onEditButtonClick).toHaveBeenCalled();
+		fixture.whenstable().then(() => {
+			expect(home.oneditbuttonclick).tohavebeencalled();
 		});
 	}));
 
 	// tests if the controller gets called when homepage is hit	
 	/*
-	When button for homepage is clicked, then the controller function should be called
+	when button for homepage is clicked, then the controller function should be called
 	*/
 	test('test homepage called', () => {
 
 	});
 
-	// Testing that the path updates when homepage runs
+	// testing that the path updates when homepage runs
 	test('testing that path updates', () => {
 
 	});
@@ -58,208 +58,208 @@ describe('testing init function', () => {
 	});
 });
 
-//This test ensures that each field of waypoint is not null
-describe('Testing fullWaypoint', () => {
-	//Gives a waypoint with only latitude and longitude to the function
-	beforeEach(() => {
-		testWaypoint = { 'lat': 10, 'long': 20 };
+//this test ensures that each field of waypoint is not null
+describe('testing fullwaypoint', () => {
+	//gives a waypoint with only latitude and longitude to the function
+	beforeeach(() => {
+		testwaypoint = { 'lat': 10, 'long': 20 };
 	});
 
-	//Tests that lat is not null
-	test('testWaypoint[lat] not null', () => {
-		fullWaypoint(testWaypoint);
+	//tests that lat is not null
+	test('testwaypoint[lat] not null', () => {
+		fullwaypoint(testwaypoint);
 
-		expect(testWaypoint['lat']).not.toBeNull();
+		expect(testwaypoint['lat']).not.tobenull();
 	});
 
-	//Tests that long is not null
-	test('testWaypoint[long] not null', () => {
-		fullWaypoint(testWaypoint);
+	//tests that long is not null
+	test('testwaypoint[long] not null', () => {
+		fullwaypoint(testwaypoint);
 
-		expect(testWaypoint['long']).not.toBeNull();
+		expect(testwaypoint['long']).not.tobenull();
 	});
 
-	//Tests that index is not null
-	test('testWaypoint[index] not null', () => {
-		fullWaypoint(testWaypoint);
+	//tests that index is not null
+	test('testwaypoint[index] not null', () => {
+		fullwaypoint(testwaypoint);
 
-		expect(testWaypoint['index']).not.toBeNull();
+		expect(testwaypoint['index']).not.tobenull();
 	});
 
-	//Tests that x_pos is not null
-	test('testWaypoint[x_pos] not null', () => {
-		fullWaypoint(testWaypoint);
+	//tests that x_pos is not null
+	test('testwaypoint[x_pos] not null', () => {
+		fullwaypoint(testwaypoint);
 
-		expect(testWaypoint['x_pos']).not.toBeNull();
+		expect(testwaypoint['x_pos']).not.tobenull();
 	});
 
-	//Tests that y_pos is not null
-	test('testWaypoint[y_pos] not null', () => {
-		fullWaypoint(testWaypoint);
+	//tests that y_pos is not null
+	test('testwaypoint[y_pos] not null', () => {
+		fullwaypoint(testwaypoint);
 
-		expect(testWaypoint['y_pos']).not.toBeNull();
+		expect(testwaypoint['y_pos']).not.tobenull();
 	})
 
 });
 
-describe('testing addNotification', () => {  // testing the addNotification function
+describe('testing addnotification', () => {  // testing the addnotification function
 
-	beforeEach(() => {
+	beforeeach(() => {
 		$scope.notifications = "none yet";
 	});
 
-	const output1 = "none yetNew Notification Sent To Server\n";
-	const output2 = "none yetHello\nThis\nIS A New\nNotification\nThat We\nSent!\n";
+	const output1 = "none yetnew notification sent to server\n";
+	const output2 = "none yethello\nthis\nis a new\nnotification\nthat we\nsent!\n";
 	const output3 = "none yet\n";
 
-	test('Notifications are as expected after call', () => {  //test after 1 call that notifications matches
-		addNotification("New Notification Sent To Server");
-		expect($scope.notifications).toEqual(output1);
+	test('notifications are as expected after call', () => {  //test after 1 call that notifications matches
+		addnotification("new notification sent to server");
+		expect($scope.notifications).toequal(output1);
 	});
 
-	test('Notifications are as expected after several calls', () => {  //test after several calls that notifications matches
-		addNotification("Hello");
-		addNotification("This");
-		addNotification("Is A New");
-		addNotification("Notification");
-		addNotification("That We");
-		addNotification("Sent!");
-		expect($scope.notifications).toEqual(output2);
+	test('notifications are as expected after several calls', () => {  //test after several calls that notifications matches
+		addnotification("hello");
+		addnotification("this");
+		addnotification("is a new");
+		addnotification("notification");
+		addnotification("that we");
+		addnotification("sent!");
+		expect($scope.notifications).toequal(output2);
 	});
 
-	test('Notifications are as expected after empty string', () => {  //test after 1 call that notifications matches
-		addNotification("");
-		expect($scope.notifications).toEqual(output3);
+	test('notifications are as expected after empty string', () => {  //test after 1 call that notifications matches
+		addnotification("");
+		expect($scope.notifications).toequal(output3);
 	});
 
-	//Defaults global notifications variable
-	afterAll(() => {
+	//defaults global notifications variable
+	afterall(() => {
 		$scope.notifications = "none yet";
 	});
 });
 
-//Tests the ESTOP button; checks for the appropriate notification
-describe('testing ESTOP button', () => {
+//tests the estop button; checks for the appropriate notification
+describe('testing estop button', () => {
 
-	beforeEach(() => {
+	beforeeach(() => {
 		$scope.notifications = "none yet";
 	});
 
-	const output1 = "none yetESTOP PRESSED! Rover is force restarting.\n"
+	const output1 = "none yetestop pressed! rover is force restarting.\n"
 
-	test('Estop button notification called', () => {  // checks that the notification popped up when the function called
-		eStopButton();
-		expect($scope.notifications).toEqual(output1);
+	test('estop button notification called', () => {  // checks that the notification popped up when the function called
+		estopbutton();
+		expect($scope.notifications).toequal(output1);
 	});
 });
 
 /*
-This below is the unit testing just for coordToXY. 
+this below is the unit testing just for coordtoxy. 
 */
-describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected output for these may be wrong
-	//Tests math completed in coordToXY
+describe('testing coordtoxy', () => {  // tests for testing coordtoxy.  expected output for these may be wrong
+	//tests math completed in coordtoxy
 	test('test with regular input', () => {
 		const lat = 53.687;
 		const long = 37.993;
-		//TODO: Once Docker is up and running, the xpos and ypos can be determined from this. 
+		//todo: once docker is up and running, the xpos and ypos can be determined from this. 
 		const output = ({ 'x_pos': 68.7, 'y_pos': 99.3 });
 
-		expect(coordToXY(lat, long)).toEqual(output);
+		expect(coordtoxy(lat, long)).toequal(output);
 	});
 
-	// Tests for Null Input in coordToXY (not for coordToXY; using as reminder for waypointNew)
+	// tests for null input in coordtoxy (not for coordtoxy; using as reminder for waypointnew)
 	test('test with null input', () => {
 		const lat = null;
 		const long = null;
 		const output = ({ 'x_pos': null, 'y_pos': null });
-		//TODO: To check what the null value should return
-		expect(coordToXY(lat, long)).toEqual(output);
+		//todo: to check what the null value should return
+		expect(coordtoxy(lat, long)).toequal(output);
 	});
 
-	//Test that x_pos is greater than 0 with a negative value entered
+	//test that x_pos is greater than 0 with a negative value entered
 	test('test xpos is positive with negative value', () => {
 		const lat = 0;
 		const long = -334;
 		const output = ({ 'x_pos': 0, 'y_pos': 0 });
 
-		expect(coordToXY(lat, long)).toBeGreaterThan(output);
+		expect(coordtoxy(lat, long)).tobegreaterthan(output);
 	});
 
-	//Test that x_pos is greater than 0 with a positive value entered
+	//test that x_pos is greater than 0 with a positive value entered
 	test('test xpos is positive with positive value', () => {
 		const lat = 0;
 		const long = 10;
 		const output = ({ 'x_pos': 0, 'y_pos': 0 });
 
-		expect(coordToXY(lat, long)).toBeGreaterThan();
+		expect(coordtoxy(lat, long)).tobegreaterthan();
 	})
 
-	//Test that y_pos is less than 0 with a negative value entered
+	//test that y_pos is less than 0 with a negative value entered
 	test('test ypos is negative with negative value', () => {
 		const lat = -10;
 		const long = 0;
-		const testOut = coordToXY(lat, long);
+		const testout = coordtoxy(lat, long);
 
-		expect(testOut['y']).toBeLessThan(0);
+		expect(testout['y']).tobelessthan(0);
 	})
 
-	//Test that y_pos is less than 0 with a positive value entered
+	//test that y_pos is less than 0 with a positive value entered
 	test('test ypos is negative with positive value', () => {
 		const lat = 10;
 		const long = 0;
-		const testOut = coordToXY(lat, long);
+		const testout = coordtoxy(lat, long);
 
-		expect(testOut['y']).toBeLessThan(0);
+		expect(testout['y']).tobelessthan(0);
 	})
 
-	//Test that when point A is more west than point B, x_pos for A is less than x_pos for B
-	test('west point A.xpos less than east point B.xpos', () => {
-		const latA = 0;
-		const longA = 40;
-		const latB = 0;
-		const longB = 80;
+	//test that when point a is more west than point b, x_pos for a is less than x_pos for b
+	test('west point a.xpos less than east point b.xpos', () => {
+		const lata = 0;
+		const longa = 40;
+		const latb = 0;
+		const longb = 80;
 
-		const testA = coordToXY(latA, longA);
-		const testB = coordToXY(latB, longB);
+		const testa = coordtoxy(lata, longa);
+		const testb = coordtoxy(latb, longb);
 
-		expect(testA['x']).toBeLessThan(testB['x']);
+		expect(testa['x']).tobelessthan(testb['x']);
 	})
 
-	//Test that when point A is more north than point B, y_pos for A is less than y_pos for B
-	test('north point A.xpos less than south point B.xpos', () => {
-		const latA = 80;
-		const longA = 0;
-		const latB = 40;
-		const longB = 0;
+	//test that when point a is more north than point b, y_pos for a is less than y_pos for b
+	test('north point a.xpos less than south point b.xpos', () => {
+		const lata = 80;
+		const longa = 0;
+		const latb = 40;
+		const longb = 0;
 
-		const testA = coordToXY(latA, longA);
-		const testB = coordToXY(latB, longB);
+		const testa = coordtoxy(lata, longa);
+		const testb = coordtoxy(latb, longb);
 
-		expect(testA['y']).toBeLessThan(testB['y']);
+		expect(testa['y']).tobelessthan(testb['y']);
 	})
 
-	//Tests the output with max latitude (90) and max long (180) inputs
+	//tests the output with max latitude (90) and max long (180) inputs
 	/*test('test with very max input', () => {
 		const lat = 757124;
 		const long = 999138;
 		const output = ({ 'x_pos': 0, 'y_pos': 0 });
 
-		expect(coordToXY(lat, long)).toEqual(output);
+		expect(coordtoxy(lat, long)).toequal(output);
 	});*/
 	/*
-	The minimum value (save for waypointNew?)
+	the minimum value (save for waypointnew?)
 	*/
 	test('test with very large negative input', () => {
 		const lat = -90.000000;
 		const long = -180.00000;
 		const output = ({ 'x_pos': 0, 'y_pos': 0 });
 
-		expect(coordToXY(lat, long)).toBeGreaterThan(output);
+		expect(coordtoxy(lat, long)).tobegreaterthan(output);
 	});
 
 	/*
-	Making sure that identical waypoints will be added to the same x and y_pos
-	DONE
+	making sure that identical waypoints will be added to the same x and y_pos
+	done
 	*/
 	test('test with same input', () => {
 		const lat = 55;
@@ -267,13 +267,13 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		const lat1 = 55;
 		const long2 = 55;
 
-		expect(coordToXY(lat, long)).toEqual(coordToXY(lat1, long1));
+		expect(coordtoxy(lat, long)).toequal(coordtoxy(lat1, long1));
 	});
 
 });
 
-//Not testing this function for now because it's officially terrible to test
-describe('Testing addWaypointToMap', () => {
+//not testing this function for now because it's officially terrible to test
+describe('testing addwaypointtomap', () => {
 	test('test null waypoint', () => {
 
 	});
@@ -308,12 +308,12 @@ describe('Testing addWaypointToMap', () => {
 });
 
 /*
- * This tests adding valid waypoints. I'm going to pretend the function call is waypointNew(lat, long) simply because
- * I'm not sure how to simulate the document.getElementById
+ * this tests adding valid waypoints. i'm going to pretend the function call is waypointnew(lat, long) simply because
+ * i'm not sure how to simulate the document.getelementbyid
  */
-describe('Testing waypointNew', () => {
+describe('testing waypointnew', () => {
 
-	beforeEach(() => {
+	beforeeach(() => {
 		$scope.waypoints = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }]
 	});
 
@@ -322,102 +322,102 @@ describe('Testing waypointNew', () => {
 	const output3 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': -90, 'long': -180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
 	const output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 90, 'long': 180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
 	const output5 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 0, 'long': 0, 'x_pos': 0, 'y_pos': 0, 'index': 2 }];
-	const output6 = ;
+	
 
-	//Null input tests invalid and doesn't add a waypoint
+	//null input tests invalid and doesn't add a waypoint
 	test('test with null latitude', () => {
-		//Call with invalid input with null latitude;
-		waypointNew("", 1);
+		//call with invalid input with null latitude;
+		waypointnew("", 1);
 
-		expect($scope.waypoints).toEqual(output1);
+		expect($scope.waypoints).toequal(output1);
 	});
 
-	//Null input tests invalid and doesn't add a waypoint
+	//null input tests invalid and doesn't add a waypoint
 	test('test with null longitude', () => {
-		//Call with invalid input with null longitude;
-		waypointNew(1, "");
+		//call with invalid input with null longitude;
+		waypointnew(1, "");
 
-		expect($scope.waypoints).toEqual(output1);
+		expect($scope.waypoints).toequal(output1);
 	});
 
-	//Ensures test with valid input adds point; TODO: ensure that output constants are correct
+	//ensures test with valid input adds point; todo: ensure that output constants are correct
 	test('test with valid input', () => {
-		waypointNew(23, 23);
+		waypointnew(23, 23);
 
-		expect($scope.waypoints).toEqual(output2);
+		expect($scope.waypoints).toequal(output2);
 	});
 
-	//Test with long that's too negative
+	//test with long that's too negative
 	test('test with too small input', () => {
-		//Call with invalid input with null longitude;
-		waypointNew(1, -2000);
+		//call with invalid input with null longitude;
+		waypointnew(1, -2000);
 
-		expect($scope.waypoints).toEqual(output1);
+		expect($scope.waypoints).toequal(output1);
 	});
 
-	//Test with long that's too large and positive
+	//test with long that's too large and positive
 	test('test with too large input', () => {
-		//Call with invalid input with null longitude;
-		waypointNew(1, 2000);
+		//call with invalid input with null longitude;
+		waypointnew(1, 2000);
 
-		expect($scope.waypoints).toEqual(output1);
+		expect($scope.waypoints).toequal(output1);
 	});
 
-	//Test with lat that's too negative
+	//test with lat that's too negative
 	test('test with too small input', () => {
-		//Call with invalid input with null longitude;
-		waypointNew(-2000, 1);
+		//call with invalid input with null longitude;
+		waypointnew(-2000, 1);
 
-		expect($scope.waypoints).toEqual(output1);
+		expect($scope.waypoints).toequal(output1);
 	});
 
-	//Test with lat that's too large and positive
+	//test with lat that's too large and positive
 	test('test with too large input', () => {
-		//Call with invalid input with null longitude;
-		waypointNew(2000, 1);
+		//call with invalid input with null longitude;
+		waypointnew(2000, 1);
 
-		expect($scope.waypoints).toEqual(output1);
+		expect($scope.waypoints).toequal(output1);
 	})
 
 
-	//Test with invalid input within a few valid entries
-	//only concerned about statement coverage for now... Brenna very tired
+	//test with invalid input within a few valid entries
+	//only concerned about statement coverage for now... brenna very tired
 	test('test with valid input, then invalid input, then valid input', () => {
 
 	});
 
-	//Tests valid input with most negative input; 
+	//tests valid input with most negative input; 
 	test('test with most negative input', () => {
-		waypointNew(-90, -180);
+		waypointnew(-90, -180);
 
-		expect($scope.waypoints).toEqual(output3);
+		expect($scope.waypoints).toequal(output3);
 	});
 
-	//Tests valid input with most positive input
+	//tests valid input with most positive input
 	test('test with most positive input', () => {
-		waypointNew(90, 180);
+		waypointnew(90, 180);
 
-		expect($scope.waypoints).toEqual(output4);
+		expect($scope.waypoints).toequal(output4);
 	});
 
-	// Testing output for input of 0,0
+	// testing output for input of 0,0
 	test('test with inputs of 0', () => {
-		waypointNew(0, 0);
+		waypointnew(0, 0);
 
-		expect(coordToXY(lat, long)).toEqual(output5);
+		expect(coordtoxy(lat, long)).toequal(output5);
 	});
 
-	//Test with many valid inputs (many = 5?)
+	//test with many valid inputs (many = 5?)
 
-	//Empties global waypoints variable
-	afterAll(() => {
+	//empties global waypoints variable
+	afterall(() => {
 		$scope.waypoints = [];
 	});
 });
 
-describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoint functionality
+describe('testing deletelatestwaypoint', () => {  // test the deletelatestwaypoint functionality
 
-	beforeEach(() => {  // setup initial waypoints array
+	beforeeach(() => {  // setup initial waypoints array
 		$scope.waypoints = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
 	})
 
@@ -427,21 +427,21 @@ describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoi
 	const output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
 
 	test('test with normal waypoint', () => {  // just test with removing 1 waypoint
-		deleteLatestWaypoint();
-		expect($scope.waypoints).toEqual(output1);
+		deletelatestwaypoint();
+		expect($scope.waypoints).toequal(output1);
 	});
 
 	test('test with no waypoints', () => {
 		$scope.waypoints = []  // empty array out since we need it empty for this test
-		deleteLatestWaypoint();
-		expect($scope.waypoints).toEqual(output2);
+		deletelatestwaypoint();
+		expect($scope.waypoints).toequal(output2);
 	});
 
-	test('test delete then add then delete waypoint', () => {  // calls deleteLatestWaypoint twice and adds a waypoint between the calls
-		deleteLatestWaypoint();
+	test('test delete then add then delete waypoint', () => {  // calls deletelatestwaypoint twice and adds a waypoint between the calls
+		deletelatestwaypoint();
 		$scope.waypoints.push({ 'lat': 56, 'long': 43, 'x_pos': 7, 'y_pos': 8, 'index': 2 })
-		deleteLatestWaypoint();
-		expect($scope.waypoints).toEqual(output3);
+		deletelatestwaypoint();
+		expect($scope.waypoints).toequal(output3);
 	});
 
 	test('test with many waypoints', () => {  // calls many times in a row with many waypoints in array
@@ -449,16 +449,16 @@ describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoi
 		{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 3 }, { 'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5, 'index': 4 },
 		{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 5 }, { 'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5, 'index': 6 },
 		{ 'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7 }]
-		deleteLatestWaypoint();
-		deleteLatestWaypoint();
-		deleteLatestWaypoint();
-		deleteLatestWaypoint();
-		deleteLatestWaypoint();
-		expect($scope.waypoints).toEqual(output4);
+		deletelatestwaypoint();
+		deletelatestwaypoint();
+		deletelatestwaypoint();
+		deletelatestwaypoint();
+		deletelatestwaypoint();
+		expect($scope.waypoints).toequal(output4);
 	});
 
-	//Empties global waypoints variable
-	afterAll(() => {
+	//empties global waypoints variable
+	afterall(() => {
 		$scope.waypoints = [];
 	});
-});// Unit testing file for the ERDM controller
+});// unit testing file for the erdm controller
