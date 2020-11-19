@@ -1,6 +1,6 @@
 // Unit testing file for the AI Navigation controller
 
- import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+ //import { TestBed, async, ComponentFixture } from '@angular/core/testing';
  //import { createTestApp } from 'angularjs-jest';
 /*
 This is a module just for grabbing the onClick in HTML
@@ -25,35 +25,40 @@ describe('', () => { //TODO: Adapt for the homepagebutton
 });
 */
 
-describe('AINavigation', ($scope, $window, $http, PanZoomService) => {
-	describe('testing homepage function', () => { //TODO Check for onClick Functions
+//FOR REFERENCE ONLY
+const AINavigation = require('../static/controllers/AINavigation.controller.js');
 
-		// Every instance of home refers to the HTML Homepage, 'homepage' means for the controller method
-		it('should', async(() => {
-			spyOn(home, 'homepage');
+	describe('AINavigation', ($scope, $window, $http, PanZoomService) => {
+		describe('testing homepage function', () => { //TODO Check for onClick Functions
 
-			let button = fixture.debugElement.nativeElement.querySelector('button');
-			button.click();
+			// Every instance of home refers to the HTML Homepage, 'homepage' means for the controller method
+			it('should', async(() => {
+				spyOn(home, 'homepage');
 
-			fixture.whenStable().then(() => {
-				expect(home.onEditButtonClick).toHaveBeenCalled();
+				let button = fixture.debugElement.nativeElement.querySelector('button');
+				button.click();
+
+				fixture.whenStable().then(() => {
+					expect(home.onEditButtonClick).toHaveBeenCalled();
+				});
+			}));
+
+			// tests if the controller gets called when homepage is hit	
+			/*
+			When button for homepage is clicked, then the controller function should be called
+			*/
+			test('test homepage called', () => {
+
 			});
-		}));
 
-		// tests if the controller gets called when homepage is hit	
-		/*
-		When button for homepage is clicked, then the controller function should be called
-		*/
-		test('test homepage called', () => {
+			// Testing that the path updates when homepage runs
+			test('testing that path updates', () => {
 
-		});
-
-		// Testing that the path updates when homepage runs
-		test('testing that path updates', () => {
-
+			});
 		});
 	});
-})
+
+
 describe('testing homepage function', () => { //TODO Check for onClick Functions
 	
 	// Every instance of home refers to the HTML Homepage, 'homepage' means for the controller method

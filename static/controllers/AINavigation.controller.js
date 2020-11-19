@@ -239,7 +239,8 @@
         }
 
         init();
-    }
+    };
+    module.exports = AINavigationController($scope, $window, $http, PanZoomService);
 
 
-    })();
+})();
