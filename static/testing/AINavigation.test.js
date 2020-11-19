@@ -1,6 +1,9 @@
 // Unit testing file for the AI Navigation controller
 
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { createTestApp } from 'angularjs-jest';
+
+require('../controllers/AINavigation.controller');
 
 /*
 This is a module just for grabbing the onClick in HTML

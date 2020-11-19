@@ -1,0 +1,33 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prettify": "prettier -l --write \"**/*.js\"",
+    "test": "jest --coverage",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
+    "sqlite3": "^4.1.0",
+    "uuid": "^3.3.3",
+    "wait-port": "^0.2.2"
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.6.6",
+    "jest": "^24.9.0",
+    "jest-cli": "^21.2.1",
+    "nodemon": "^1.19.2",
+    "prettier": "^1.18.2"
+  }
+}
