@@ -1,0 +1,24 @@
+{
+  "name": "csd-application",
+  "jest": {
+    "verbose": true
+  },
+  "description": "Sample app for CSD for AngularJS",
+  "version": "1.0.2",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.8.2",
+    "jasmine-core": "^3.6.0",
+    "jest-cli": "^26.6.3",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^4.0.1"
+  },
+  "dependencies": {
+    "angular": "^1.8.2",
+    "angularjs": "^0.0.1",
+    "esm": "^3.2.25",
+    "jasmine": "^3.6.3"
+  }
+}
