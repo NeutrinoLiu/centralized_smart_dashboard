@@ -1,9 +1,17 @@
 //trying new spec file for jasmine
 import('../static/controllers/AINavigation.controller.js');
 
-describe("AINavigationController", function() {
+describe('AINavigationController', function () {
 
-	describe('testing ESTOP button', () => {  // tests the ESTOP button javscript function
+	beforeEach(angular.mock.module('AINavigation'));
+
+	var $controller;
+
+	beforeEach(angular.mock.inject(function (_$controller_) {
+		$controller = _$controller_;
+	}));
+
+	describe('ESTOP button', () => {  // tests the ESTOP button javscript function
 
 		beforeEach(() => {
 			var notify = scope.notifications;
