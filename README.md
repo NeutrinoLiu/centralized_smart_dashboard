@@ -1,7 +1,10 @@
 # Centralized Smart Dashboard
 Centralized Smart Dashboard developed for the rover of Wisconsin Robotics team. 
+
 Iteration number 2 for COMPSCI 506: Software Engineer. 
-Code cutoff date: Friday, November 13, 2020
+
+Code cutoff date: Friday, November 13, 2020.
+
 Use master branch for testing and reviews of the newest version.
 
 # Prerequisites
