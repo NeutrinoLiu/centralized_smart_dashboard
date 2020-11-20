@@ -34,15 +34,15 @@ class Cmd:      # the object sending from frontend to the local publisher
                         new_speed=[],
                         remark='<unclaimed>'):
         self.new_route = new_route  
-        # self.new_arm = new_arm
+        self.new_arm = new_arm
         self.new_speed = new_speed
         self.remark = remark
         self.cmd_code = 0           # the code indicates which type of command it is
 
         if new_route != []:
             self.cmd_code = self.cmd_code | 0b0001  # last bit: new route setting cmd
-        # if new_arm != []:
-        #     self.cmd_code = self.cmd_code | 0b0010  # 2nd bit: new arm gesture setting
+        if new_arm != []:
+             self.cmd_code = self.cmd_code | 0b0010  # 2nd bit: new arm gesture setting
         if new_speed != []:
             self.cmd_code = self.cmd_code | 0b0100  # 3rd bit: 
 
@@ -75,6 +75,7 @@ class Rover:
         # the target pos of the car
         self.ori = 0.0
         self.speed = []
+        self.arm = []
         self.remark = ''
         self.name = name
         # self.warn_flag = False # indicate whenever there is a warning.
@@ -130,9 +131,8 @@ class Rover:
             self.set_new_route(command.new_route)                    # remote update
 
         if command.cmd_code & 0b0010:    # an arm gesture update command
-            # pub.set_arm_gesture(command.new_arm) 
-            # local-rover interface not implemented
-            pass 
+            self.set_new_arm(command.new_arm) 
+            # local-rover interface not implemented 
 
         if command.cmd_code & 0b0100:    # a speed update command
             self.set_new_speed(command.new_speed)
@@ -152,6 +152,10 @@ class Rover:
         nav_data.tar_long = new_target.longt
         self.navi_pub.publish(nav_data) 
     
+    def set_new_arm(self, new_arm):
+        self.arm = new_arm
+        # due to the mock rover node do not have the corresponded topic, simply store it locally
+
     def set_new_speed(self, new_speed):
         # invalid if it is not number
         if len(new_speed) != 6:
@@ -166,6 +170,9 @@ class Rover:
         drive_data.wheel4 = new_speed[4]
         drive_data.wheel5 = new_speed[5]
         self.driv_pub.publish(drive_data)
+    
+    def emergent_stop(self):
+        self.set_new_speed([0, 0, 0, 0, 0, 0])
 
     def get_notification(self):
         remark = self.remark
