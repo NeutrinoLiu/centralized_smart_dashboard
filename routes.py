@@ -37,69 +37,67 @@ def coming_soon():
 def coming_soon():
     return render_template('ComingSoon.html')
 
-# API routes
-
-# return rover heading and speed
-def api_speed():
-    orientation = my_rover.ori
-    speed = my_rover.speed
-    return json.jsonify({"success": True, "data": {"orientation": orientation,
-                                                   "speed1": speed[0], "speed2": speed[1],
-                                                   "speed3": speed[2], "speed4": speed[3],
-                                                   "speed5": speed[4], "speed6": speed[5]}})
-
-# returns full list of all waypoint on route
-def api_route():
+# helper method for getting the route in format for
+def get_format_route():
     route = my_rover.route_state
     route_to_send = []
     for point in route:
         route_to_send.append({"lat": point.lati, "long": point.longt})
-    if len(route_to_send) > 0:
-        return json.jsonify({"success": True, "data": route_to_send})
+    return route_to_send
+
+# API routes
+
+def api_add_notifications():
+    response = json.loads(request.data.decode())
+    my_rover.remark = response["notifications"]
+    return json.jsonify({"success": True, "notifications": my_rover.remark})
+
+# send the notification to
+def api_send_notifications():
+    notifications = my_rover.remark
+    return json.jsonify({"success": True, "notifications": notifications})
+# send rover to next waypoint
+def api_go_button():
+    if len(my_rover.route_state) > 0:
+        my_rover.set_new_target(my_rover.route_state[0])
+        return json.jsonify({"success": True})
     else:
         return json.jsonify({"success": False})
 
-# route for adding a waypoint
-def api_add_waypoint():
-    # waypoint = json.loads(request.data.decode())
-    # lat = float(waypoint.get("lat"))
-    # long = float(waypoint.get("long"))
-    # new_route = my_rover.route_state.append(GPSPoint(lat, long))
-    # my_rover.set_new_route(new_route[1:])
+# emergency stop not implemented yet
+def api_emergency_stop():
     return json.jsonify({"success": True})
 
-def api_go_button():
-    # TODO: implement in iteration 2
-    return json.jsonify({"success": True})
-
-# route for deleting a waypoint
-def api_delete_waypoint():
-    waypoint = json.loads(request.data.decode())
-    lat = float(waypoint.get("lat"))
-    long = float(waypoint.get("long"))
-    success = False
-    for i, point in enumerate(my_rover.route_state):
-        if point.lati == lat and point.longt == long:
-            my_rover.route_state.pop()
-            success = True
-            break
-    return json.jsonify({"success": success})
-
-
+# returns full list of all waypoint on route
 def api_get_route():
-    return json.jsonify({"waypoints": [{'lat': 9.958869, 'long': -83.985763},
-                                       {'lat': 43.075441, 'long': -89.404075}],
-                         "curr_coord": {'lat': 90.3456, 'long': -90.6543}, "notifications": ""})
+    route_to_send = get_format_route()
+    if len(route_to_send) > 0:
+        return json.jsonify({"success": True, "waypoints": route_to_send})
+    else:
+        return json.jsonify({"success": False})
+
+
+# sets the new route
+def api_set_route():
+    new_route = json.loads(request.data.decode())
+    route_to_set = []
+    for point in new_route["waypoints"]:
+        route_to_set.append(GPSPoint(point["lat"], point["long"]))
+    my_rover.route_state = route_to_set
+
+    return json.jsonify({"success": True, "waypoints": get_format_route()})
 
 # route for getting the latitude and longitude of the rover
 def api_gps():
     lat = my_rover.gps_lati
     long = my_rover.gps_longt
     # get in format specified by server
-    if lat != GPS_ERROR_VALUE and long != GPS_ERROR_VALUE:
-        return json.jsonify({"success": True, "data": {"lat": lat, "long": long}})
-    else:
-        return json.jsonify({"success": False})
+    #try:
+    return json.jsonify({"success": True, "lat": lat, "long": long})
+    #except ValueError:
+
+   #else:
+   #     return json.jsonify({"success": False})
 
 
 # TODO: might be useful to add server-side error handlers
@@ -117,11 +115,12 @@ def init_website_routes(app):
         app.add_url_rule('/science', 'science', science, methods=['GET'])
         app.add_url_rule('/coming-soon', 'coming-soon', coming_soon, methods=['GET'])
 
-        app.add_url_rule('/api/speed', 'api_speed', api_speed, methods=['GET'])
-        app.add_url_rule('/api/route', 'api_route', api_route, methods=['POST'])
+        app.add_url_rule('/api/notifications', 'api_send_notifications', api_send_notifications, methods=['GET'])
+        app.add_url_rule('/api/notifications', 'api_add_notifications', api_add_notifications, methods=['POST'])
+        app.add_url_rule('/api/emergency-stop', 'api_emergency_stop', api_emergency_stop, methods=['GET'])
         app.add_url_rule('/api/gps', 'api_gps', api_gps, methods=['GET'])
-        app.add_url_rule('/api/waypoint', 'api_add_waypoint', api_add_waypoint, methods=['POST'])
-        app.add_url_rule('/api/waypoint', 'api_get_route', api_get_route, methods=['GET'])
+        app.add_url_rule('/api/route', 'api_set_route', api_set_route, methods=['POST'])
+        app.add_url_rule('/api/route', 'api_get_route', api_get_route, methods=['GET'])
         app.add_url_rule('/api/go-button', 'api_go_button', api_go_button, methods=['GET'])
 
 
