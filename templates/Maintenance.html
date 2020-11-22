@@ -16,8 +16,19 @@
 </head>
 <body ng-controller="MaintenanceController">
     <div class="topnav">
-        <homepage href="#home">Homepage</homepage>
         <pageName href="#pageName">Maintenance</pageName>
+        <homepage ng-click="homepage()" href="#home">Homepage</homepage>
     </div>
+
+    <div class = "maintenance">
+
+        <form ng-submit="cameraIP()">
+            <!-- <input type="text" id="cameraIP" name="cameraIP" placeholder="Add Camera IP Address:">
+        <input type="submit" value="Submit" id="submit-button">-->
+        </form><div></div>
+
+        <div id="reset-button" ng-click="resetButton()">RESET</div>
+        <notification-bar id="notification-bar"><div id="notices">{{ '{{notifications}}' }}</div></notification-bar>
+        <div id="emergency-stop" ng-click="eStopButton()">STOP</div>
 </body>
 </html>

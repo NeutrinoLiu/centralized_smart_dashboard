@@ -35,7 +35,7 @@
         const PATH = 'http://localhost:5000'
         const GPS_INTERVAL = 500; // in milliseconds
 
-        function homepage() {
+        function homepage() {  // takes user back to homepage
             $window.location.href = "/home";
         }
 
