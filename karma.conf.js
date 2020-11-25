@@ -10,18 +10,22 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
-    files: [
-      { pattern: '"**/*[sS]pec.js"', included: false },
-      { pattern: '"spec/*[sS]pec.js"', included: false },
-      { pattern: '"**/spec/*[sS]pec.js"', included: false },
-      { pattern: '**/**/*[sS]pec.js', included: false },
-      node_modules/ angular / angular.js,
-      node_modules/angular-mocks/angular-mocks.js
-    ],
+      files: [
+          'app.py',
+          'node_modules/angular/angular.js',
+          'node_modules/angular/angular.min.js',
+          'node_modules/angularjs/index.js',
+          'node_modules/angular-mocks/angular-mocks.js',
+          'node_modules/angular-mocks/ngAnimateMock.js',
+          'node_modules/angular-mocks/ngMock.js',
+          'node_modules/angular-mocks/ngMockE2E.js',
+          'static/controllers/*.js',
+          'spec/*[sS]pec.js'
+      ],
 
 
     // list of files / patterns to exclude
@@ -54,8 +58,8 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
 
 
-    // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+      // enable / disable watching file and executing tests whenever any file changes
+      autoWatch: true,
 
 
     // start these browsers
@@ -64,8 +68,8 @@ module.exports = function(config) {
 
 
     // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+      // if true, Karma captures browsers, runs the tests and exits
+      singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous
