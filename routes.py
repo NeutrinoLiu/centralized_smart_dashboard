@@ -1,10 +1,10 @@
 from flask import render_template, json, abort, request
-from model.src.centralized_dashboard.src.rover import Rover, GPSPoint
+#from model.src.centralized_dashboard.src.rover import Rover, GPSPoint
 
 
 GPS_ERROR_VALUE = None
 
-my_rover = Rover("rover1")
+#my_rover = Rover("rover1")
 
 # Render templates
 def home():
@@ -27,8 +27,8 @@ def maintenance():
     return render_template("Maintenance.html")
 
 
-def science():
-    return render_template("Science.html")
+def cameras():
+    return render_template("Cameras.html")
 
 def coming_soon():
     return render_template("ComingSoon.html")
@@ -38,12 +38,12 @@ def coming_soon():
     return render_template('ComingSoon.html')
 
 # helper method for getting the route in format for
-def get_format_route():
-    route = my_rover.route_state
-    route_to_send = []
-    for point in route:
-        route_to_send.append({"lat": point.lati, "long": point.longt})
-    return route_to_send
+#def get_format_route():
+#    route = my_rover.route_state
+#    route_to_send = []
+#    for point in route:
+#        route_to_send.append({"lat": point.lati, "long": point.longt})
+#    return route_to_send
 
 # API routes
 
@@ -112,7 +112,7 @@ def init_website_routes(app):
         app.add_url_rule('/equipment-servicing', 'equipment_servicing', equipment_servicing, methods=['GET'])
         app.add_url_rule('/erdm', 'erdm', erdm, methods=['GET'])
         app.add_url_rule('/maintenance', 'maintenance',  maintenance, methods=['GET'])
-        app.add_url_rule('/science', 'science', science, methods=['GET'])
+        app.add_url_rule('/cameras', 'cameras', cameras, methods=['GET'])
         app.add_url_rule('/coming-soon', 'coming-soon', coming_soon, methods=['GET'])
 
         app.add_url_rule('/api/notifications', 'api_send_notifications', api_send_notifications, methods=['GET'])

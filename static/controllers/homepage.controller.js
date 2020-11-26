@@ -5,7 +5,7 @@
 	function homepageController($scope, $window) {
 		$scope.aiNav = aiNav;
 		$scope.EquipmentServicing = EquipmentServicing;
-		$scope.Science = Science;
+		$scope.Cameras = Cameras;
 		$scope.ERDM = ERDM;
 		$scope.Maintenance = Maintenance;
 
@@ -38,11 +38,15 @@
 
 		// Sending to Maintenance
 		function Maintenance() {
-			//$window.location.href = "/maintenance";
-			$window.location.href = "/coming-soon";
+			$window.location.href = "/maintenance";
+			//$window.location.href = "/coming-soon";
 			
 		}
 
+		function Cameras() {
+			$window.location.href = "/cameras";
+			//$window.location.href = "/coming-soon";
+        }
 	}
 })();
 
