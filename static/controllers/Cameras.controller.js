@@ -38,6 +38,10 @@
                 alert("No IP added. So we cannot remove anything");
             }
         }
+
+        function addIP() {  // function to have us add a new IP address for the new camera
+
+        }
 	}
 
 	})();

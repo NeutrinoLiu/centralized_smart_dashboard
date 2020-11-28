@@ -39,6 +39,9 @@
                     <td>Current Cameras:</td>  <!-- will display a list of all of the camera IP addresses that we have entered -->
                     <td></td>
                 </tr>
+                <tr ng-repeat="cameraIPadd in cameraIPs">
+                    <td>{{ '{{cameraIPadd}}' }} &nbsp;&nbsp;</td>  <!-- supposed to loop and display each cameraIP -->
+                </tr>
                 
             </table>
         </camera-display>
@@ -47,7 +50,12 @@
             <!--<input type="text" id="cameraIP" name="cameraIP" placeholder="Add Camera IP Address:">
         <input type="submit" value="Submit" id="submit-button">-->
         </form><div></div>
-
+        <enter-cameraIP>  <!-- Setup for us to enter new camera IP address -->
+            <form>
+                <input type="number" id="cameraNewIP" name="cameraNew" placeholder="Enter New IP:"><br>  <!-- input for the camera IP.  May need to change type-->
+                <input type="submit" ng-click="addIP()" value="Submit" id="submit-button"><br>
+            </form>
+        </enter-cameraIP>
         <input class="remove-camera-button" type="button" ng-click="removeLatestCamera()" value="Remove Latest Camera IP" />
         
         <div></div>
