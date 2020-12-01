@@ -1,6 +1,6 @@
 (function() {
-	var app = angular.module('Cameras', []);
-	app.controller('CamerasController', ['$scope', '$window', EquipmentServicingController]);
+	var app = angular.module('cameras', []);
+	app.controller('CamerasController', ['$scope', '$window', CamerasController]);
 
 	function CamerasController($scope, $window) {
         $scope.homepage = homepage;

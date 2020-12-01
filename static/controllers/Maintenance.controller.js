@@ -170,12 +170,65 @@
 
         // Sends the reset command to reset all motor direction values to zero
         function resetButton() {
-            alert("RESET PRESSED! Setting all motor direction values to zero.")
+            alert("RESET PRESSED! Setting all motor direction values to zero.");
+            wheel1out.innerHTML = 50;
+            wheel1slider.value = 50;
+            //$scope.wheel1 = 50; //is this needed?
+
+            wheel2out.innerHTML = 50;
+            wheel2slider.value = 50;
+            //$scope.wheel2 = 50; //is this needed?
+
+            wheel3out.innerHTML = 50;
+            wheel3slider.value = 50;
+            //$scope.wheel3 = 50; //is this needed?
+
+            wheel4out.innerHTML = 50;
+            wheel4slider.value = 50;
+            //$scope.wheel4 = 50; //is this needed?
+
+            wheel5out.innerHTML = 50;
+            wheel5slider.value = 50;
+            //$scope.wheel5 = 50; //is this needed?
+
+            wheel6out.innerHTML = 50;
+            wheel6slider.value = 50;
+            //$scope.wheel6 = 50; //is this needed?
+
+            arm1out.innerHTML = 50;
+            arm1slider.value = 50;
+            //$scope.arm1 = 50; //is this needed?
+
+            arm2out.innerHTML = 50;
+            arm2slider.value = 50;
+            //$scope.arm2 = 50; //is this needed?
+
+            arm3out.innerHTML = 50;
+            arm3slider.value = 50;
+            //$scope.arm3 = 50; //is this needed?
+
+            arm4out.innerHTML = 50;
+            arm4slider.value = 50;
+            //$scope.arm4 = 50; //is this needed?
+
+            arm5out.innerHTML = 50;
+            arm5slider.value = 50;
+            //$scope.arm5 = 50; //is this needed?
+
+            arm6out.innerHTML = 50;
+            arm6slider.value = 50;
+            //$scope.arm6 = 50; //is this needed?
+
+            arm7out.innerHTML = 50;
+            arm7slider.value = 50;
+            //$scope.arm7 = 50; //is this needed?
+
             $http.get(PATH + '/api/reset')
                 .then ((response) => {
                     if (response.data.success) {
                         // TODO: add notification through http call 
                         addNotification("RESET PRESSED! Setting all motor direction values to zero.");
+                        
                     } else {
                         connectionLost();
                     }
