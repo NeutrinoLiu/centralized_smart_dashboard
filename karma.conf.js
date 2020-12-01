@@ -15,16 +15,21 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
       files: [
-          'app.py',
+          //'app.py',
           'node_modules/angular/angular.js',
           'node_modules/angular/angular.min.js',
-          'node_modules/angularjs/index.js',
+          //'node_modules/angularjs/index.js',
           'node_modules/angular-mocks/angular-mocks.js',
-          'node_modules/angular-mocks/ngAnimateMock.js',
-          'node_modules/angular-mocks/ngMock.js',
-          'node_modules/angular-mocks/ngMockE2E.js',
+          //'node_modules/angular-mocks/ngAnimateMock.js',
+          //'node_modules/angular-mocks/ngMock.js',
+          //'node_modules/angular-mocks/ngMockE2E.js',
           'static/controllers/*.js',
-          'spec/*[sS]pec.js'
+          'spec/*[sS]pec.js',
+          'static/services/PanZoomService.js',
+          'static/directives/panzoom.js',
+          'static/directives/panzoom.min.js',
+          'static/directives/panzoomwidget.js',
+          'static/controllers/AINavigation.controller.js'
       ],
 
 
