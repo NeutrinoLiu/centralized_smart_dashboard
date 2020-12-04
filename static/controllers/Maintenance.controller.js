@@ -3,7 +3,7 @@
 	app.controller('MaintenanceController', ['$scope', '$window', MaintenanceController]);
 
 	function MaintenanceController($scope, $window) {
-        //defining scope of functions
+        //defining scope of functions;;
         $scope.homepage = homepage;
 		$scope.resetButton = resetButton;
         $scope.eStopButton = eStopButton;

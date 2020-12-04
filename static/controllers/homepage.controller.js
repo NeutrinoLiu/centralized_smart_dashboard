@@ -10,7 +10,7 @@
 		$scope.Maintenance = Maintenance;
 
 		/*
-		These are the function that, when the buttons on the homepage are hit, will send to the various pages
+		These are the function that, when the buttons on the homepage are hit, will send to the various pages;;
 		*/
 		
 		// Sending to AINavigation
