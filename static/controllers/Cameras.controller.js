@@ -58,6 +58,10 @@
                     connectionLost();
                 });
         }
+
+        function showVideo() {  // function to launch and display the video feed from the specified camera IP
+
+        }
 	}
 
 	})();
