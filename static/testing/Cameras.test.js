@@ -2,7 +2,7 @@
 // May need to add some includes at the top, not sure what to add though
 
 
-describe('testing homepage function', () => {
+describe('testing homepage function', () => {  // Based on code written in the AINavigation tests
 	it('should', async(() => {
 		spyOn(home, 'homepage');
 

@@ -8,6 +8,8 @@
 		$scope.resetButton = resetButton;
         $scope.eStopButton = eStopButton;
 
+        $scope.notifications = "none yet";
+
         //Wheel 1 functionality
         var wheel1slider = document.getElementById("wheel1");
         var wheel1out = document.getElementById("wheel1_val");
@@ -252,6 +254,22 @@
                 }, (error) => {
                     connectionLost();
                 });
+        }
+
+        // Adds a new notification to the notifications scope for the notifications bar
+        function addNotification(newNotification) {
+            $scope.notifications += (newNotification + '\n');
+            $http.post(PATH + '/api/notifications', {
+                'notifications': $scope.notifications
+            }).then((response) => {
+                if (response.data.success){
+                    $scope.notifications = response.data.notifications;
+                } else {
+                    connectionLost();
+                }
+            }, (error) => {
+                connectionLost();
+            })
         }
 	}
 

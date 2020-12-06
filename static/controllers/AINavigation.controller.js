@@ -230,6 +230,7 @@
             alert("A new camera stream IP address has been opened.");
         }
 
+        // Adds a new notification to the notifications scope for the notifications bar
         function addNotification(newNotification) {
             $scope.notifications += (newNotification + '\n');
             $http.post(PATH + '/api/notifications', {
