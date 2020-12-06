@@ -206,12 +206,12 @@ h1 {
     padding: 5px 5px;
     margin: auto 30px auto 50px;
     grid-row-gap: 50px;
-    grid-template-columns: auto auto auto auto auto auto auto;
+    grid-template-columns: 200px 200px 200px 200px 200px 200px 200px;
     grid-template-rows: 225px 225px 100px 100px;
 }
 
 .maintenance sliderSection{
-    padding: 10px 10px;
+/*    padding: 10px 10px;*/
 }
 
 .maintenance notification-bar {
@@ -247,7 +247,7 @@ h1 {
 }
 
 .slider::after{
-    content: "100";
+    content: "10";
     color: black;
     font-size: 15px;
     font-weight: 600;
@@ -258,12 +258,12 @@ h1 {
 }
 
 .slider::before {
-    content: "1";
+    content: "-10";
     color: black;
     font-size: 15px;
     font-weight: 600;
     position: absolute;
-    right: 93%;
+    right: 100%;
     top: auto;
     transform: rotate(90deg);
 }
