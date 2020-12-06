@@ -1,6 +1,14 @@
 // Unit testing file for the Maintenance Controller
 
 
+describe('testing wheels', () => {  // Testing for the wheels functions.  May not be needed or possible.
+
+});
+
+describe('testing arms', () => {  // Testing for the arms functions.  May not be needed or possible.
+
+});
+
 describe('testing homepage function', () => {  // Based on code written in the AINavigation tests
 	it('should', async(() => {
 		spyOn(home, 'homepage');
