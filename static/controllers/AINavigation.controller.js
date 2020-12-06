@@ -6,7 +6,6 @@
     function AINavigationController($scope, $window, $http, PanZoomService) {
         $scope.homepage = homepage;
         $scope.waypointNew = waypointNew;
-        $scope.cameraIP = cameraIP;
         $scope.goButton = goButton;
         $scope.eStopButton = eStopButton;
         $scope.deleteLatestWaypoint = deleteLatestWaypoint;
@@ -32,7 +31,7 @@
 
         $scope.panzoomModel = {};
 
-        const PATH = 'http://localhost:5000'
+        const PATH = 'http://localhost:5000';
         const GPS_INTERVAL = 500; // in milliseconds
 
         function homepage() {  // takes user back to homepage
@@ -225,11 +224,6 @@
             }
         }
 
-        //Opens a new window with a live stream of the camera at the IP address sent
-        function cameraIP() {  // future iteration item
-            alert("A new camera stream IP address has been opened.");
-        }
-
         // Adds a new notification to the notifications scope for the notifications bar
         function addNotification(newNotification) {
             $scope.notifications += (newNotification + '\n');
@@ -283,10 +277,6 @@
                     connectionLost();
                 });
         }
-
-/*        function getCameraIP(){  //future iteration item
-
-        } */
 
         function connectionLost() {
             alert("Connection lost to server");
