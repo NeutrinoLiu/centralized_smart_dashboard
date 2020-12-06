@@ -6,7 +6,11 @@
         $scope.homepage = homepage;
         $scope.removeLatestCamera = removeLatestCamera;
         $scope.eStopButton = eStopButton;
+        $scope.showVideo = showVideo;
+        $scope.addIP = addIP;
+
         $scope.cameraIPs = [];  // list of our camera IPs to store
+        $scope.notifications = "none yet";
 
         function homepage() {  // takes user back to homepage
             $window.location.href = "/home";
@@ -61,6 +65,21 @@
 
         function showVideo() {  // function to launch and display the video feed from the specified camera IP
 
+        }
+
+        function addNotification(newNotification) {  // function to add notifications to the notifications box
+            $scope.notifications += (newNotification + '\n');
+            $http.post(PATH + '/api/notifications', {
+                'notifications': $scope.notifications
+            }).then((response) => {
+                if (response.data.success){
+                    $scope.notifications = response.data.notifications;
+                } else {
+                    connectionLost();
+                }
+            }, (error) => {
+                connectionLost();
+            })
         }
 	}
 
