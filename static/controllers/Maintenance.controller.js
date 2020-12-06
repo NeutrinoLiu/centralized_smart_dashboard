@@ -1,14 +1,18 @@
 (function() {
 	var app = angular.module('Maintenance', []);
-	app.controller('MaintenanceController', ['$scope', '$window', MaintenanceController]);
+	app.controller('MaintenanceController', ['$scope', '$window',  '$http', MaintenanceController]);
 
-	function MaintenanceController($scope, $window) {
+	function MaintenanceController($scope, $window, $http) {
         //defining scope of functions;;
         $scope.homepage = homepage;
 		$scope.resetButton = resetButton;
         $scope.eStopButton = eStopButton;
+        $scope.wheelChange = wheelChange;
+        $scope.armChange = armChange;
 
-        $scope.notifications = "none yet";
+        $scope.notifications = "";
+
+        const PATH = 'http://localhost:5000';
 
         //Wheel 1 functionality
         var wheel1slider = document.getElementById("wheel1");
@@ -166,8 +170,77 @@
             $scope.arm7 = this.value;
         }
 
+        function init() {
+            $scope.wheel1 = 0;
+            $scope.wheel2 = 0;
+            $scope.wheel3 = 0;
+            $scope.wheel4 = 0;
+            $scope.wheel5 = 0;
+            $scope.wheel6 = 0;
+
+            $scope.arm1 = 0;
+            $scope.arm2 = 0;
+            $scope.arm3 = 0;
+            $scope.arm4 = 0;
+            $scope.arm5 = 0;
+            $scope.arm6 = 0;
+            $scope.arm7 = 0;
+
+            $http.get(PATH + '/api/notifications')
+                .then((response) => {
+                    if (response.data.success) {
+                        $scope.notifications = response.data.notifications;
+                    }
+                }, (error) => {
+                    connectionLost();
+                });
+        }
+
 		function homepage() {  // This function takes the user back to the homepage
             $window.location.href = "/home";
+        }
+
+        function wheelChange() {
+            console.log('Wheel Change');
+            var wheels = [parseInt($scope.wheel1), parseInt($scope.wheel2), parseInt($scope.wheel3), parseInt($scope.wheel4), parseInt($scope.wheel5), parseInt($scope.wheel6)]
+            $http.post(PATH + '/api/maintenance/wheels', {
+                'wheels': wheels
+            }).then((response)  => {
+                if (response.data.success)  {
+                    $scope.wheel1 = response.data.wheels[0];
+                    $scope.wheel2 = response.data.wheels[1];
+                    $scope.wheel3 = response.data.wheels[2];
+                    $scope.wheel4 = response.data.wheels[3];
+                    $scope.wheel5 = response.data.wheels[4];
+                    $scope.wheel6 = response.data.wheels[5];
+                } else {
+                    connectionLost();
+                }
+            }, (error) => {
+                connectionLost()
+            });
+        }
+
+        function armChange() {
+            console.log('Arm change');
+            var joints = [parseInt($scope.arm1), parseInt($scope.arm2), parseInt($scope.arm3), parseInt($scope.arm4), parseInt($scope.arm5), parseInt($scope.arm6), parseInt($scope.arm7)]
+            $http.post(PATH + '/api/maintenance/wheels', {
+                'joints': joints
+            }).then((response)  => {
+                if (response.data.success)  {
+                    $scope.arm1 = response.data.joints[0];
+                    $scope.arm2 = response.data.joints[1];
+                    $scope.arm3 = response.data.joints[2];
+                    $scope.arm4 = response.data.joints[3];
+                    $scope.arm5 = response.data.joints[4];
+                    $scope.arm6 = response.data.joints[5];
+                    $scope.arm6 = response.data.joints[6];
+                } else {
+                    connectionLost();
+                }
+            }, (error) => {
+                connectionLost()
+            });
         }
 
         // Sends the reset command to reset all motor direction values to zero
@@ -225,18 +298,9 @@
             arm7slider.value = 0;
             //$scope.arm7 = 0; //is this needed?
 
-            $http.get(PATH + '/api/reset')
-                .then ((response) => {
-                    if (response.data.success) {
-                        // TODO: add notification through http call 
-                        addNotification("RESET PRESSED! Setting all motor direction values to zero.");
-                        
-                    } else {
-                        connectionLost();
-                    }
-                }, (error) => {
-                    connectionLost();
-                });
+            // Calls the backend to update the values in the rover
+            wheelChange();
+            armChange();
         }
 
 
@@ -271,6 +335,13 @@
                 connectionLost();
             })
         }
+
+        function connectionLost() {
+            alert("Connection lost to server");
+            // todo: consider if we try some other reconnection or something
+        }
+
+        init();
 	}
 
 	})();
