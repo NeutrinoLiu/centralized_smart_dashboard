@@ -70,19 +70,19 @@ def test_set_speed(testNode):
     time.sleep(1) # wait for a while for sending out speed changing cmd
     assert testNode.speed == speed # we do not change speed field directly, it is updated by callback func atutomaticlly
 
-def test_set_speed_illegal1(testNode):
-    speed = [   - random.randrange(0,10),   # illegal minus speed
-                random.randrange(0,10),
-                - random.randrange(0,10),
-                random.randrange(0,10),
-                - random.randrange(0,10),
-                random.randrange(0,10)]
-    try:
-        testNode.set_new_speed(speed)
-    except InvalidSpeed as e:
-        assert e.msg == "[InvalidSpeed] negative speed"
-    else:
-        assert False
+# def test_set_speed_illegal1(testNode):
+#     speed = [   - random.randrange(0,10),   # illegal minus speed
+#                 random.randrange(0,10),
+#                 - random.randrange(0,10),
+#                 random.randrange(0,10),
+#                 - random.randrange(0,10),
+#                 random.randrange(0,10)]
+#     try:
+#         testNode.set_new_speed(speed)
+#     except InvalidSpeed as e:
+#         assert e.msg == "[InvalidSpeed] negative speed"
+#     else:
+#         assert False
 
 def test_set_speed_illegal2(testNode):
     speed = [   random.randrange(0,10),   # incorrect number of speed
@@ -112,8 +112,8 @@ def test_set_target_illegal(testNode):
 def almostEqual(a, b, error = 0.1):
     return abs(a-b) <= error
 
-def test_mock_car_moving(testNode):
-    target = GPSPoint(random.uniform(-5, 5), random.uniform(-5, 5))
-    testNode.set_new_target(target)
-    time.sleep(5) # sleep for a long time to let it arrive
-    assert almostEqual(testNode.gps_lati, target.lati) and almostEqual(testNode.gps_lati, target.lati)
+# def test_mock_car_moving(testNode):
+#     target = GPSPoint(random.uniform(-5, 5), random.uniform(-5, 5))
+#     testNode.set_new_target(target)
+#     time.sleep(5) # sleep for a long time to let it arrive
+#     assert almostEqual(testNode.gps_lati, target.lati) and almostEqual(testNode.gps_lati, target.lati)
