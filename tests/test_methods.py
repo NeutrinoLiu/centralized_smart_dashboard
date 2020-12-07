@@ -27,12 +27,12 @@ def testNode():
 ################### METHOD TEST ######################
 
 def test_get_ips_from_file(testNode):
-    assert testNode.get_ip_from_file == ['192.168.2.3', '192.128.9.9', '152.167.2.5', '199.188.6.9']
+    assert testNode.get_ip_from_file("testipfile.txt") == ['192.168.2.3', '192.128.9.9', '152.167.2.5', '199.188.6.9']
 
 def test_update_ips(testNode):
     testNode.update_ips(['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9'])
     assert testNode.ips == ['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9']
-    assert testNode.get_ip_from_file() == ['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9']
+    assert testNode.get_ip_from_file("testipfile.txt") == ['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9']
     testNode.update_ips(['192.168.2.3', '192.128.9.9', '152.167.2.5', '199.188.6.9'])
 
 
