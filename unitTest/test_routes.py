@@ -127,3 +127,32 @@ def test_get_format_route(client):
                                              {"lat": 0, "long": -34.231564}, {"lat": -10.123412, "long": 24.6555}]
     my_rover.route_state = route
     assert get_format_route() == correct_formatted_route
+
+# check if updating ips works
+def test_ips(client):
+    url = "/api/ips"
+    mock_request_data = {"ips": ["192.168.2.4", "192.168.1.4", "192.1.2.8", "192.168.7.1", "192.23.2.1"]}
+    response = client.post(url, data=json.dumps(mock_request_data))
+    assert json.loads(response.get_data()) == {"success": True, "ips": ["192.168.2.4", "192.168.1.4",
+                                                                        "192.1.2.8", "192.168.7.1", "192.23.2.1"]}
+    response = client.get(url)
+    assert json.loads(response.get_data()) == {"success": True, "ips": ["192.168.2.4", "192.168.1.4",
+                                                                        "192.1.2.8", "192.168.7.1", "192.23.2.1"]}
+
+# test if maintenance works
+
+def test_wheels(client):
+    url = "/api/maintenance/wheels"
+    mock_request_data = {"wheels": [6,5,2,0,7,-7]}
+    response = client.post(url, data=json.dumps(mock_request_data))
+    assert json.loads(response.get_data()) == {"success": True, "wheels": [6,5,2,0,7,-7]}
+    response = client.get(url)
+    assert json.loads(response.get_data()) == {"success": True, "wheels": [6,5,2,0,7,-7]}
+
+def test_arm(client):
+    url = "/api/maintenance/arm"
+    mock_request_data = {"arm": [6,5,2,0,7,-7,-3]}
+    response = client.post(url, data=json.dumps(mock_request_data))
+    assert json.loads(response.get_data()) == {"success": True, "arm": [6,5,2,0,7,-7]}
+    response = client.get(url)
+    assert json.loads(response.get_data()) == {"success": True, "arm": [6,5,2,0,7,-7]}
