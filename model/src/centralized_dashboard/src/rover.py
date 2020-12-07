@@ -64,7 +64,7 @@ class GPSPoint:
         return '(' + str(self.lati) + ',' + str(self.longt) + ')'
 
 class Rover:
-    def __init__(self, name, frequency=100, auto_init=True):    # frequency is the commmand topic sending freq
+    def __init__(self, name, frequency=100, auto_init=True, ip_file_path = None):    # frequency is the commmand topic sending freq
         # NOTICE:   those fields are though read_only for outside program but not protected.
         #           make sure you did not overwrite them mistakenly
         self.gps_longt = 0.0
@@ -86,8 +86,28 @@ class Rover:
                                 # r[0]    r[1]    r[2]                            for example: it get updated when rover arrive r[1]
                                 #         0--*----O--------O-------O------------O
                                 #         r[0]    r[1]     r[2]
+        self.ips = []
+        self.ip_file_path = ip_file_path
+        if ip_file_path is not None:
+            self.ips = self.get_ip_from_file(ip_file_path)
         if auto_init:
             self.ros_init()
+
+    # gets the ip addresses for cameras from a file specified
+    def get_ip_from_file(self, file_path):
+        ips = []
+        with open(file_path, "r") as f:
+            for line in f:
+                ips.append(line)
+        return ips
+
+    # updates the ip camera addresses and writes them to a file
+    def update_ips(self, new_ips):
+        self.ips = new_ips
+        if self.ip_file_path is not None:
+            with open(self.ip_file_path, "w") as f:
+                for i in new_ips:
+                    f.write(str(i) + "\n")
 
     def ros_init(self):
         #ros init
