@@ -1,7 +1,7 @@
 import pytest
 import random
 import time
-
+import os
 import sys
 sys.path.append('../model/src/centralized_dashboard/src') # change dir to rover.py dir
 from rover import * 
@@ -11,14 +11,30 @@ from rover import *
 
 @pytest.fixture(scope="module", autouse=True)   
 def testNode():
-    testNode = Rover("testNode", auto_init=True)
+    testNode = Rover("testNode", auto_init=True, ip_file_path="testipfile.txt")
     print(">>> test node is running >>>")
+    with open("testipfile.txt", "w") as f:
+        f.write("192.168.2.3\n192.128.9.9\n152.167.2.5\n199.188.6.9")
     yield testNode
     testNode.shut_down()
+    if os.path.exists("testipfile.txt"):
+        os.remove("testipfile.txt")
+    else:
+        print("The file does not exist")
     del testNode
     print("<<< test node shuts down <<<")
 
 ################### METHOD TEST ######################
+
+def test_get_ips_from_file(testNode):
+    assert testNode.get_ip_from_file == ['192.168.2.3', '192.128.9.9', '152.167.2.5', '199.188.6.9']
+
+def test_update_ips(testNode):
+    testNode.update_ips(['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9'])
+    assert testNode.ips == ['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9']
+    assert testNode.get_ip_from_file() == ['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9']
+    testNode.update_ips(['192.168.2.3', '192.128.9.9', '152.167.2.5', '199.188.6.9'])
+
 
 def test_clear_noti(testNode):
     testNode.remark = ''.join(random.sample('abcdefghijklmnopqrstuvwxyz', random.randrange(1,26)))
