@@ -63,17 +63,23 @@ def api_get_ips():
     ips = my_rover.ips
     return json.jsonify({"success": True, "ips": ips})
 
-#TODO
-def api_maintenance_wheels():
+
+def api_maintenance_set_wheels():
     response = json.loads(request.data.decode())
     my_rover.set_new_speed(response["wheels"])
     return json.jsonify({"success": True, "wheels": my_rover.speed})
 
 
-def api_maintenance_arm():
+def api_maintenance_set_arm():
     response = json.loads(request.data.decode())
     my_rover.set_new_arm(response["arm"])
-    return json.jsonify({"success": True, "wheels": my_rover.arm})
+    return json.jsonify({"success": True, "arm": my_rover.arm})
+
+def api_maintenance_get_arm():
+    return json.jsonify({"success": True, "arm": my_rover.arm})
+
+def api_maintenance_get_wheels():
+    return json.jsonify({"success": True, "wheels": my_rover.speed})
 
 # send the notification to rover
 def api_send_notifications():
@@ -141,8 +147,10 @@ def init_website_routes(app):
 
         app.add_url_rule('/api/ips', 'api_update_ips', api_update_ips, methods=['POST'])
         app.add_url_rule('/api/ips', 'api_get_ips', api_get_ips, methods=['GET'])
-        app.add_url_rule('/api/maintenance/wheels', 'api_maintenance_wheels', api_maintenance_wheels, methods=['POST'])
-        app.add_url_rule('/api/maintenance/arm', 'api_maintenance_arm', api_maintenance_arm, methods=['POST'])
+        app.add_url_rule('/api/maintenance/wheels', 'api_maintenance_get_wheels', api_maintenance_get_wheels, methods=['GET'])
+        app.add_url_rule('/api/maintenance/arm', 'api_maintenance_get_arm', api_maintenance_get_arm, methods=['GET'])
+        app.add_url_rule('/api/maintenance/wheels', 'api_maintenance_set_wheels', api_maintenance_set_wheels, methods=['POST'])
+        app.add_url_rule('/api/maintenance/arm', 'api_maintenance_set_arm', api_maintenance_set_arm, methods=['POST'])
         app.add_url_rule('/api/notifications', 'api_send_notifications', api_send_notifications, methods=['GET'])
         app.add_url_rule('/api/notifications', 'api_add_notifications', api_add_notifications, methods=['POST'])
         app.add_url_rule('/api/emergency-stop', 'api_emergency_stop', api_emergency_stop, methods=['GET'])
