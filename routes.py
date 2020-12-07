@@ -55,7 +55,7 @@ def api_add_notifications():
 #adds
 def api_update_ips():
     response = json.loads(request.data.decode())
-    my_rover.update_ips(response)
+    my_rover.update_ips(response["ips"])
     ips = my_rover.ips
     return json.jsonify({"success": True, "ips": ips})
 
@@ -66,12 +66,14 @@ def api_get_ips():
 #TODO
 def api_maintenance_wheels():
     response = json.loads(request.data.decode())
-    return
+    my_rover.set_new_speed(response["wheels"])
+    return json.jsonify({"success": True, "wheels": my_rover.speed})
 
 
 def api_maintenance_arm():
     response = json.loads(request.data.decode())
-    return
+    my_rover.set_new_arm(response["arm"])
+    return json.jsonify({"success": True, "wheels": my_rover.arm})
 
 # send the notification to rover
 def api_send_notifications():
