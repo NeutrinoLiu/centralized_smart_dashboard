@@ -1,12 +1,18 @@
 (function() {
 	var app = angular.module('Maintenance', []);
-	app.controller('MaintenanceController', ['$scope', '$window', MaintenanceController]);
+	app.controller('MaintenanceController', ['$scope', '$window',  '$http', MaintenanceController]);
 
-	function MaintenanceController($scope, $window) {
+	function MaintenanceController($scope, $window, $http) {
         //defining scope of functions;;
         $scope.homepage = homepage;
 		$scope.resetButton = resetButton;
         $scope.eStopButton = eStopButton;
+        $scope.wheelChange = wheelChange;
+        $scope.armChange = armChange;
+
+        $scope.notifications = "";
+
+        const PATH = 'http://localhost:5000';
 
         //Wheel 1 functionality
         var wheel1slider = document.getElementById("wheel1");
@@ -164,77 +170,189 @@
             $scope.arm7 = this.value;
         }
 
+        function init() {
+            $scope.wheel1 = 0;
+            $scope.wheel2 = 0;
+            $scope.wheel3 = 0;
+            $scope.wheel4 = 0;
+            $scope.wheel5 = 0;
+            $scope.wheel6 = 0;
+
+            $scope.arm1 = 0;
+            $scope.arm2 = 0;
+            $scope.arm3 = 0;
+            $scope.arm4 = 0;
+            $scope.arm5 = 0;
+            $scope.arm6 = 0;
+            $scope.arm7 = 0;
+
+            $http.get(PATH + '/api/notifications')
+                .then((response) => {
+                    if (response.data.success) {
+                        $scope.notifications = response.data.notifications;
+                    }
+                }, (error) => {
+                    connectionLost();
+                });
+
+            $http.get(PATH + '/api/maintenance/wheels')
+                .then((response) => {
+                    if (response.data.success) {
+                        wheel1out.innerHTML = response.data.wheels[0];
+                        wheel1slider.value = response.data.wheels[0];
+                        $scope.wheel1 = response.data.wheels[0];
+
+                        wheel2out.innerHTML = response.data.wheels[1];
+                        wheel2slider.value = response.data.wheels[1];
+                        $scope.wheel2 = response.data.wheels[1];
+
+                        wheel3out.innerHTML = response.data.wheels[2];
+                        wheel3slider.value = response.data.wheels[2];
+                        $scope.wheel3 = response.data.wheels[2];
+
+                        wheel4out.innerHTML = response.data.wheels[3];
+                        wheel4slider.value = response.data.wheels[3];
+                        $scope.wheel4 = response.data.wheels[3];
+
+                        wheel5out.innerHTML = response.data.wheels[4];
+                        wheel5slider.value = response.data.wheels[4];
+                        $scope.wheel5 = response.data.wheels[4];
+
+                        wheel6out.innerHTML = response.data.wheels[5];
+                        wheel6slider.value = response.data.wheels[5];
+                        $scope.wheel6 = response.data.wheels[5];
+                    }
+                }, (error) => {
+                    connectionLost();
+                });
+
+        $http.get(PATH + '/api/maintenance/arm')
+                .then((response) => {
+                    if (response.data.success) {
+                        arm1out.innerHTML = response.data.arm[0];
+                        arm1slider.value = response.data.arm[0];
+                        $scope.arm1 = response.data.arm[0];
+
+                        arm2out.innerHTML = response.data.arm[1];
+                        arm2slider.value = response.data.arm[1];
+                        $scope.arm2 = response.data.arm[1];
+
+                        arm3out.innerHTML = response.data.arm[2];
+                        arm3slider.value = response.data.arm[2];
+                        $scope.arm3 = response.data.arm[2];
+
+                        arm4out.innerHTML = response.data.arm[3];
+                        arm4slider.value = response.data.arm[3];
+                        $scope.arm4 = response.data.arm[3];
+
+                        arm5out.innerHTML = response.data.arm[4];
+                        arm5slider.value = response.data.arm[4];
+                        $scope.arm5 = response.data.arm[4];
+
+                        arm6out.innerHTML = response.data.arm[5];
+                        arm6slider.value = response.data.arm[5];
+                        $scope.arm6 = response.data.arm[5];
+
+                        arm7out.innerHTML = response.data.arm[6];
+                        arm7slider.value = response.data.arm[6];
+                        $scope.arm7 = response.data.arm[6];
+                    }
+                }, (error) => {
+                    connectionLost();
+                });
+
+        }
+
 		function homepage() {  // This function takes the user back to the homepage
             $window.location.href = "/home";
+        }
+
+        function wheelChange() {
+            var wheels = [parseInt($scope.wheel1), parseInt($scope.wheel2), parseInt($scope.wheel3), parseInt($scope.wheel4), parseInt($scope.wheel5), parseInt($scope.wheel6)]
+            $http.post(PATH + '/api/maintenance/wheels', {
+                'wheels': wheels
+            }).then((response)  => {
+                if (!response.data.success)  {
+                    connectionLost();
+                }
+            }, (error) => {
+                connectionLost()
+            });
+        }
+
+        function armChange() {
+            var joints = [parseInt($scope.arm1), parseInt($scope.arm2), parseInt($scope.arm3), parseInt($scope.arm4), parseInt($scope.arm5), parseInt($scope.arm6), parseInt($scope.arm7)]
+            $http.post(PATH + '/api/maintenance/arm', {
+                'arm': joints
+            }).then((response)  => {
+                if (!response.data.success)  {
+                    connectionLost();
+                }
+            }, (error) => {
+                connectionLost()
+            });
         }
 
         // Sends the reset command to reset all motor direction values to zero
         function resetButton() {
             alert("RESET PRESSED! Setting all motor direction values to zero.");
-            wheel1out.innerHTML = 50;
-            wheel1slider.value = 50;
-            //$scope.wheel1 = 50; //is this needed?
+            wheel1out.innerHTML = 0;
+            wheel1slider.value = 0;
 
-            wheel2out.innerHTML = 50;
-            wheel2slider.value = 50;
-            //$scope.wheel2 = 50; //is this needed?
+            wheel2out.innerHTML = 0;
+            wheel2slider.value = 0;
 
-            wheel3out.innerHTML = 50;
-            wheel3slider.value = 50;
-            //$scope.wheel3 = 50; //is this needed?
+            wheel3out.innerHTML = 0;
+            wheel3slider.value = 0;
 
-            wheel4out.innerHTML = 50;
-            wheel4slider.value = 50;
-            //$scope.wheel4 = 50; //is this needed?
+            wheel4out.innerHTML = 0;
+            wheel4slider.value = 0;
 
-            wheel5out.innerHTML = 50;
-            wheel5slider.value = 50;
-            //$scope.wheel5 = 50; //is this needed?
+            wheel5out.innerHTML = 0;
+            wheel5slider.value = 0;
 
-            wheel6out.innerHTML = 50;
-            wheel6slider.value = 50;
-            //$scope.wheel6 = 50; //is this needed?
+            wheel6out.innerHTML = 0;
+            wheel6slider.value = 0;
 
-            arm1out.innerHTML = 50;
-            arm1slider.value = 50;
-            //$scope.arm1 = 50; //is this needed?
+            arm1out.innerHTML = 0;
+            arm1slider.value = 0;
 
-            arm2out.innerHTML = 50;
-            arm2slider.value = 50;
-            //$scope.arm2 = 50; //is this needed?
+            arm2out.innerHTML = 0;
+            arm2slider.value = 0;
 
-            arm3out.innerHTML = 50;
-            arm3slider.value = 50;
-            //$scope.arm3 = 50; //is this needed?
+            arm3out.innerHTML = 0;
+            arm3slider.value = 0;
 
-            arm4out.innerHTML = 50;
-            arm4slider.value = 50;
-            //$scope.arm4 = 50; //is this needed?
+            arm4out.innerHTML = 0;
+            arm4slider.value = 0;
 
-            arm5out.innerHTML = 50;
-            arm5slider.value = 50;
-            //$scope.arm5 = 50; //is this needed?
+            arm5out.innerHTML = 0;
+            arm5slider.value = 0;
 
-            arm6out.innerHTML = 50;
-            arm6slider.value = 50;
-            //$scope.arm6 = 50; //is this needed?
+            arm6out.innerHTML = 0;
+            arm6slider.value = 0;
 
-            arm7out.innerHTML = 50;
-            arm7slider.value = 50;
-            //$scope.arm7 = 50; //is this needed?
+            arm7out.innerHTML = 0;
+            arm7slider.value = 0;
 
-            $http.get(PATH + '/api/reset')
-                .then ((response) => {
-                    if (response.data.success) {
-                        // TODO: add notification through http call 
-                        addNotification("RESET PRESSED! Setting all motor direction values to zero.");
-                        
-                    } else {
-                        connectionLost();
-                    }
-                }, (error) => {
-                    connectionLost();
-                });
+            $scope.wheel1 = 0;
+            $scope.wheel2 = 0;
+            $scope.wheel3 = 0;
+            $scope.wheel4 = 0;
+            $scope.wheel5 = 0;
+            $scope.wheel6 = 0;
+
+            $scope.arm1 = 0;
+            $scope.arm2 = 0;
+            $scope.arm3 = 0;
+            $scope.arm4 = 0;
+            $scope.arm5 = 0;
+            $scope.arm6 = 0;
+            $scope.arm7 = 0;
+
+            // Calls the backend to update the values in the rover
+            wheelChange();
+            armChange();
         }
 
 
@@ -253,6 +371,29 @@
                     connectionLost();
                 });
         }
+
+        // Adds a new notification to the notifications scope for the notifications bar
+        function addNotification(newNotification) {
+            $scope.notifications += (newNotification + '\n');
+            $http.post(PATH + '/api/notifications', {
+                'notifications': $scope.notifications
+            }).then((response) => {
+                if (response.data.success){
+                    $scope.notifications = response.data.notifications;
+                } else {
+                    connectionLost();
+                }
+            }, (error) => {
+                connectionLost();
+            })
+        }
+
+        function connectionLost() {
+            alert("Connection lost to server");
+            // todo: consider if we try some other reconnection or something
+        }
+
+        init();
 	}
 
 	})();

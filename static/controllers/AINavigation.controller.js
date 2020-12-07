@@ -6,19 +6,19 @@
     function AINavigationController($scope, $window, $http, PanZoomService) {
         $scope.homepage = homepage;
         $scope.waypointNew = waypointNew;
-        $scope.cameraIP = cameraIP;
         $scope.goButton = goButton;
         $scope.eStopButton = eStopButton;
         $scope.deleteLatestWaypoint = deleteLatestWaypoint;
 
         $scope.waypoints = [];
+        $scope.roverPin;
         $scope.curr_coord = {'lat': 0, 'long':0};
         $scope.notifications = "none yet";
 
         // todo: add a zoomtofit after each addition
         var initial_zoom = {
-            x: -98.32,
-            y: -99.39,
+            x: 0,
+            y: 0,
             width: 5,
             height: 5
         };
@@ -32,7 +32,7 @@
 
         $scope.panzoomModel = {};
 
-        const PATH = 'http://localhost:5000'
+        const PATH = 'http://localhost:5000';
         const GPS_INTERVAL = 500; // in milliseconds
 
         function homepage() {  // takes user back to homepage
@@ -57,6 +57,8 @@
                         setInterval(updateRoverCoordinates, GPS_INTERVAL);
                         $scope.curr_coord.lat = response.data.lat;
                         $scope.curr_coord.long = response.data.long;
+                        $scope.roverPin = fullRoverPin(response.data);
+                        moveRoverIcon();
                     }
                 }, (error) => {
                     connectionLost();
@@ -82,10 +84,22 @@
                     if (response.data.success) {
                         $scope.curr_coord.lat = response.data.lat;
                         $scope.curr_coord.long = response.data.long;
+                        $scope.roverPin = fullRoverPin(response.data);
+                        moveRoverIcon();
                     }
                 }, (error) => {
                     connectionLost();
                 });
+        }
+
+        function fullRoverPin(rover) {
+            rover['lat'] = parseFloat(rover['lat'])
+            rover['long'] = parseFloat(rover['long'])
+            position = coordToXY(rover.lat, rover.long);
+            rover['x_pos'] = parseFloat(position['x']);
+            rover['y_pos'] = parseFloat(position['y']);
+
+            return rover;
         }
 
         /*
@@ -139,6 +153,16 @@
             return {'x': x_pos, 'y': y_pos};
         }
 
+        function moveRoverIcon() {
+            top_ = $scope.roverPin['y_pos'].toString();
+            top_ = top_ + 'px';
+            left_ = $scope.roverPin['x_pos'].toString();
+            left_ = left_ + 'px';
+            document.getElementById("roverPin").style.position = 'absolute';
+            document.getElementById("roverPin").style.top = top_;
+            document.getElementById("roverPin").style.left = left_;
+        }
+
         function addWaypointToMap() {
             for (index = 0; index < $scope.waypoints.length; index++) { 
                     waypoint = $scope.waypoints[index];
@@ -153,8 +177,8 @@
 
             if ($scope.waypoints.length > 0) {
                 var point_location = {
-                    x: $scope.waypoints[0]['x_pos'],
-                    y: $scope.waypoints[0]['y_pos'],
+                    x: $scope.waypoints[$scope.waypoints.length - 1]['x_pos'],
+                    y: $scope.waypoints[$scope.waypoints.length - 1]['y_pos'],
                     width: 5,
                     height: 5
                 };
@@ -183,10 +207,6 @@
                     } 
                     ).then((response) => {
                         if (response.data.success) {
-                            $scope.waypoints = []
-                            for (index = 0; index < response.data.waypoints.length; index++) {  
-                                $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
-                            }
                             addNotification("New Waypoint Added");
                             addWaypointToMap();
                         } else {
@@ -208,12 +228,8 @@
                     } 
                     ).then((response) => {
                         if (response.data.success) {
-                            $scope.waypoints = []
-                            for (index = 0; index < response.data.waypoints.length; index++) {  
-                                $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
-                            }
-
                             addNotification("Deleted Waypoint");
+                            addWaypointToMap();
                         } else {
                             connectionLost();
                         }
@@ -225,11 +241,7 @@
             }
         }
 
-        //Opens a new window with a live stream of the camera at the IP address sent
-        function cameraIP() {  // future iteration item
-            alert("A new camera stream IP address has been opened.");
-        }
-
+        // Adds a new notification to the notifications scope for the notifications bar
         function addNotification(newNotification) {
             $scope.notifications += (newNotification + '\n');
             $http.post(PATH + '/api/notifications', {
@@ -282,10 +294,6 @@
                     connectionLost();
                 });
         }
-
-/*        function getCameraIP(){  //future iteration item
-
-        } */
 
         function connectionLost() {
             alert("Connection lost to server");

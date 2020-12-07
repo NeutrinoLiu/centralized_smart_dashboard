@@ -53,7 +53,8 @@ describe('AINavigation', ($scope, $window, $http, PanZoomService) => {
 
 		});
 	});
-})
+});
+
 describe('testing homepage function', () => { //TODO Check for onClick Functions
 	
 	// Every instance of home refers to the HTML Homepage, 'homepage' means for the controller method
