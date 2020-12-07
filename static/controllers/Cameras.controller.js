@@ -25,9 +25,10 @@
 
             $http.get(PATH + '/api/ips')
                 .then((response) => {
+                    console.log(response);
                     if (response.data.success){
-                        for (index = 0; index < response.data.cameraIPs.length; index++) {  
-                            $scope.waypoints.push(response.data.cameraIPs[index]);
+                        for (index = 0; index < response.data.ips.length; index++) {  
+                            $scope.cameraIPs.push(response.data.ips[index]);
                         }
                     }
                 }, (error) => {
@@ -45,13 +46,13 @@
                 $scope.cameraIPs.pop();
                 $http.post(PATH + '/api/ips',
                     {
-                        'cameraIPs': $scope.cameraIPs
+                        'ips': $scope.cameraIPs
                     } 
                     ).then((response) => {
                         if (response.data.success) {
                             $scope.cameraIPs = []
-                            for (index = 0; index < response.data.cameraIPs.length; index++) {  
-                                $scope.cameraIPs.push(response.data.cameraIPs[index]);
+                            for (index = 0; index < response.data.ips.length; index++) {  
+                                $scope.cameraIPs.push(response.data.ips[index]);
                             }
 
                             addNotification("Latest IP address for camera removed");
@@ -67,7 +68,6 @@
         }
 
         function addIP() {
-            // TODO: test
             // TODO: validate ip
             var newIP = document.getElementById("cameraNewIP").value;
             for (index = 0; index < $scope.cameraIPs.length; index++) {
@@ -79,13 +79,13 @@
             $scope.cameraIPs.push(newIP);
             $http.post(PATH + '/api/ips',
             {
-                'cameraIPs': $scope.cameraIPs
+                'ips': $scope.cameraIPs
             } 
             ).then((response) => {
                 if (response.data.success) {
                     $scope.cameraIPs = []
-                    for (index = 0; index < response.data.cameraIPs.length; index++) {  
-                        $scope.cameraIPs.push(response.data.cameraIPs[index]);
+                    for (index = 0; index < response.data.ips.length; index++) {  
+                        $scope.cameraIPs.push(response.data.ips[index]);
                     }
 
                     addNotification("New IP address for a camera added");

@@ -194,6 +194,76 @@
                 }, (error) => {
                     connectionLost();
                 });
+
+            $http.get(PATH + '/api/maintenance/wheels')
+                .then((response) => {
+                    console.log(response.data);
+                    
+                    if (response.data.success) {
+                        wheel1out.innerHTML = response.data.wheels[0];
+                        wheel1slider.value = response.data.wheels[0];
+                        $scope.wheel1 = response.data.wheels[0];
+
+                        wheel2out.innerHTML = response.data.wheels[1];
+                        wheel2slider.value = response.data.wheels[1];
+                        $scope.wheel2 = response.data.wheels[1];
+
+                        wheel3out.innerHTML = response.data.wheels[2];
+                        wheel3slider.value = response.data.wheels[2];
+                        $scope.wheel3 = response.data.wheels[2];
+
+                        wheel4out.innerHTML = response.data.wheels[3];
+                        wheel4slider.value = response.data.wheels[3];
+                        $scope.wheel4 = response.data.wheels[3];
+
+                        wheel5out.innerHTML = response.data.wheels[4];
+                        wheel5slider.value = response.data.wheels[4];
+                        $scope.wheel5 = response.data.wheels[4];
+
+                        wheel6out.innerHTML = response.data.wheels[5];
+                        wheel6slider.value = response.data.wheels[5];
+                        $scope.wheel6 = response.data.wheels[5];
+                    }
+                }, (error) => {
+                    connectionLost();
+                });
+
+        $http.get(PATH + '/api/maintenance/arm')
+                .then((response) => {
+                    console.log(response.data);
+                    if (response.data.success) {
+                        arm1out.innerHTML = response.data.arm[0];
+                        arm1slider.value = response.data.arm[0];
+                        $scope.arm1 = response.data.arm[0];
+
+                        arm2out.innerHTML = response.data.arm[1];
+                        arm2slider.value = response.data.arm[1];
+                        $scope.arm2 = response.data.arm[1];
+
+                        arm3out.innerHTML = response.data.arm[2];
+                        arm3slider.value = response.data.arm[2];
+                        $scope.arm3 = response.data.arm[2];
+
+                        arm4out.innerHTML = response.data.arm[3];
+                        arm4slider.value = response.data.arm[3];
+                        $scope.arm4 = response.data.arm[3];
+
+                        arm5out.innerHTML = response.data.arm[4];
+                        arm5slider.value = response.data.arm[4];
+                        $scope.arm5 = response.data.arm[4];
+
+                        arm6out.innerHTML = response.data.arm[5];
+                        arm6slider.value = response.data.arm[5];
+                        $scope.arm6 = response.data.arm[5];
+
+                        arm7out.innerHTML = response.data.arm[6];
+                        arm7slider.value = response.data.arm[6];
+                        $scope.arm7 = response.data.arm[6];
+                    }
+                }, (error) => {
+                    connectionLost();
+                });
+
         }
 
 		function homepage() {  // This function takes the user back to the homepage
@@ -201,19 +271,16 @@
         }
 
         function wheelChange() {
-            console.log('Wheel Change');
             var wheels = [parseInt($scope.wheel1), parseInt($scope.wheel2), parseInt($scope.wheel3), parseInt($scope.wheel4), parseInt($scope.wheel5), parseInt($scope.wheel6)]
+            console.log(wheels);
+            console.log('$$$$$$$$$$$$$$$')
             $http.post(PATH + '/api/maintenance/wheels', {
                 'wheels': wheels
             }).then((response)  => {
-                if (response.data.success)  {
-                    $scope.wheel1 = response.data.wheels[0];
-                    $scope.wheel2 = response.data.wheels[1];
-                    $scope.wheel3 = response.data.wheels[2];
-                    $scope.wheel4 = response.data.wheels[3];
-                    $scope.wheel5 = response.data.wheels[4];
-                    $scope.wheel6 = response.data.wheels[5];
-                } else {
+                console.log('$$$$HERE');
+                console.log(response.data.wheels);
+                console.log('$$$$$HERE');
+                if (!response.data.success)  {
                     connectionLost();
                 }
             }, (error) => {
@@ -224,18 +291,11 @@
         function armChange() {
             console.log('Arm change');
             var joints = [parseInt($scope.arm1), parseInt($scope.arm2), parseInt($scope.arm3), parseInt($scope.arm4), parseInt($scope.arm5), parseInt($scope.arm6), parseInt($scope.arm7)]
-            $http.post(PATH + '/api/maintenance/wheels', {
-                'joints': joints
+            $http.post(PATH + '/api/maintenance/arm', {
+                'arm': joints
             }).then((response)  => {
-                if (response.data.success)  {
-                    $scope.arm1 = response.data.joints[0];
-                    $scope.arm2 = response.data.joints[1];
-                    $scope.arm3 = response.data.joints[2];
-                    $scope.arm4 = response.data.joints[3];
-                    $scope.arm5 = response.data.joints[4];
-                    $scope.arm6 = response.data.joints[5];
-                    $scope.arm6 = response.data.joints[6];
-                } else {
+                console.log(response.data.arm);
+                if (!response.data.success)  {
                     connectionLost();
                 }
             }, (error) => {
@@ -248,56 +308,59 @@
             alert("RESET PRESSED! Setting all motor direction values to zero.");
             wheel1out.innerHTML = 0;
             wheel1slider.value = 0;
-            //$scope.wheel1 = 0; //is this needed?
 
             wheel2out.innerHTML = 0;
             wheel2slider.value = 0;
-            //$scope.wheel2 = 0; //is this needed?
 
             wheel3out.innerHTML = 0;
             wheel3slider.value = 0;
-            //$scope.wheel3 = 0; //is this needed?
 
             wheel4out.innerHTML = 0;
             wheel4slider.value = 0;
-            //$scope.wheel4 = 0; //is this needed?
 
             wheel5out.innerHTML = 0;
             wheel5slider.value = 0;
-            //$scope.wheel5 = 0; //is this needed?
 
             wheel6out.innerHTML = 0;
             wheel6slider.value = 0;
-            //$scope.wheel6 = 0; //is this needed?
 
             arm1out.innerHTML = 0;
             arm1slider.value = 0;
-            //$scope.arm1 = 0; //is this needed?
 
             arm2out.innerHTML = 0;
             arm2slider.value = 0;
-            //$scope.arm2 = 0; //is this needed?
 
             arm3out.innerHTML = 0;
             arm3slider.value = 0;
-            //$scope.arm3 = 0; //is this needed?
 
             arm4out.innerHTML = 0;
             arm4slider.value = 0;
-            //$scope.arm4 = 0; //is this needed?
 
             arm5out.innerHTML = 0;
             arm5slider.value = 0;
-            //$scope.arm5 = 0; //is this needed?
 
             arm6out.innerHTML = 0;
             arm6slider.value = 0;
-            //$scope.arm6 = 0; //is this needed?
 
             arm7out.innerHTML = 0;
             arm7slider.value = 0;
-            //$scope.arm7 = 0; //is this needed?
 
+            $scope.wheel1 = 0;
+            $scope.wheel2 = 0;
+            $scope.wheel3 = 0;
+            $scope.wheel4 = 0;
+            $scope.wheel5 = 0;
+            $scope.wheel6 = 0;
+
+            $scope.arm1 = 0;
+            $scope.arm2 = 0;
+            $scope.arm3 = 0;
+            $scope.arm4 = 0;
+            $scope.arm5 = 0;
+            $scope.arm6 = 0;
+            $scope.arm7 = 0;
+
+            console.log('$$$$$$$_RESET_$$$$$$$$');
             // Calls the backend to update the values in the rover
             wheelChange();
             armChange();

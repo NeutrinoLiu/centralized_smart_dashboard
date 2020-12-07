@@ -66,7 +66,7 @@ def api_get_ips():
 
 def api_maintenance_set_wheels():
     response = json.loads(request.data.decode())
-    my_rover.set_new_speed(response["wheels"])
+    new_speed = my_rover.set_new_speed(response["wheels"])
     return json.jsonify({"success": True, "wheels": my_rover.speed})
 
 

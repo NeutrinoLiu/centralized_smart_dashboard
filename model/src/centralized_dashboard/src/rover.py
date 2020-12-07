@@ -75,7 +75,7 @@ class Rover:
         # the target pos of the car
         self.ori = 0.0
         self.speed = []
-        self.arm = []
+        self.arm = [0, 0, 0, 0, 0, 0, 0]
         self.remark = ''
         self.name = name
         # self.warn_flag = False # indicate whenever there is a warning.
@@ -189,7 +189,15 @@ class Rover:
         drive_data.wheel3 = new_speed[3]
         drive_data.wheel4 = new_speed[4]
         drive_data.wheel5 = new_speed[5]
+        self.speed = [      drive_data.wheel0,
+                            drive_data.wheel1,
+                            drive_data.wheel2,
+                            drive_data.wheel3,
+                            drive_data.wheel4,
+                            drive_data.wheel5]
         self.driv_pub.publish(drive_data)
+
+        return self.speed
     
     def emergent_stop(self):
         self.set_new_speed([0, 0, 0, 0, 0, 0])
