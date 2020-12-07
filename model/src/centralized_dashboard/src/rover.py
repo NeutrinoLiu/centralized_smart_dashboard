@@ -180,8 +180,8 @@ class Rover:
         # invalid if it is not number
         if len(new_speed) != 6:
             raise InvalidSpeed("incorrect num of speed")
-        if not reduce(lambda a,b: a and b, map(lambda a: a>=0 , new_speed)):
-            raise InvalidSpeed("negative speed")
+        #if not reduce(lambda a,b: a and b, map(lambda a: a>=0 , new_speed)):
+            #raise InvalidSpeed("negative speed")
         drive_data = Drive()
         drive_data.wheel0 = new_speed[0]
         drive_data.wheel1 = new_speed[1]
