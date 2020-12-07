@@ -153,6 +153,6 @@ def test_arm(client):
     url = "/api/maintenance/arm"
     mock_request_data = {"arm": [6,5,2,0,7,-7,-3]}
     response = client.post(url, data=json.dumps(mock_request_data))
-    assert json.loads(response.get_data()) == {"success": True, "arm": [6,5,2,0,7,-7]}
+    assert json.loads(response.get_data()) == {"success": True, "arm": [6,5,2,0,7,-7, -3]}
     response = client.get(url)
-    assert json.loads(response.get_data()) == {"success": True, "arm": [6,5,2,0,7,-7]}
+    assert json.loads(response.get_data()) == {"success": True, "arm": [6,5,2,0,7,-7, -3]}
