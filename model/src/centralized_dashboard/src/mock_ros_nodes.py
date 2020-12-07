@@ -5,9 +5,12 @@ import random
 
 from math import sqrt
 from threading import Thread
+from functools import reduce
 
 from centralized_dashboard.msg import NavigationMsg
 from centralized_dashboard.msg import Drive
+
+stop_flag = False
 
 class NavData:
 
@@ -39,6 +42,9 @@ class NavData:
 
     # a simulator of moving the mock rover car
     def move_forward(self):
+        global stop_flag
+        if stop_flag:
+            return
         line_speed = 0.01
         dist = sqrt((self.tar_lat - self.cur_lat)*(self.tar_lat - self.cur_lat) + (self.tar_long - self.cur_long)*(self.tar_long - self.cur_long))
         if dist != 0 :
@@ -81,14 +87,16 @@ class DriveData:
         self.publisher = rospy.Publisher(topic_name, Drive, queue_size=1)
         self.subscriber = rospy.Subscriber('/set_drive_data', Drive, self.set_speed)
         self.rate = rospy.Rate(frequency)
-        self.wheel_speeds = [0, 0, 0, 0, 0, 0]
+        self.wheel_speeds = [1, 1, 1, 1, 1, 1]
 
     def get_wheel_speeds(self):
         return self.wheel_speeds
     
     def set_speed(self, data):
+        global stop_flag
         self.wheel_speeds = [data.wheel0, data.wheel1, data.wheel2, data.wheel3, data.wheel4, data.wheel5]
-
+        stop_flag = reduce(lambda a,b: a and b, map(lambda a: a == 0, self.wheel_speeds))
+        
 
     def talker(self):
         msg = Drive()

@@ -1,10 +1,10 @@
 from flask import render_template, json, abort, request
-#from model.src.centralized_dashboard.src.rover import Rover, GPSPoint
+from model.src.centralized_dashboard.src.rover import Rover, GPSPoint
 
 
 GPS_ERROR_VALUE = None
 
-#my_rover = Rover("rover1")
+my_rover = Rover("rover1")
 
 # Render templates
 def home():
@@ -38,12 +38,12 @@ def coming_soon():
     return render_template('ComingSoon.html')
 
 # helper method for getting the route in format for
-#def get_format_route():
-#    route = my_rover.route_state
-#    route_to_send = []
-#    for point in route:
-#        route_to_send.append({"lat": point.lati, "long": point.longt})
-#    return route_to_send
+def get_format_route():
+    route = my_rover.route_state
+    route_to_send = []
+    for point in route:
+        route_to_send.append({"lat": point.lati, "long": point.longt})
+    return route_to_send
 
 # API routes
 
@@ -52,7 +52,30 @@ def api_add_notifications():
     my_rover.remark = response["notifications"]
     return json.jsonify({"success": True, "notifications": my_rover.remark})
 
-# send the notification to
+#adds
+def api_update_ips():
+    response = json.loads(request.data.decode())
+    my_rover.update_ips(response["ips"])
+    ips = my_rover.ips
+    return json.jsonify({"success": True, "ips": ips})
+
+def api_get_ips():
+    ips = my_rover.ips
+    return json.jsonify({"success": True, "ips": ips})
+
+#TODO
+def api_maintenance_wheels():
+    response = json.loads(request.data.decode())
+    my_rover.set_new_speed(response["wheels"])
+    return json.jsonify({"success": True, "wheels": my_rover.speed})
+
+
+def api_maintenance_arm():
+    response = json.loads(request.data.decode())
+    my_rover.set_new_arm(response["arm"])
+    return json.jsonify({"success": True, "wheels": my_rover.arm})
+
+# send the notification to rover
 def api_send_notifications():
     notifications = my_rover.remark
     return json.jsonify({"success": True, "notifications": notifications})
@@ -66,6 +89,7 @@ def api_go_button():
 
 # emergency stop not implemented yet
 def api_emergency_stop():
+    my_rover.emergent_stop()
     return json.jsonify({"success": True})
 
 # returns full list of all waypoint on route
@@ -115,6 +139,10 @@ def init_website_routes(app):
         app.add_url_rule('/cameras', 'cameras', cameras, methods=['GET'])
         app.add_url_rule('/coming-soon', 'coming-soon', coming_soon, methods=['GET'])
 
+        app.add_url_rule('/api/ips', 'api_update_ips', api_update_ips, methods=['POST'])
+        app.add_url_rule('/api/ips', 'api_get_ips', api_get_ips, methods=['GET'])
+        app.add_url_rule('/api/maintenance/wheels', 'api_maintenance_wheels', api_maintenance_wheels, methods=['POST'])
+        app.add_url_rule('/api/maintenance/arm', 'api_maintenance_arm', api_maintenance_arm, methods=['POST'])
         app.add_url_rule('/api/notifications', 'api_send_notifications', api_send_notifications, methods=['GET'])
         app.add_url_rule('/api/notifications', 'api_add_notifications', api_add_notifications, methods=['POST'])
         app.add_url_rule('/api/emergency-stop', 'api_emergency_stop', api_emergency_stop, methods=['GET'])
