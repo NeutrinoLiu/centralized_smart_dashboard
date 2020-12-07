@@ -197,8 +197,6 @@
 
             $http.get(PATH + '/api/maintenance/wheels')
                 .then((response) => {
-                    console.log(response.data);
-                    
                     if (response.data.success) {
                         wheel1out.innerHTML = response.data.wheels[0];
                         wheel1slider.value = response.data.wheels[0];
@@ -230,7 +228,6 @@
 
         $http.get(PATH + '/api/maintenance/arm')
                 .then((response) => {
-                    console.log(response.data);
                     if (response.data.success) {
                         arm1out.innerHTML = response.data.arm[0];
                         arm1slider.value = response.data.arm[0];
@@ -272,14 +269,9 @@
 
         function wheelChange() {
             var wheels = [parseInt($scope.wheel1), parseInt($scope.wheel2), parseInt($scope.wheel3), parseInt($scope.wheel4), parseInt($scope.wheel5), parseInt($scope.wheel6)]
-            console.log(wheels);
-            console.log('$$$$$$$$$$$$$$$')
             $http.post(PATH + '/api/maintenance/wheels', {
                 'wheels': wheels
             }).then((response)  => {
-                console.log('$$$$HERE');
-                console.log(response.data.wheels);
-                console.log('$$$$$HERE');
                 if (!response.data.success)  {
                     connectionLost();
                 }
@@ -289,12 +281,10 @@
         }
 
         function armChange() {
-            console.log('Arm change');
             var joints = [parseInt($scope.arm1), parseInt($scope.arm2), parseInt($scope.arm3), parseInt($scope.arm4), parseInt($scope.arm5), parseInt($scope.arm6), parseInt($scope.arm7)]
             $http.post(PATH + '/api/maintenance/arm', {
                 'arm': joints
             }).then((response)  => {
-                console.log(response.data.arm);
                 if (!response.data.success)  {
                     connectionLost();
                 }
@@ -360,7 +350,6 @@
             $scope.arm6 = 0;
             $scope.arm7 = 0;
 
-            console.log('$$$$$$$_RESET_$$$$$$$$');
             // Calls the backend to update the values in the rover
             wheelChange();
             armChange();
