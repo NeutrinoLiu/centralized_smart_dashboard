@@ -5,6 +5,7 @@
 	function CamerasController($scope, $window, $http) {
         $scope.homepage = homepage;
         $scope.removeLatestCamera = removeLatestCamera;
+        $scope.addNotification = addNotification;
         $scope.eStopButton = eStopButton;
         $scope.addIP = addIP;
 

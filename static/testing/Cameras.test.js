@@ -15,18 +15,25 @@
 	}));
 }); */
 
-/* describe('testing addNotification', () => {
+describe('testing addNotification', () => {
 
-	beforeEach(() => {
-		$scope.notifications = "none yet";
-	});
+	beforeEach(module('cameras'));
+
+	var scope, $controller;
+
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+	}));
 
 	it('should send a notifcation', () => {
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.notifications = "none yet"
 		var output1 = "none yetNew Notification Sent To Server\n";
-		addNotification("New Notification Sent To Server");
-		expect($scope.notifications).toEqual(output1);
+		scope.addNotification("New Notification Sent To Server");
+		expect(scope.notifications).toEqual(output1);
 	});
-}); */
+});
 
 describe('testing removeLatestCamera function', () => {
 
@@ -41,9 +48,9 @@ describe('testing removeLatestCamera function', () => {
 
 	it('should remove the latest camera', () => {  //
 		ctrl = $controller('CamerasController', { $scope: scope });
-		scope.cameraIPs = [192.168.1.14, 192.168.1.23];  // fill in with 2 camera IPs of right format
+		scope.cameraIPs = ['192.168.1.14', '192.168.1.23'];  // fill in with 2 camera IPs of right format
 		scope.removeLatestCamera();
-		var output1C = [192.168.1.14];  // fill in with 1 camera IP of right format
+		var output1C = ['192.168.1.14'];  // fill in with 1 camera IP of right format
 		expect(scope.cameraIPs).toEqual(output1C);  //check for match
 	});
 
@@ -83,15 +90,22 @@ describe('testing addIP function', () => {  // tests written to test the addIP f
 
 });
 
-/* describe('testing eStop button', () => {  // tests written for the eStop button
+describe('testing eStop button', () => {  // tests written for the eStop button
 
-	beforeEach(() => {
-		$scope.notifications = "none yet";
-	});
+	beforeEach(module('cameras'));
+
+	var scope, $controller;
+
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+	}));
 
 	it('should send a notification when called', () => {
+		scope.notifications = "none yet";
+		ctrl = $controller('CamerasController', { $scope: scope });
 		var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
-		eStopButton();
-		expect($scope.notifications).toEqual(output1);
+		scope.eStopButton();
+		expect(scope.notifications).toEqual(output1);
 	});
-});  */
+});
