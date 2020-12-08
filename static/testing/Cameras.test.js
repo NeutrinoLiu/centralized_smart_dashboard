@@ -2,8 +2,34 @@
 // May need to add some includes at the top, not sure what to add though
 
 
-/* describe('testing homepage function', () => {  // Based on code written in the AINavigation tests
-	it('should', async(() => {
+ describe('testing homepage function', () => {  // Based on code written in the AINavigation tests
+
+	beforeEach(module('cameras'));
+
+	var scope, $controller;
+
+	beforeEach(ngMock.inject(function ($rootScope, $compile) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+
+		var content = '<my-directive></my-directive>'
+		
+		compiledDirective = $compile(content)(scope);
+		scope.$digest();
+	}));
+
+	it('broadcasts an event when the button is clicked', function () {
+		var data = null;
+
+		scope.$on('event.action', function ($event, eventData) {
+			data = eventData;
+		});
+
+		compiledDirective.find('.topnav homepage').click();
+
+		expect(data.attributeOne).to.equal('value 1');
+	});
+
+	/* it('should go to homepage', () => {
 		spyOn(home, 'homepage');
 
 		let button = fixture.debugElement.nativeElement.querySelector('button');
@@ -12,8 +38,8 @@
 		fixture.whenStable().then(() => {
 			expect(home.onEditButtonClick).toHaveBeenCalled();
 		});
-	}));
-}); */
+	});  */
+}); 
 
 describe('testing addNotification', () => {
 
@@ -26,7 +52,7 @@ describe('testing addNotification', () => {
 		$controller = _$controller_;
 	}));
 
-	it('should send a notifcation', () => {
+	it('should send a notification', () => {
 		ctrl = $controller('CamerasController', { $scope: scope });
 		scope.notifications = "none yet"
 		var output1 = "none yetNew Notification Sent To Server\n";

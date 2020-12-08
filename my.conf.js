@@ -17,6 +17,8 @@ module.exports = function(config) {
     files: [
 	  'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'static/services/panZoomService.js',
+      'static/directives/*.js',
       'static/controllers/*.js',
       'static/testing/*.js'
     ],

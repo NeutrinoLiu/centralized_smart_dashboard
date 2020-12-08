@@ -39,6 +39,9 @@
 
         function homepage() {  // takes user back to homepage
             $window.location.href = "/home";
+            $rootScope.$broadcast('event.action', {
+                attributeOne: 'value 1'
+            });
         }
 
 	    // Removes the last camera IP added to our list
