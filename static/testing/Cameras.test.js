@@ -34,17 +34,17 @@ describe('testing removeLatestCamera function', () => {
 
 	var scope, $controller;
 
-	beforeEach(inject(function ($rootScope, _$controller_) {
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
 		scope = $rootScope.$new();
 		$controller = _$controller_;
 	}));
 
-	it('should remove the latest camera', () => {  // TODO finish this when rest of controller is written
+	it('should remove the latest camera', () => {  //
 		ctrl = $controller('CamerasController', { $scope: scope });
-		scope.cameraIPs = [];  // TODO fill in with 2 camera IPs of right format
+		scope.cameraIPs = [192.168.1.14, 192.168.1.23];  // fill in with 2 camera IPs of right format
 		scope.removeLatestCamera();
-		var output1C = [];  // TODO fill in with 1 camera IP of right format
-		expect(scope.cameraIPs).toEqual(output1C);
+		var output1C = [192.168.1.14];  // fill in with 1 camera IP of right format
+		expect(scope.cameraIPs).toEqual(output1C);  //check for match
 	});
 
 	it('should do nothing with no cameras', () => {
@@ -62,11 +62,22 @@ describe('testing removeLatestCamera function', () => {
 
 describe('testing addIP function', () => {  // tests written to test the addIP function
 
+	beforeEach(module('cameras'));
+
+	var scope, $controller;
+
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+	}));
+
 	it('should add an IP', () => {  // TODO finish this test when addIP is written
+		ctrl = $controller('CamerasController', { $scope: scope });
 
 	});
 
 	it('should ignore bad input', () => {  // TODO finish this test when addIP is written
+		ctrl = $controller('CamerasController', { $scope: scope });
 
 	});
 
