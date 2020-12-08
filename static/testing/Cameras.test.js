@@ -2,7 +2,7 @@
 // May need to add some includes at the top, not sure what to add though
 
 
-describe('testing homepage function', () => {  // Based on code written in the AINavigation tests
+/* describe('testing homepage function', () => {  // Based on code written in the AINavigation tests
 	it('should', async(() => {
 		spyOn(home, 'homepage');
 
@@ -13,9 +13,9 @@ describe('testing homepage function', () => {  // Based on code written in the A
 			expect(home.onEditButtonClick).toHaveBeenCalled();
 		});
 	}));
-});
+}); */
 
-describe('testing addNotification', () => {
+/* describe('testing addNotification', () => {
 
 	beforeEach(() => {
 		$scope.notifications = "none yet";
@@ -26,26 +26,37 @@ describe('testing addNotification', () => {
 		addNotification("New Notification Sent To Server");
 		expect($scope.notifications).toEqual(output1);
 	});
-});
+}); */
 
 describe('testing removeLatestCamera function', () => {
 
+	beforeEach(module('cameras'));
+
+	var scope, $controller;
+
+	beforeEach(inject(function ($rootScope, _$controller_) {
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+	}));
+
 	it('should remove the latest camera', () => {  // TODO finish this when rest of controller is written
-		$scope.cameraIPs = [];  // TODO fill in with 2 camera IPs of right format
-		removeLatestCamera();
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.cameraIPs = [];  // TODO fill in with 2 camera IPs of right format
+		scope.removeLatestCamera();
 		var output1C = [];  // TODO fill in with 1 camera IP of right format
-		expect($scope.cameraIPs).toEqual(output1C);
+		expect(scope.cameraIPs).toEqual(output1C);
 	});
 
 	it('should do nothing with no cameras', () => {
-		$scope.cameraIPs = [];
-		removeLatestCamera();
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.cameraIPs = [];
+		scope.removeLatestCamera();
 		var output2C = [];
-		expect($scope.cameraIPs).toEqual(output2C);
+		expect(scope.cameraIPs).toEqual(output2C);
 	});
 
 	afterAll(() => {  // empty cameraIPs at end of tests to avoid bugs
-		$scope.cameraIPs = [];
+		scope.cameraIPs = [];
 	});
 });
 
@@ -61,7 +72,7 @@ describe('testing addIP function', () => {  // tests written to test the addIP f
 
 });
 
-describe('testing eStop button', () => {  // tests written for the eStop button
+/* describe('testing eStop button', () => {  // tests written for the eStop button
 
 	beforeEach(() => {
 		$scope.notifications = "none yet";
@@ -72,17 +83,4 @@ describe('testing eStop button', () => {  // tests written for the eStop button
 		eStopButton();
 		expect($scope.notifications).toEqual(output1);
 	});
-});
-
-describe('testing showVideo function', () => {  // tests written to test the showVideo function
-
-	beforeEach(() => {
-		$scope.notifications = "none yet";
-	});
-
-	it('should send a notification when called', () => {  // TODO finish this test when showVideo is written
-		var output1V = "";
-
-		expect($scope.notifications).toEqual(output1V);
-	});
-});
+});  */
