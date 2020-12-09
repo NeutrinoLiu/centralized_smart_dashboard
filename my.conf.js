@@ -25,7 +25,8 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
-		'static/controllers/invalidPage.controller.js'
+		'static/controllers/invalidPage.controller.js',
+		'static/controllers/ERDM.controller.js',
     ],
 
 
