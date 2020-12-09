@@ -70,7 +70,7 @@ describe('Testing fullWaypoint', () => {
 		scope.fullWaypoint(testWaypoint);
 
 		expect(testWaypoint['y_pos']).not.toBeNull();
-	})
+	});
 
 });
 
@@ -177,121 +177,133 @@ describe('testing GO button', () => {  // tests the GO button javascript functio
 /*
 This below is the unit testing just for coordToXY. 
 */
-//describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected output for these may be wrong
-//	//Tests math completed in coordToXY
-//	it('test with regular input', () => {
-//		const lat = 53.687;
-//		const long = 37.993;
-//		//TODO: Once Docker is up and running, the xpos and ypos can be determined from this. 
-//		const output = ({'x_pos': 68.7, 'y_pos': 99.3});
+describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected output for these may be wrong
 
-//		expect(coordToXY(lat, long)).toEqual(output);
-//	});
+	beforeEach(module('AINavigation'));
 
-//	// Tests for Null Input in coordToXY (not for coordToXY; using as reminder for waypointNew)
-//	it('test with null input', () => {
-//		const lat = null;
-//		const long = null;
-//		const output = ({'x_pos': null, 'y_pos': null});
-//		//TODO: To check what the null value should return
-//		expect(coordToXY(lat, long)).toEqual(output);
-//	});
+	var scope, $controller;
 
-//	//Test that x_pos is greater than 0 with a negative value entered
-//	it('test xpos is positive with negative value', () => {
-//		const lat = 0;
-//		const long = -334;
-//		const output = ({'x_pos': 0, 'y_pos': 0});
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
 
-//		expect(coordToXY(lat,long)).toBeGreaterThan(output);
-//	});
+		ctrl = $controller('AINavigationController', { $scope: scope });
+	}));
 
-//	//Test that x_pos is greater than 0 with a positive value entered
-//	it('test xpos is positive with positive value', () => {
-//		const lat = 0;
-//		const long = 10;
-//		const output = ({ 'x_pos': 0, 'y_pos': 0 });
+	//Tests math completed in coordToXY
+	it('test with regular input', () => {
+		const lat = 53.687;
+		const long = 37.993;
+		//TODO: Once Docker is up and running, the xpos and ypos can be determined from this. 
+		const output = ({'x_pos': 68.7, 'y_pos': 99.3});
 
-//		expect(coordToXY(lat, long)).toBeGreaterThan();
-//	})
+		expect(scope.coordToXY(lat, long)).toEqual(output);
+	});
 
-//	//Test that y_pos is less than 0 with a negative value entered
-//	it('test ypos is negative with negative value', () => {
-//		const lat = -10;
-//		const long = 0;
-//		const testOut = coordToXY(lat, long);
+	// Tests for Null Input in coordToXY (not for coordToXY; using as reminder for waypointNew)
+	it('test with null input', () => {
+		const lat = null;
+		const long = null;
+		const output = ({'x_pos': null, 'y_pos': null});
+		//TODO: To check what the null value should return
+		expect(sccope.coordToXY(lat, long)).toEqual(output);
+	});
 
-//		expect(testOut['y']).toBeLessThan(0);
-//	})
+	//Test that x_pos is greater than 0 with a negative value entered
+	it('test xpos is positive with negative value', () => {
+		const lat = 0;
+		const long = -334;
+		const output = ({'x_pos': 0, 'y_pos': 0});
 
-//	//Test that y_pos is less than 0 with a positive value entered
-//	it('test ypos is negative with positive value', () => {
-//		const lat = 10;
-//		const long = 0;
-//		const testOut = coordToXY(lat, long);
+		expect(scope.coordToXY(lat,long)).toBeGreaterThan(output);
+	});
 
-//		expect(testOut['y']).toBeLessThan(0);
-//	})
+	//Test that x_pos is greater than 0 with a positive value entered
+	it('test xpos is positive with positive value', () => {
+		const lat = 0;
+		const long = 10;
+		const output = ({ 'x_pos': 0, 'y_pos': 0 });
 
-//	//Test that when point A is more west than point B, x_pos for A is less than x_pos for B
-////	it('west point A.xpos less than east point B.xpos', () => {
-//		const latA = 0;
-//		const longA = 40;
-//		const latB = 0;
-//		const longB = 80;
+		expect(scope.coordToXY(lat, long)).toBeGreaterThan();
+	});
 
-//		const testA = coordToXY(latA, longA);
-//		const testB = coordToXY(latB, longB);
+	//Test that y_pos is less than 0 with a negative value entered
+	it('test ypos is negative with negative value', () => {
+		const lat = -10;
+		const long = 0;
+		const testOut = scope.coordToXY(lat, long);
 
-//		expect(testA['x']).toBeLessThan(testB['x']);
-//	})
+		expect(testOut['y']).toBeLessThan(0);
+	});
 
-//	//Test that when point A is more north than point B, y_pos for A is less than y_pos for B
-//	it('north point A.xpos less than south point B.xpos', () => {
-//		const latA = 80;
-//		const longA = 0;
-//		const latB = 40;
-//		const longB = 0;
+	//Test that y_pos is less than 0 with a positive value entered
+	it('test ypos is negative with positive value', () => {
+		const lat = 10;
+		const long = 0;
+		const testOut = scope.coordToXY(lat, long);
 
-//		const testA = coordToXY(latA, longA);
-//		const testB = coordToXY(latB, longB);
+		expect(testOut['y']).toBeLessThan(0);
+	});
 
-//		expect(testA['y']).toBeLessThan(testB['y']);
-//	})
+	//Test that when point A is more west than point B, x_pos for A is less than x_pos for B
+	it('west point A.xpos less than east point B.xpos', () => {
+		const latA = 0;
+		const longA = 40;
+		const latB = 0;
+		const longB = 80;
 
-//	//Tests the output with max latitude (90) and max long (180) inputs
-//	/*test('test with very max input', () => {
-//		const lat = 757124;
-//		const long = 999138;
-//		const output = ({ 'x_pos': 0, 'y_pos': 0 });
+		const testA = scope.coordToXY(latA, longA);
+		const testB = scope.coordToXY(latB, longB);
 
-//		expect(coordToXY(lat, long)).toEqual(output);
-//	});*/
-//	/*
-//	The minimum value (save for waypointNew?)
-//	*/
-//	it('test with very large negative input', () => {
-//		const lat = -90.000000;
-//		const long = -180.00000;
-//		const output = ({'x_pos': 0, 'y_pos': 0});
+		expect(testA['x']).toBeLessThan(testB['x']);
+	});
 
-//		expect(coordToXY(lat, long)).toBeGreaterThan(output);
-//	});
+	//Test that when point A is more north than point B, y_pos for A is less than y_pos for B
+	it('north point A.xpos less than south point B.xpos', () => {
+		const latA = 80;
+		const longA = 0;
+		const latB = 40;
+		const longB = 0;
 
-//	/*
-//	Making sure that identical waypoints will be added to the same x and y_pos
-//	DONE
-//	*/
-//	it('test with same input', () => {
-//		const lat = 55;
-//		const long = 55;
-//		const lat1 = 55;
-//		const long2 = 55;
+		const testA = scope.coordToXY(latA, longA);
+		const testB = scope.coordToXY(latB, longB);
 
-//		expect(coordToXY(lat, long)).toEqual(coordToXY(lat1,long1));
-//	});
+		expect(testA['y']).toBeLessThan(testB['y']);
+	});
 
-//});
+	//Tests the output with max latitude (90) and max long (180) inputs
+	test('test with very max input', () => {
+		const lat = 757124;
+		const long = 999138;
+		const output = ({ 'x_pos': 0, 'y_pos': 0 });
+
+		expect(scope.coordToXY(lat, long)).toEqual(output);
+	});
+	
+	//The minimum value (save for waypointNew?)
+	
+	it('test with very large negative input', () => {
+		const lat = -90.000000;
+		const long = -180.00000;
+		const output = ({'x_pos': 0, 'y_pos': 0});
+
+		expect(scope.coordToXY(lat, long)).toBeGreaterThan(output);
+	});
+
+	
+	//Making sure that identical waypoints will be added to the same x and y_pos
+	//DONE
+	
+	it('test with same input', () => {
+		const lat = 55;
+		const long = 55;
+		const lat1 = 55;
+		const long2 = 55;
+
+		expect(scope.coordToXY(lat, long)).toEqual(scope.coordToXY(lat1,long1));
+	});
+
+});
 
 ////Not testing this function for now because it's officially terrible to test
 //describe('Testing addWaypointToMap', () => {
@@ -331,7 +343,7 @@ This below is the unit testing just for coordToXY.
 ///*
 // * This tests adding valid waypoints. I'm going to pretend the function call is waypointNew(lat, long) simply because
 // * I'm not sure how to simulate the document.getElementById
-// */
+//
 //describe('Testing waypointNew', () => {
 
 //	beforeEach(() => {
