@@ -206,7 +206,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		const long = null;
 		const output = ({'x_pos': null, 'y_pos': null});
 		//TODO: To check what the null value should return
-		expect(sccope.coordToXY(lat, long)).toEqual(output);
+		expect(scope.coordToXY(lat, long)).toEqual(output);
 	});
 
 	//Test that x_pos is greater than 0 with a negative value entered
