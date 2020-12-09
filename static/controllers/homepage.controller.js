@@ -4,7 +4,6 @@
 
 	function homepageController($scope, $window) {
 		$scope.aiNav = aiNav;
-		$scope.EquipmentServicing = EquipmentServicing;
 		$scope.Cameras = Cameras;
 		$scope.ERDM = ERDM;
 		$scope.Maintenance = Maintenance;
@@ -16,18 +15,6 @@
 		// Sending to AINavigation
 		function aiNav() {
 			$window.location.href = "/ai-navigation";
-		}
-
-		// Sending to EquipmentServicing
-		function EquipmentServicing() {
-			//$window.location.href = "/equipment-servicing";
-			$window.location.href = "/coming-soon";
-		}
-
-		// Sending to Science
-		function Science() {
-			//$window.location.href = "/science";
-			$window.location.href = "/coming-soon";
 		}
 
 		// Sending to ERDM

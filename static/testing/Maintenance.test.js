@@ -1,6 +1,9 @@
 // Unit testing file for the Maintenance Controller
 
 
+// These tests should be good but there is an issue in the controller causing them to fail
+// Cannot read property value of null at line 23 of the controller
+
 describe('testing wheelChange', () => {  // Testing for the wheels functions.  May not be needed or possible.
 
 	beforeEach(module('Maintenance'));

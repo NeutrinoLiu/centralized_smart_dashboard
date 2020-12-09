@@ -17,7 +17,6 @@ module.exports = function(config) {
     files: [
 	  'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'static/services/panZoomService.js',
       'static/directives/*.js',
       'static/controllers/*.js',
       'static/testing/*.js'
@@ -26,21 +25,30 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
+		'static/controllers/invalidPage.controller.js'
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+		'static/controllers/*.js': ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
-
+	
+	// optionally, configure the reporter
+    coverageReporter: {
+		type: 'text',
+		dir: 'coverage/',
+		file: 'coverage.txt'
+    },
+	
     // web server port
     port: 9876,
 

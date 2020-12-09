@@ -8,7 +8,7 @@
 
 	var scope, $controller;
 
-	beforeEach(ngMock.inject(function ($rootScope, $compile) {  // inject and mock(?) function
+	beforeEach(inject(function ($rootScope, $compile) {  // inject and mock(?) function
 		scope = $rootScope.$new();
 
 		var content = '<my-directive></my-directive>'
@@ -102,17 +102,19 @@ describe('testing addIP function', () => {  // tests written to test the addIP f
 	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
 		scope = $rootScope.$new();
 		$controller = _$controller_;
+		scope.notifications = "";
 	}));
 
-	it('should add an IP', () => {  // TODO finish this test when addIP is written
+	it('should give us a notification', () => {  // Should give a notification when done
 		ctrl = $controller('CamerasController', { $scope: scope });
-
+		var output = "New IP address for a camera added\n";
+		expect(scope.notifications).toEqual(output);
 	});
 
-	it('should ignore bad input', () => {  // TODO finish this test when addIP is written
+	/* it('should ignore bad input', () => {  // Not sure how to mock this
 		ctrl = $controller('CamerasController', { $scope: scope });
 
-	});
+	});  */
 
 });
 
