@@ -228,7 +228,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		const long = 10;
 		const output = ({ 'x_pos': 0, 'y_pos': 0 });
 
-		expect(scope.coordToXY(lat, long)).toBeGreaterThan();
+		expect(scope.coordToXY(lat, long)).toBeGreaterThan(output);
 	});
 
 	//Test that y_pos is less than 0 with a negative value entered
