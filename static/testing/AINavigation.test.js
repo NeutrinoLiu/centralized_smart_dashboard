@@ -272,7 +272,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 	});
 
 	//Tests the output with max latitude (90) and max long (180) inputs
-	test('test with very max input', () => {
+	it('test with very max input', () => {
 		const lat = 757124;
 		const long = 999138;
 		const output = ({ 'x_pos': 0, 'y_pos': 0 });
