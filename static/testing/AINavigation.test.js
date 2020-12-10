@@ -19,6 +19,8 @@
 //});
 
 //This test ensures that each field of waypoint is not null
+const PATH = 'http://localhost:5000';
+
 describe('Testing fullWaypoint', () => {
 
 	beforeEach(module('AINavigation'));
@@ -78,9 +80,11 @@ describe('testing addNotification', () => {  // testing the addNotification func
 
 	beforeEach(module('AINavigation'));
 
-	var scope, $controller;
+	var scope, $controller, $httpBackend;
 
-	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+	beforeEach(inject(function ($rootScope, _$controller_, $injector) {  // inject and mock(?) function
+		$httpBackend = $injector.get('$httpBackend');
+
 		scope = $rootScope.$new();
 		$controller = _$controller_;
 
@@ -97,7 +101,7 @@ describe('testing addNotification', () => {  // testing the addNotification func
 
 	it('Notifications are as expected after call', () => {  //test after 1 call that notifications matches
 		scope.addNotification("New Notification Sent To Server");
-
+		$httpBackend.expectPost(PATH + '/api/notifications', { 'notifications': scope.notifications }).respond();
 		expect(scope.notifications).toEqual(output1);
 	});
 
