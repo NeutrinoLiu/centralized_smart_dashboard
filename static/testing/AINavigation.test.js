@@ -96,7 +96,7 @@ describe('testing addNotification', () => {  // testing the addNotification func
 	});
 
 	const output1 = "none yetNew Notification Sent To Server\n";
-	const output2 = "none yetHello\nThis\nIS A New\nNotification\nThat We\nSent!\n";
+	const output2 = "none yetHello\nThis\nIs A New\nNotification\nThat We\nSent!\n";
 	const output3 = "none yet\n";
 
 	it('Notifications are as expected after call', () => {  //test after 1 call that notifications matches
@@ -191,7 +191,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		scope = $rootScope.$new();
 		$controller = _$controller_;
 
-		ctrl = $controller('AINavigationController', { $scope: scope });
+		var ctrl = $controller('AINavigationController', { $scope: scope });
 	}));
 
 	//Tests math completed in coordToXY
@@ -302,7 +302,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 		const lat = 55;
 		const long = 55;
 		const lat1 = 55;
-		const long2 = 55;
+		const long1 = 55;
 
 		expect(scope.coordToXY(lat, long)).toEqual(scope.coordToXY(lat1,long1));
 	});
