@@ -98,7 +98,7 @@ class Rover:
         ips = []
         with open(file_path, "r") as f:
             for line in f:
-                ips.append(line)
+                ips.append(line.rstrip("\n"))
         return ips
 
     # updates the ip camera addresses and writes them to a file
