@@ -95,14 +95,20 @@ describe('testing addNotification', () => {  // testing the addNotification func
 		scope.notifications = "none yet";
 	});
 
+	afterEach(function () {
+		$httpBackend.verifyNoOutstandingExpectation();
+		$httpBackend.verifyNoOutstandingRequest();
+	});
+
 	const output1 = "none yetNew Notification Sent To Server\n";
 	const output2 = "none yetHello\nThis\nIs A New\nNotification\nThat We\nSent!\n";
 	const output3 = "none yet\n";
 
 	it('Notifications are as expected after call', () => {  //test after 1 call that notifications matches
 		scope.addNotification("New Notification Sent To Server");
-		$httpBackend.expectPost(PATH + '/api/notifications', { 'notifications': scope.notifications }).respond();
+		$httpBackend.expectPOST(PATH + '/api/notifications', { 'notifications': scope.notifications }).respond();
 		expect(scope.notifications).toEqual(output1);
+		$httpBackend.flush();
 	});
 
 	it('Notifications are as expected after several calls', () => {  //test after several calls that notifications matches
