@@ -21,6 +21,52 @@
 //This test ensures that each field of waypoint is not null
 const PATH = 'http://localhost:5000';
 
+describe('Testing init', () =>{
+    beforeEach(module('AINavigation'));
+    var scope, $controller, $httpBackend;
+    beforeEach(inject(function ($rootScope, _$controller_, $injector) {  // inject and mock(?) function
+        $httpBackend = $injector.get('$httpBackend');
+
+        scope = $rootScope.$new();
+        $controller = _$controller_;
+
+        ctrl = $controller('AINavigationController', { $scope: scope });
+    }));
+
+    it('testing init', () =>{
+		$httpBackend.expectGET(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4}]});
+        $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+        $httpBackend.expectGET(PATH + '/api/notifications').respond({"success": true, "notifications": ""});
+		scope.init();
+		//$httpBackend.flush();
+
+	})
+
+});
+
+describe('Testing waypoint new', () =>{
+    beforeEach(module('AINavigation'));
+    var scope, $controller, $httpBackend;
+    beforeEach(inject(function ($rootScope, _$controller_, $injector) {  // inject and mock(?) function
+        $httpBackend = $injector.get('$httpBackend');
+
+        scope = $rootScope.$new();
+        $controller = _$controller_;
+
+        ctrl = $controller('AINavigationController', { $scope: scope });
+    }));
+
+    it('testing waypoint new', () =>{
+        $httpBackend.expectPOST(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4}]});
+        //$httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+        //$httpBackend.expectGET(PATH + '/api/notifications').respond({"success": true, "notifications": ""});
+        scope.waypointNew();
+        //$httpBackend.flush();
+
+    })
+
+});
+
 describe('Testing fullWaypoint', () => {
 
 	beforeEach(module('AINavigation'));
@@ -91,9 +137,12 @@ describe('testing addNotification', () => {  // testing the addNotification func
 		$controller = _$controller_;
 
 		ctrl = $controller('AINavigationController', { $scope: scope });
+
+		initHandler = $httpBackend.when('GET', '/api/route').respond({"success": true, "data": {"waypoints": []}})
 	}));
 
 	beforeEach(() => {
+
 		scope.notifications = "none yet";
 	});
 
@@ -245,7 +294,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 
 	//Test that y_pos is less than 0 with a negative value entered
 	it('test ypos is negative with negative value', () => {
-		const lat = -10;
+		const lat = -10.1;
 		const long = 0;
 
 		expect(scope.coordToXY(lat, long).y).toBeLessThan(0);
@@ -253,7 +302,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 
 	//Test that y_pos is less than 0 with a positive value entered
 	it('test ypos is negative with positive value', () => {
-		const lat = 10;
+		const lat = 10.1;
 		const long = 0;
 
 		expect(scope.coordToXY(lat, long).y).toBeLessThan(0);
@@ -262,9 +311,9 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 	//Test that when point A is more west than point B, x_pos for A is less than x_pos for B
 	it('west point A.xpos greater than east point B.xpos', () => {
 		const latA = 0;
-		const longA = 40;
+		const longA = 40.1;
 		const latB = 0;
-		const longB = 80;
+		const longB = 80.2;
 
 		const testA = scope.coordToXY(latA, longA);
 		const testB = scope.coordToXY(latB, longB);
@@ -274,9 +323,9 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 
 	//Test that when point A is more north than point B, y_pos for A is less than y_pos for B
 	it('north point A.xpos less than south point B.xpos', () => {
-		const latA = 80;
+		const latA = 80.1;
 		const longA = 0;
-		const latB = 40;
+		const latB = 40.1;
 		const longB = 0;
 
 		const testA = scope.coordToXY(latA, longA);

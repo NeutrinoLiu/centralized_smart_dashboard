@@ -14,6 +14,7 @@
         $scope.coordToXY = coordToXY;
         $scope.fullWaypoint = fullWaypoint;
         $scope.addNotification = addNotification;
+        $scope.init = init;
 
         $scope.waypoints = [];
         $scope.roverPin;
