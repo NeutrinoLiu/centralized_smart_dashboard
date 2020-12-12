@@ -23,6 +23,7 @@ describe('Testing init', () =>{
 		$httpBackend.flush();
 
 	});
+
     it('testing init fail branch 1', () =>{
         $httpBackend.expectGET(PATH + '/api/route').respond(500);
         $httpBackend.expectGET(PATH + '/api/gps').respond(500);
@@ -43,7 +44,7 @@ describe('Testing waypoint new', () =>{
         $controller = _$controller_;
 
         ctrl = $controller('AINavigationController', { $scope: scope });
-		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 'point-1'}]
+		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 'point-1'}];
     }));
 
     it('testing waypoint new', () =>{
@@ -116,7 +117,7 @@ describe('Testing waypoint new', () =>{
 		scope.waypointNew();
 
 		expect(scope.waypoints).toEqual(output1);
-	})
+	});
 
 	//Ensures test with valid input adds point; TODO: ensure that output constants are correct
 	it('test with valid input', () => {
@@ -197,7 +198,7 @@ describe('testing update rover coordinates', () => {  // tests written for the u
         scope.updateRoverCoordinates();
         $httpBackend.flush();
         //expect(scope.notifications).toEqual(output1);
-    })
+    });
 });
 
 describe('Testing fullWaypoint', () => {
@@ -641,7 +642,7 @@ describe('Testing deleteEarliestWaypoint', () => {  // test the deleteLatestWayp
 
 	var output1 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
 	var output2 = [];
-	var output3 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+	var output3 = [{'lat': 56, 'long': 43, 'x_pos': 7, 'y_pos': 8,'index': 2}];
 	var output4 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6}, {'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}];
 
 	it('test with normal waypoint', () => {  // just test with removing 1 waypoint

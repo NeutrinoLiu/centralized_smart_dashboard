@@ -19,10 +19,17 @@ describe('Testing init', () => {
 		$httpBackend.expectGET(PATH + '/api/route').respond({ "success": true, "waypoints": [{ "lat": 56.42, "long": 58.4 }] });
 		$httpBackend.expectGET(PATH + '/api/gps').respond({ "success": true, "lat": 56.43, "long": 58.5 });
 		$httpBackend.expectGET(PATH + '/api/notifications').respond({ "success": true, "notifications": "" });
-		scope.init();
-		//$httpBackend.flush();
+		$httpBackend.flush();
 
-	})
+	});
+
+	it('testing init fail branch 1', () =>{
+        $httpBackend.expectGET(PATH + '/api/route').respond(500);
+        $httpBackend.expectGET(PATH + '/api/gps').respond(500);
+        $httpBackend.expectGET(PATH + '/api/notifications').respond(500);
+        $httpBackend.flush();
+
+    });
 
 });
 
@@ -36,6 +43,7 @@ describe('Testing waypoint new', () => {
 		$controller = _$controller_;
 
 		ctrl = $controller('ERDMController', { $scope: scope });
+		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 'point-1'}];
 	}));
 
 	it('testing waypoint new', () => {
@@ -45,8 +53,151 @@ describe('Testing waypoint new', () => {
 		scope.waypointNew();
 		//$httpBackend.flush();
 
-	})
+	});
 
+	var output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 'point-1'}];
+	var output2 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 23, 'long': 23, 'x_pos': -1495, 'y_pos': -2990, 'index': 'point-2' }];
+	var output3 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': -90, 'long': -180, 'x_pos': -11700, 'y_pos': -11700, 'index': 'point-2' }];
+	var output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 90, 'long': 180, 'x_pos': -11700, 'y_pos': -11700, 'index': 'point-2' }];
+	var output5 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 0, 'long': 0, 'x_pos': 0, 'y_pos': 0, 'index': 'point-2' }];
+	//const output6 = ;
+
+	//Null input tests invalid and doesn't add a waypoint
+	it('test with empty latitude', () => {
+		//Call with invalid input with empty latitude;
+		scope.waypointNewLatitude = "";
+		scope.waypointNewLongitude = 1;
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output1);
+	});
+
+	//Null input tests invalid and doesn't add a waypoint
+	it('test with empty longitude', () => {
+		//Call with invalid input with null longitude;
+		scope.waypointNewLatitude = 1;
+		scope.waypointNewLongitude = "";
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output1);
+	});
+
+	//Test with long that's too negative
+	it('test with too small input longitude', () => {
+		scope.waypointNewLatitude = 1;
+		scope.waypointNewLongitude = -2000;
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output1);
+	});
+
+	//Test with long that's too large and positive
+	it('test with too large input longitude', () => {
+		scope.waypointNewLatitude = 1;
+		scope.waypointNewLongitude = 2000;
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output1);
+	});
+
+	//Test with lat that's too negative
+	it('test with too small input latitude', () => {
+		scope.waypointNewLatitude = -2000;
+		scope.waypointNewLongitude = 1;
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output1);
+	});
+
+	//Test with lat that's too large and positive
+	it('test with too large input latitude', () => {
+		scope.waypointNewLatitude = 2000;
+		scope.waypointNewLongitude = 1;
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output1);
+	});
+
+	//Ensures test with valid input adds point; TODO: ensure that output constants are correct
+	it('test with valid input', () => {
+		scope.waypointNewLatitude = 23;
+		scope.waypointNewLongitude = 23;
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output2);
+	});
+
+	//Test with invalid input within a few valid entries
+	//only concerned about statement coverage for now... Brenna very tired
+	it('test with valid input, then invalid input, then valid input', () => {
+
+	});
+
+	//Tests valid input with most negative input; 
+	it('test with most negative input', () => {
+		scope.waypointNewLatitude = -90;
+		scope.waypointNewLongitude = -180;
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output3);
+	});
+
+	//Tests valid input with most positive input
+	it('test with most positive input', () => {
+		scope.waypointNewLatitude = 90;
+		scope.waypointNewLongitude = 180;
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output4);
+	});
+
+	// Testing output for input of 0,0
+	it('test with inputs of 0', () => {
+		scope.waypointNewLatitude = 0;
+		scope.waypointNewLongitude = 0;
+		scope.waypointNew();
+
+		expect(scope.waypoints).toEqual(output5);
+	});
+
+	//Test with many valid inputs (many = 5?)
+
+	//Empties global waypoints variable
+	afterAll(() => {
+		scope.waypoints = [];
+	});
+
+});
+
+describe('testing update rover coordinates', () => {  // tests written for the update rover coordinates button
+
+    beforeEach(module('AINavigation'));
+
+    var scope, $controller, $httpBackend;
+
+    beforeEach(inject(function ($rootScope, _$controller_, $injector) {  // inject and mock(?) function
+        $httpBackend = $injector.get('$httpBackend');
+        scope = $rootScope.$new();
+        $controller = _$controller_;
+        $httpBackend.whenGET(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4},
+                {"lat": 23.4, "long": -32.5}]});
+        $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+        $httpBackend.whenGET(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yet"});
+    }));
+
+    it('should send a notification when called', () => {
+        spyOn(document, "getElementById").and.callFake(function() {
+            return {
+                style: ''
+            }
+        });
+        $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 57.43, "long": 58.5});
+        ctrl = $controller('AINavigationController', {$scope: scope});
+        scope.updateRoverCoordinates();
+        $httpBackend.flush();
+        //expect(scope.notifications).toEqual(output1);
+    });
 });
 
 describe('Testing fullWaypoint', () => {
@@ -120,7 +271,7 @@ describe('testing addNotification', () => {  // testing the addNotification func
 
 		ctrl = $controller('ERDMController', { $scope: scope });
 
-		initHandler = $httpBackend.when('GET', '/api/route').respond({ "success": true, "data": { "waypoints": [] } })
+		initHandler = $httpBackend.when('GET', '/api/route').respond({"success": true, "data": {"waypoints": []}})
 	}));
 
 	beforeEach(() => {
@@ -133,9 +284,9 @@ describe('testing addNotification', () => {  // testing the addNotification func
 	//	$httpBackend.verifyNoOutstandingRequest();
 	//});
 
-	const output1 = "none yetNew Notification Sent To Server\n";
-	const output2 = "none yetHello\nThis\nIs A New\nNotification\nThat We\nSent!\n";
-	const output3 = "none yet\n";
+	var output1 = "none yetNew Notification Sent To Server\n";
+	var output2 = "none yetHello\nThis\nIs A New\nNotification\nThat We\nSent!\n";
+	var output3 = "none yet\n";
 
 	it('Notifications are as expected after call', () => {  //test after 1 call that notifications matches
 		//$httpBackend.flush();
@@ -169,29 +320,56 @@ describe('testing addNotification', () => {  // testing the addNotification func
 	});
 });
 
-describe('testing ESTOP button', () => {  // tests the ESTOP button javscript function
+describe('testing eStop button', () => {  // tests written for the eStop button
 
-	beforeEach(module('ERDM'));
+    beforeEach(module('AINavigation'));
 
-	var scope, $controller;
+    var scope, $controller, $httpBackend;
 
-	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
-		scope = $rootScope.$new();
-		$controller = _$controller_;
+    beforeEach(inject(function ($rootScope, _$controller_, $injector) {  // inject and mock(?) function
+        $httpBackend = $injector.get('$httpBackend');
+        scope = $rootScope.$new();
+        $controller = _$controller_;
+        $httpBackend.whenGET(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4},
+                {"lat": 23.4, "long": -32.5}]});
+        $httpBackend.whenGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+        $httpBackend.whenGET(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yet"});
+    }));
 
-		ctrl = $controller('ERDMController', { $scope: scope });
-	}));
-
-	beforeEach(() => {
-		scope.notifications = "none yet";
-	});
-
-	const output1 = "none yetESTOP PRESSED! Rover is force restarting.\n"
-
-	it('Estop button notification called', () => {  // checks that the notification popped up when the function called
-		scope.eStopButton();
-		expect(scope.notifications).toEqual(output1);
-	});
+    it('should send a notification when called', () => {
+        $httpBackend.expectGET(PATH + '/api/emergency-stop').respond({"success": true});
+        $httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
+        //scope.notifications = "none yet";
+        ctrl = $controller('AINavigationController', { $scope: scope });
+        var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
+        scope.eStopButton();
+        $httpBackend.flush();
+        expect(scope.notifications).toEqual(output1);
+    });
+    it('estop failure', () => {
+        $httpBackend.expectGET(PATH + '/api/emergency-stop').respond({"success": false});
+        //$httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
+        //    "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
+        //scope.notifications = "none yet";
+        ctrl = $controller('AINavigationController', { $scope: scope });
+        var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
+        scope.eStopButton();
+        $httpBackend.flush();
+        //expect(scope.notifications).toEqual(output1);
+    });
+    it('estop failure', () => {
+        $httpBackend.expectGET(PATH + '/api/emergency-stop').respond(500);
+        //$httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
+        //    "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
+        //scope.notifications = "none yet";
+        ctrl = $controller('AINavigationController', { $scope: scope });
+        var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
+        scope.eStopButton();
+        $httpBackend.flush();
+        //expect(scope.notifications).toEqual(output1);
+    });
 });
 
 /*
@@ -344,112 +522,61 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 //	});
 //});
 
+describe('Testing deleteEarliestWaypoint', () => {  // test the deleteLatestWaypoint functionality
 
-///*
-// * this tests adding valid waypoints. i'm going to pretend the function call is waypointnew(lat, long) simply because
-// * i'm not sure how to simulate the document.getelementbyid
-// */
-//describe('testing waypointnew', () => {
+	beforeEach(module('ERDM'));
 
-//	beforeeach(() => {
-//		$scope.waypoints = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }]
-//	});
+	var scope, $controller;
 
-//	const output1 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }];
-//	const output2 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
-//	const output3 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': -90, 'long': -180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
-//	const output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 90, 'long': 180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
-//	const output5 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 0, 'long': 0, 'x_pos': 0, 'y_pos': 0, 'index': 2 }];
-	
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
 
-//	//null input tests invalid and doesn't add a waypoint
-//	test('test with null latitude', () => {
-//		//call with invalid input with null latitude;
-//		waypointnew("", 1);
+		var ctrl = $controller('ERDMController', { $scope: scope });
 
-//		expect($scope.waypoints).toequal(output1);
-//	});
+		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];  // setup inital waypoints array
 
-//	//null input tests invalid and doesn't add a waypoint
-//	test('test with null longitude', () => {
-//		//call with invalid input with null longitude;
-//		waypointnew(1, "");
+	}));
 
-//		expect($scope.waypoints).toequal(output1);
-//	});
+	var output1 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+	var output2 = [];
+	var output3 = [{'lat': 56, 'long': 43, 'x_pos': 7, 'y_pos': 8,'index': 2}];
+	var output4 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6}, {'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}];
 
-//	//ensures test with valid input adds point; todo: ensure that output constants are correct
-//	test('test with valid input', () => {
-//		waypointnew(23, 23);
+	it('test with normal waypoint', () => {  // just test with removing 1 waypoint
+		scope.deleteEarliestWaypoint();
+		expect(scope.waypoints).toEqual(output1);
+	});
 
-//		expect($scope.waypoints).toequal(output2);
-//	});
+	it('test with no waypoints', () => {
+		scope.waypoints = [];  // empty array out since we need it empty for this test
+		scope.deleteEarliestWaypoint();
+		expect(scope.waypoints).toEqual(output2);
+	});
 
-//	//test with long that's too negative
-//	test('test with too small input', () => {
-//		//call with invalid input with null longitude;
-//		waypointnew(1, -2000);
+	it('test delete then add then delete waypoint', () => {  // calls deleteLatestWaypoint twice and adds a waypoint between the calls
+		scope.deleteEarliestWaypoint();
+		scope.waypoints.push({'lat': 56, 'long': 43, 'x_pos': 7, 'y_pos': 8,'index': 2});
+		scope.deleteEarliestWaypoint();
+		expect(scope.waypoints).toEqual(output3);
+	});
 
-//		expect($scope.waypoints).toequal(output1);
-//	});
+	it('test with many waypoints', () => {  // calls many times in a row with many waypoints in array
+		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2},
+		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 3}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 4},
+		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 5}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6},
+		{'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}];
+		scope.deleteEarliestWaypoint();
+		scope.deleteEarliestWaypoint();
+		scope.deleteEarliestWaypoint();
+		scope.deleteEarliestWaypoint();
+		scope.deleteEarliestWaypoint();
+		expect(scope.waypoints).toEqual(output4);
+	});
 
-//	//test with long that's too large and positive
-//	test('test with too large input', () => {
-//		//call with invalid input with null longitude;
-//		waypointnew(1, 2000);
+	//Empties global waypoints variable
+	afterAll(() => {
+		scope.waypoints = [];
+	});
 
-//		expect($scope.waypoints).toequal(output1);
-//	});
-
-//	//test with lat that's too negative
-//	test('test with too small input', () => {
-//		//call with invalid input with null longitude;
-//		waypointnew(-2000, 1);
-
-//		expect($scope.waypoints).toequal(output1);
-//	});
-
-//	//test with lat that's too large and positive
-//	test('test with too large input', () => {
-//		//call with invalid input with null longitude;
-//		waypointnew(2000, 1);
-
-//		expect($scope.waypoints).toequal(output1);
-//	})
-
-
-//	//test with invalid input within a few valid entries
-//	//only concerned about statement coverage for now... brenna very tired
-//	test('test with valid input, then invalid input, then valid input', () => {
-
-//	});
-
-//	//tests valid input with most negative input; 
-//	test('test with most negative input', () => {
-//		waypointnew(-90, -180);
-
-//		expect($scope.waypoints).toequal(output3);
-//	});
-
-//	//tests valid input with most positive input
-//	test('test with most positive input', () => {
-//		waypointnew(90, 180);
-
-//		expect($scope.waypoints).toequal(output4);
-//	});
-
-//	// testing output for input of 0,0
-//	test('test with inputs of 0', () => {
-//		waypointnew(0, 0);
-
-//		expect(coordtoxy(lat, long)).toequal(output5);
-//	});
-
-//	//test with many valid inputs (many = 5?)
-
-//	//empties global waypoints variable
-//	afterall(() => {
-//		$scope.waypoints = [];
-//	});
-//});
-
+});

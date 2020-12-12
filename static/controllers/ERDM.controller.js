@@ -6,7 +6,6 @@
 	function ERDMController($scope, $window, $http, PanZoomService) {
 		$scope.homepage = homepage;
 		$scope.waypointNew = waypointNew;
-		$scope.cameraIP = cameraIP;
 		$scope.eStopButton = eStopButton;
         $scope.deleteEarliestWaypoint = deleteEarliestWaypoint;
 
@@ -15,6 +14,7 @@
         $scope.fullWaypoint = fullWaypoint;
         $scope.addNotification = addNotification;
         $scope.init = init;
+        $scope.updateRoverCoordinates = updateRoverCoordinates;
 
         $scope.waypoints = [];
         $scope.roverPin;
@@ -65,7 +65,6 @@
                         $scope.curr_coord.lat = response.data.lat;
                         $scope.curr_coord.long = response.data.long;
                         $scope.roverPin = fullRoverPin(response.data);
-                        moveRoverIcon();
                     }
                 }, (error) => {
                     connectionLost();
@@ -82,6 +81,7 @@
 
             $window.onload = function() {
                 addWaypointToMap();
+                moveRoverIcon();
             }
         }
 
@@ -182,7 +182,7 @@
         function waypointNew() {
             var latitude = $scope.waypointNewLatitude;
             var longitude = $scope.waypointNewLongitude;
-            var invalidInput = (latitude == null || longitude == null) || (latitude == "" || longitude == "") || latitude < -90 || latitude > 90 
+            var invalidInput = (latitude == null || longitude == null) || (latitude === "" || longitude === "") || latitude < -90 || latitude > 90 
                 || longitude < -180 || longitude > 180;
 
             if (invalidInput) {
@@ -208,27 +208,26 @@
 
         // Removes the last waypoint added to our waypoints 
         function deleteEarliestWaypoint() {
-            $scope.waypoints.shift();
-            $http.post(PATH + '/api/route',
-                {
-                    'waypoints': $scope.waypoints
-                } 
-                ).then((response) => {
-                    if (response.data.success) {
-                        addNotification("Deleted Waypoint");
-                        addWaypointToMap();
-                    } else {
+            if ($scope.waypoints.length != 0) {
+                $scope.waypoints.shift();
+                $http.post(PATH + '/api/route',
+                    {
+                        'waypoints': $scope.waypoints
+                    } 
+                    ).then((response) => {
+                        if (response.data.success) {
+                            addNotification("Deleted Waypoint");
+                            addWaypointToMap();
+                        } else {
+                            connectionLost();
+                        }
+                    }, (error) => {
                         connectionLost();
-                    }
-                }, (error) => {
-                    connectionLost();
-                });
-        }
+                    });
+            } else {
+                alert("No waypoint added. So we cannot remove anything");
+            }
 
- /*       //Opens a new window with a live stream of the camera at the IP address sent
- */
-        function cameraIP() {  // future iteration item
-            alert("A new camera stream IP address has been opened.");
         }
 
         function addNotification(newNotification) {

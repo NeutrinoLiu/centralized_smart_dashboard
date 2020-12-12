@@ -63,19 +63,25 @@ roscore &
 </ol>
 
 # Running the backend tests
-```
- cd model/src/centralized_dashboard/src/
-```
 
-Inside here, we should find a file called rover.py, which is the one we want to test. Thus, we run:
-```
-pytest --cov=rover
-```
-
-For the flask tests go to the unitTest folder and run:
+For the flask tests go to the ```unitTest``` folder and run:
 
 ```
 pytest --cov=routes
+```
+
+Now, to test the code that connects our application with the rover. First, we need to run our mock rover:
+
+```
+python3 model/src/centralized_dashboard/src/mock_ros_nodes.py &
+```
+
+Then, we can find the rover tests inside the ```tests/``` folder, and run them as in:
+```
+touch testipfile.txt
+```
+```
+pytest --cov=rover
 ```
 
 For this iteration, we have achieved an 88% code coverage. 
