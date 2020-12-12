@@ -182,7 +182,7 @@
         function waypointNew() {
             var latitude = $scope.waypointNewLatitude;
             var longitude = $scope.waypointNewLongitude;
-            var invalidInput = (latitude == "" || longitude == "") || latitude < -90 || latitude > 90 
+            var invalidInput = (latitude == null || longitude == null) || (latitude == "" || longitude == "") || latitude < -90 || latitude > 90 
                 || longitude < -180 || longitude > 180;
 
             if (invalidInput) {
