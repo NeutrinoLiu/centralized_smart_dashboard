@@ -8,7 +8,7 @@
         $scope.waypointNew = waypointNew;
         $scope.goButton = goButton;
         $scope.eStopButton = eStopButton;
-        $scope.deleteEarliesttWaypoint = deleteEarliesttWaypoint;
+        $scope.deleteEarliestWaypoint = deleteEarliestWaypoint;
 
         /* Scope functions needed for testing*/
         $scope.coordToXY = coordToXY;
@@ -215,7 +215,7 @@
         }
 
         // Removes the last waypoint added to our waypoints 
-        function deleteEarliesttWaypoint() {
+        function deleteEarliestWaypoint() {
             if ($scope.waypoints.length != 0) {
                 $scope.waypoints.shift();
                 $http.post(PATH + '/api/route',
