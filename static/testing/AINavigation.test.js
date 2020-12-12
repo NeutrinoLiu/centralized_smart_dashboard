@@ -501,7 +501,7 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 //	});
 //});
 
-describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoint functionality
+describe('Testing deleteEarliestWaypoint', () => {  // test the deleteLatestWaypoint functionality
 
 	beforeEach(module('AINavigation'));
 
@@ -517,26 +517,26 @@ describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoi
 
 	}));
 
-	const output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
+	const output1 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
 	const output2 = [];
-	const output3 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
-	const output4 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+	const output3 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+	const output4 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6}, {'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}];
 
 	it('test with normal waypoint', () => {  // just test with removing 1 waypoint
-		scope.deleteLatestWaypoint();
+		scope.deleteEarliestWaypoint();
 		expect(scope.waypoints).toEqual(output1);
 	});
 
 	it('test with no waypoints', () => {
 		scope.waypoints = [];  // empty array out since we need it empty for this test
-		scope.deleteLatestWaypoint();
+		scope.deleteEarliestWaypoint();
 		expect(scope.waypoints).toEqual(output2);
 	});
 
 	it('test delete then add then delete waypoint', () => {  // calls deleteLatestWaypoint twice and adds a waypoint between the calls
-		scope.deleteLatestWaypoint();
+		scope.deleteEarliestWaypoint();
 		scope.waypoints.push({'lat': 56, 'long': 43, 'x_pos': 7, 'y_pos': 8,'index': 2});
-		scope.deleteLatestWaypoint();
+		scope.deleteEarliestWaypoint();
 		expect(scope.waypoints).toEqual(output3);
 	});
 
@@ -545,11 +545,11 @@ describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoi
 		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 3}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 4},
 		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 5}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6},
 		{'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}];
-		scope.deleteLatestWaypoint();
-		scope.deleteLatestWaypoint();
-		scope.deleteLatestWaypoint();
-		scope.deleteLatestWaypoint();
-		scope.deleteLatestWaypoint();
+		scope.deleteEarliestWaypoint();
+		scope.deleteEarliestWaypoint();
+		scope.deleteEarliestWaypoint();
+		scope.deleteEarliestWaypoint();
+		scope.deleteEarliestWaypoint();
 		expect(scope.waypoints).toEqual(output4);
 	});
 
