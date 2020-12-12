@@ -27,8 +27,6 @@ describe('CAMERA Testing init', () =>{
 
 });
 
-
-
  describe('testing homepage function', () => {  // Based on code written in the AINavigation tests
 
 	beforeEach(module('cameras'));
@@ -91,6 +89,20 @@ describe('testing removeLatestCamera function', () => {
 		expect(scope.cameraIPs).toEqual(output2C);
 	});
 
+	it('should go into the fail branch', () => {  // errors right now
+		       	    $httpBackend.expectPOST(PATH + '/api/ips').respond({"success": false, "ips": ["192.343.142.2"]});
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.removeLatestCamera();
+		$httpBackend.flush();
+	});
+
+	it('should error', () => {  // errors right now
+			       	    $httpBackend.expectPOST(PATH + '/api/ips').respond(500);
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.removeLatestCamera();
+		$httpBackend.flush();
+	});
+
 	afterAll(() => {  // empty cameraIPs at end of tests to avoid bugs
 		scope.cameraIPs = [];
 	});
@@ -107,6 +119,9 @@ describe('testing addIP function', () => {  // tests written to test the addIP f
 		scope = $rootScope.$new();
 		$controller = _$controller_;
 		scope.notifications = "";
+		$httpBackend.whenGET(PATH + '/api/ips').respond({"success": true, "ips": ["192.343.142.2"]});
+        $httpBackend.whenGET(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
 
 	}));
 
@@ -127,6 +142,34 @@ describe('testing addIP function', () => {  // tests written to test the addIP f
 		var output = "New IP address for a camera added\n";
 		$httpBackend.flush();
 		expect(scope.notifications).toEqual(output);
+	});
+
+	it('should go into the fail branch', () => {
+		$httpBackend.expectGET(PATH + '/api/ips').respond({"success": false, "ips": ["192.343.142.2"]});
+		$httpBackend.expectPOST(PATH + '/api/ips').respond({"success": false, "ips": ["192.343.142.2"]});
+	    spyOn(document, "getElementById").and.callFake(function() {
+            return {
+           value: '192.168.9.1'
+                }
+            });
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.addIP();
+		var output = "New IP address for a camera added\n";
+		$httpBackend.flush();
+	});
+
+	it('should error', () => {
+		$httpBackend.expectGET(PATH + '/api/ips').respond(500);
+		$httpBackend.expectPOST(PATH + '/api/ips').respond(500);
+	    spyOn(document, "getElementById").and.callFake(function() {
+            return {
+           value: '192.168.9.1'
+                }
+            });
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.addIP();
+		var output = "New IP address for a camera added\n";
+		$httpBackend.flush();
 	});
 
 	/* it('should ignore bad input', () => {  // Not sure how to mock this
@@ -161,5 +204,19 @@ describe('testing eStop button', () => {  // tests written for the eStop button
 		scope.eStopButton();
 		$httpBackend.flush();
         expect(scope.notifications).toEqual(output1);
+	});
+
+	it('should go into the fail branch', () => {
+		$httpBackend.expectGET(PATH + '/api/emergency-stop').respond({"success": false});
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.eStopButton();
+		$httpBackend.flush();
+	});
+
+	it('should error', () => {
+		$httpBackend.expectGET(PATH + '/api/emergency-stop').respond(500);
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.eStopButton();
+		$httpBackend.flush();
 	});
 });
