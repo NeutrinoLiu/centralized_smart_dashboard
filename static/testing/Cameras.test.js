@@ -2,8 +2,34 @@
 // May need to add some includes at the top, not sure what to add though
 
 
-describe('testing homepage function', () => {  // Based on code written in the AINavigation tests
-	it('should', async(() => {
+ describe('testing homepage function', () => {  // Based on code written in the AINavigation tests
+
+	beforeEach(module('cameras'));
+
+	var scope, $controller;
+
+	beforeEach(inject(function ($rootScope, $compile) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+
+		var content = '<my-directive></my-directive>'
+		
+		compiledDirective = $compile(content)(scope);
+		scope.$digest();
+	}));
+
+	it('broadcasts an event when the button is clicked', function () {
+		var data = null;
+
+		scope.$on('event.action', function ($event, eventData) {
+			data = eventData;
+		});
+
+		compiledDirective.find('.topnav homepage').click();
+
+		expect(data.attributeOne).to.equal('value 1');
+	});
+
+	/* it('should go to homepage', () => {
 		spyOn(home, 'homepage');
 
 		let button = fixture.debugElement.nativeElement.querySelector('button');
@@ -12,77 +38,102 @@ describe('testing homepage function', () => {  // Based on code written in the A
 		fixture.whenStable().then(() => {
 			expect(home.onEditButtonClick).toHaveBeenCalled();
 		});
-	}));
-});
+	});  */
+}); 
 
 describe('testing addNotification', () => {
 
-	beforeEach(() => {
-		$scope.notifications = "none yet";
-	});
+	beforeEach(module('cameras'));
 
-	it('should send a notifcation', () => {
+	var scope, $controller;
+
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+	}));
+
+	it('should send a notification', () => {
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.notifications = "none yet"
 		var output1 = "none yetNew Notification Sent To Server\n";
-		addNotification("New Notification Sent To Server");
-		expect($scope.notifications).toEqual(output1);
+		scope.addNotification("New Notification Sent To Server");
+		expect(scope.notifications).toEqual(output1);
 	});
 });
 
 describe('testing removeLatestCamera function', () => {
 
-	it('should remove the latest camera', () => {  // TODO finish this when rest of controller is written
-		$scope.cameraIPs = [];  // TODO fill in with 2 camera IPs of right format
-		removeLatestCamera();
-		var output1C = [];  // TODO fill in with 1 camera IP of right format
-		expect($scope.cameraIPs).toEqual(output1C);
+	beforeEach(module('cameras'));
+
+	var scope, $controller;
+
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+	}));
+
+	it('should remove the latest camera', () => {  //
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.cameraIPs = ['192.168.1.14', '192.168.1.23'];  // fill in with 2 camera IPs of right format
+		scope.removeLatestCamera();
+		var output1C = ['192.168.1.14'];  // fill in with 1 camera IP of right format
+		expect(scope.cameraIPs).toEqual(output1C);  //check for match
 	});
 
 	it('should do nothing with no cameras', () => {
-		$scope.cameraIPs = [];
-		removeLatestCamera();
+		ctrl = $controller('CamerasController', { $scope: scope });
+		scope.cameraIPs = [];
+		scope.removeLatestCamera();
 		var output2C = [];
-		expect($scope.cameraIPs).toEqual(output2C);
+		expect(scope.cameraIPs).toEqual(output2C);
 	});
 
 	afterAll(() => {  // empty cameraIPs at end of tests to avoid bugs
-		$scope.cameraIPs = [];
+		scope.cameraIPs = [];
 	});
 });
 
 describe('testing addIP function', () => {  // tests written to test the addIP function
 
-	it('should add an IP', () => {  // TODO finish this test when addIP is written
+	beforeEach(module('cameras'));
 
+	var scope, $controller;
+
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+		scope.notifications = "";
+	}));
+
+	it('should give us a notification', () => {  // Should give a notification when done
+		ctrl = $controller('CamerasController', { $scope: scope });
+		var output = "New IP address for a camera added\n";
+		expect(scope.notifications).toEqual(output);
 	});
 
-	it('should ignore bad input', () => {  // TODO finish this test when addIP is written
+	/* it('should ignore bad input', () => {  // Not sure how to mock this
+		ctrl = $controller('CamerasController', { $scope: scope });
 
-	});
+	});  */
 
 });
 
 describe('testing eStop button', () => {  // tests written for the eStop button
 
-	beforeEach(() => {
-		$scope.notifications = "none yet";
-	});
+	beforeEach(module('cameras'));
+
+	var scope, $controller;
+
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+	}));
 
 	it('should send a notification when called', () => {
+		scope.notifications = "none yet";
+		ctrl = $controller('CamerasController', { $scope: scope });
 		var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
-		eStopButton();
-		expect($scope.notifications).toEqual(output1);
-	});
-});
-
-describe('testing showVideo function', () => {  // tests written to test the showVideo function
-
-	beforeEach(() => {
-		$scope.notifications = "none yet";
-	});
-
-	it('should send a notification when called', () => {  // TODO finish this test when showVideo is written
-		var output1V = "";
-
-		expect($scope.notifications).toEqual(output1V);
+		scope.eStopButton();
+		expect(scope.notifications).toEqual(output1);
 	});
 });

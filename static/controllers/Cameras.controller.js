@@ -5,6 +5,7 @@
 	function CamerasController($scope, $window, $http) {
         $scope.homepage = homepage;
         $scope.removeLatestCamera = removeLatestCamera;
+        $scope.addNotification = addNotification;
         $scope.eStopButton = eStopButton;
         $scope.addIP = addIP;
 
@@ -38,6 +39,9 @@
 
         function homepage() {  // takes user back to homepage
             $window.location.href = "/home";
+            $rootScope.$broadcast('event.action', {
+                attributeOne: 'value 1'
+            });
         }
 
 	    // Removes the last camera IP added to our list

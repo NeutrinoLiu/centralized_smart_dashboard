@@ -275,6 +275,9 @@
                 if (!response.data.success)  {
                     connectionLost();
                 }
+                else {
+                    addNotification("Wheels changed!");
+                }
             }, (error) => {
                 connectionLost()
             });
@@ -287,6 +290,9 @@
             }).then((response)  => {
                 if (!response.data.success)  {
                     connectionLost();
+                }
+                else {
+                    addNotification("Arms changed!");
                 }
             }, (error) => {
                 connectionLost()

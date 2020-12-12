@@ -1,60 +1,31 @@
 // Unit tests page for testing the homepage Controller
 //import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-/*
-import { createTestApp } from 'angularjs-jest';
-const homepageFunctions = require('../controllers/homepage.controller.js')
 
-test('test ai-nav called', () => {
-	const mockFunc = jest.fn()
-	homepageFunctions.homepageController.aiNav = mockFunc;
-	expect(mockFunc).toHaveBeenCalled()
-})
+describe('testing homepage controller', () => {
 
-test('test equipment servicing called', () => {
+	beforeEach(module('homepage'));
 
-})
+	var scope, $controller;
 
-test('test Science called', () => {
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+		ctrl = $controller('homepageController', { $scope: scope });
+	}));
 
-})
+	it('test ai-nav called', () => {
+		
+	});
 
-test('test ERDM called', () => {
+	it('test Cameras called', () => {
 
-})
+	});
 
-test('test Maintenance called', () => {
+	it('test ERDM called', () => {
 
-})
-*/
+	});
 
-require('../../node_modules/angular/angular.min.js');
-require('../../node_modules/angular-mocks/angular-mocks.js');
-require('../../controllers/js/homepage.controller.js');
+	it('test Maintenance called', () => {
 
-describe('homepageController', () => {
-	let scope;
-	let compile;
-	let summaryService;
-
-	beforeEach(() => {
-    // 1. Tell AngularJS which modules should be mocked
-    angular.mock.module(homepage);
-
-    // 2. Provide your own mocks
-    //angular.mock.module(($homepage) => {
-      //$homepage.factory('ProductService', ($q) => ProductServiceInstant($q));
-    //});
-
-    // 3. Initialize and give access to required services/values
-    angular.mock.inject(($rootScope) => {
-      scope = $rootScope.$new();
-      
-    });
-  });
-
-  test('test ai-nav called', () => {
-	const mockFunc = jest.fn();
-	homepageFunctions.homepageController.aiNav = mockFunc;
-	expect(mockFunc).toHaveBeenCalled();
-});
+	});
 });

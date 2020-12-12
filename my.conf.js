@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu Nov 19 2020 14:23:06 GMT-0600 (Central Standard Time)
+// Generated on Mon Dec 07 2020 18:25:31 GMT-0600 (Central Standard Time)
 
 module.exports = function(config) {
   config.set({
@@ -10,37 +10,46 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: '"**/*[sS]pec.js"', included: false },
-      { pattern: '"spec/*[sS]pec.js"', included: false },
-      { pattern: '"**/spec/*[sS]pec.js"', included: false },
-      { pattern: '**/**/*[sS]pec.js', included: false },
-      node_modules/ angular / angular.js,
-      node_modules/angular-mocks/angular-mocks.js
+	  'node_modules/angular/angular.js',
+      'node_modules/angular-mocks/angular-mocks.js',
+      'static/directives/*.js',
+      'static/controllers/*.js',
+      'static/testing/*.js'
     ],
 
 
     // list of files / patterns to exclude
     exclude: [
+		'static/controllers/invalidPage.controller.js',
+		'static/controllers/ERDM.controller.js',
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+		'static/controllers/*.js': ['coverage']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
-
+	
+	// optionally, configure the reporter
+    coverageReporter: {
+		type: 'text',
+		dir: 'coverage/',
+		file: 'coverage.txt'
+    },
+	
     // web server port
     port: 9876,
 
@@ -55,7 +64,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers
@@ -65,7 +74,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false,
+    singleRun: true,
 
     // Concurrency level
     // how many browser should be started simultaneous

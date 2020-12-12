@@ -10,6 +10,11 @@
         $scope.eStopButton = eStopButton;
         $scope.deleteLatestWaypoint = deleteLatestWaypoint;
 
+        /* Scope functions needed for testing*/
+        $scope.coordToXY = coordToXY;
+        $scope.fullWaypoint = fullWaypoint;
+        $scope.addNotification = addNotification;
+
         $scope.waypoints = [];
         $scope.roverPin;
         $scope.curr_coord = {'lat': 0, 'long':0};
