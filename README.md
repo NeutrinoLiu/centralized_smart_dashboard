@@ -40,8 +40,9 @@ Inside your docker container:
 source /opt/ros/noetic/setup.bash
 ```
 
-<li> cd model
-<li>
+```
+cd model
+```
   
 ```
 catkin_make
