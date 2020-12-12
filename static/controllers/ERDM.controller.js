@@ -8,7 +8,7 @@
 		$scope.waypointNew = waypointNew;
 		$scope.cameraIP = cameraIP;
 		$scope.eStopButton = eStopButton;
-        $scope.deleteLatestWaypoint = deleteLatestWaypoint;
+        $scope.deleteEarliestWaypoint = deleteEarliestWaypoint;
 
         // Added these functions for testing to the scope
         $scope.coordToXY = coordToXY;
@@ -207,7 +207,7 @@
         }
 
         // Removes the last waypoint added to our waypoints 
-        function deleteLatestWaypoint() {
+        function deleteEarliestWaypoint() {
             $scope.waypoints.shift();
             $http.post(PATH + '/api/route',
                 {
