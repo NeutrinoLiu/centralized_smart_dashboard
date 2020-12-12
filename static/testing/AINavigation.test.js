@@ -20,10 +20,16 @@ describe('Testing init', () =>{
 		$httpBackend.expectGET(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4}]});
         $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
         $httpBackend.expectGET(PATH + '/api/notifications').respond({"success": true, "notifications": ""});
-		scope.init();
-		//$httpBackend.flush(); //
+		$httpBackend.flush();
 
 	});
+    it('testing init fail branch 1', () =>{
+        $httpBackend.expectGET(PATH + '/api/route').respond(500);
+        $httpBackend.expectGET(PATH + '/api/gps').respond(500);
+        $httpBackend.expectGET(PATH + '/api/notifications').respond(500);
+        $httpBackend.flush();
+
+    });
 
 });
 
@@ -163,6 +169,37 @@ describe('Testing waypoint new', () =>{
 
 });
 
+describe('testing update rover coordinates', () => {  // tests written for the update rover coordinates button
+
+    beforeEach(module('AINavigation'));
+
+    var scope, $controller, $httpBackend;
+
+    beforeEach(inject(function ($rootScope, _$controller_, $injector) {  // inject and mock(?) function
+        $httpBackend = $injector.get('$httpBackend');
+        scope = $rootScope.$new();
+        $controller = _$controller_;
+        $httpBackend.whenGET(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4},
+                {"lat": 23.4, "long": -32.5}]});
+        $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+        $httpBackend.whenGET(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yet"});
+    }));
+
+    it('should send a notification when called', () => {
+        spyOn(document, "getElementById").and.callFake(function() {
+            return {
+                style: ''
+            }
+        });
+        $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 57.43, "long": 58.5});
+        ctrl = $controller('AINavigationController', {$scope: scope});
+        scope.updateRoverCoordinates();
+        $httpBackend.flush();
+        //expect(scope.notifications).toEqual(output1);
+    })
+});
+
 describe('Testing fullWaypoint', () => {
 
 	beforeEach(module('AINavigation'));
@@ -283,38 +320,90 @@ describe('testing addNotification', () => {  // testing the addNotification func
 	});
 });
 
-describe('testing ESTOP button', () => {  // tests the ESTOP button javscript function
+// describe('testing ESTOP button', () => {  // tests the ESTOP button javscript function
+//
+// 	beforeEach(module('AINavigation'));
+//
+// 	var scope, $controller;
+//
+// 	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+// 		scope = $rootScope.$new();
+// 		$controller = _$controller_;
+//
+// 		ctrl = $controller('AINavigationController', { $scope: scope });
+// 	}));
+//
+// 	beforeEach(() => {
+// 		scope.notifications = "none yet";
+// 	});
+//
+// 	var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n"
+//
+// 	it('Estop button notification called', () => {  // checks that the notification popped up when the function called
+// 		scope.eStopButton();
+// 		expect(scope.notifications).toEqual(output1);
+// 	});
+// });
 
-	beforeEach(module('AINavigation'));
+describe('testing eStop button', () => {  // tests written for the eStop button
 
-	var scope, $controller;
+    beforeEach(module('AINavigation'));
 
-	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
-		scope = $rootScope.$new();
-		$controller = _$controller_;
+    var scope, $controller, $httpBackend;
 
-		ctrl = $controller('AINavigationController', { $scope: scope });
-	}));
+    beforeEach(inject(function ($rootScope, _$controller_, $injector) {  // inject and mock(?) function
+        $httpBackend = $injector.get('$httpBackend');
+        scope = $rootScope.$new();
+        $controller = _$controller_;
+        $httpBackend.whenGET(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4},
+                {"lat": 23.4, "long": -32.5}]});
+        $httpBackend.whenGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+        $httpBackend.whenGET(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yet"});
+    }));
 
-	beforeEach(() => {
-		scope.notifications = "none yet";
-	});
-
-	var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n"
-
-	it('Estop button notification called', () => {  // checks that the notification popped up when the function called
-		scope.eStopButton();
-		expect(scope.notifications).toEqual(output1);
-	});
+    it('should send a notification when called', () => {
+        $httpBackend.expectGET(PATH + '/api/emergency-stop').respond({"success": true});
+        $httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
+        //scope.notifications = "none yet";
+        ctrl = $controller('AINavigationController', { $scope: scope });
+        var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
+        scope.eStopButton();
+        $httpBackend.flush();
+        expect(scope.notifications).toEqual(output1);
+    });
+    it('estop failure', () => {
+        $httpBackend.expectGET(PATH + '/api/emergency-stop').respond({"success": false});
+        //$httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
+        //    "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
+        //scope.notifications = "none yet";
+        ctrl = $controller('AINavigationController', { $scope: scope });
+        var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
+        scope.eStopButton();
+        $httpBackend.flush();
+        //expect(scope.notifications).toEqual(output1);
+    });
+    it('estop failure', () => {
+        $httpBackend.expectGET(PATH + '/api/emergency-stop').respond(500);
+        //$httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
+        //    "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
+        //scope.notifications = "none yet";
+        ctrl = $controller('AINavigationController', { $scope: scope });
+        var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
+        scope.eStopButton();
+        $httpBackend.flush();
+        //expect(scope.notifications).toEqual(output1);
+    });
 });
 
 describe('testing GO button', () => {  // tests the GO button javascript function
 
 	beforeEach(module('AINavigation'));
 
-	var scope, $controller;
-
-	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+	var scope, $controller, $httpBackend;
+    beforeEach(inject(function ($rootScope, _$controller_, $injector) {  // inject and mock(?) function
+        $httpBackend = $injector.get('$httpBackend');
 		scope = $rootScope.$new();
 		$controller = _$controller_;
 
@@ -328,9 +417,53 @@ describe('testing GO button', () => {  // tests the GO button javascript functio
 	var output1 = "none yetGO button pressed! Rover is moving.\n"
 
 	it('Go button notification called', () => {  // checks that the notification popped up when the function called
-		scope.goButton();
-		expect(scope.notifications).toEqual(output1);
+        $httpBackend.expectGET(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4},
+				{"lat": 23.4, "long": -32.5}]});
+        $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+        $httpBackend.expectGET(PATH + '/api/notifications').respond({"success": true,
+			"notifications": "none yet"});
+
+		$httpBackend.flush();
+        scope.goButton();
+        $httpBackend.expectGET(PATH + '/api/go-button').respond({"success": true});
+        $httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yetGO button pressed! Rover is moving.\n"});
+        $httpBackend.flush();
+        expect(scope.notifications).toEqual(output1);
+
 	});
+    it('Go button notification failure', () => {  // checks that the notification popped up when the function called
+        $httpBackend.expectGET(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4},
+                {"lat": 23.4, "long": -32.5}]});
+        $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+        $httpBackend.expectGET(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yet"});
+
+        $httpBackend.flush();
+        scope.goButton();
+        $httpBackend.expectGET(PATH + '/api/go-button').respond({"success": false});
+        //$httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
+           // "notifications": "none yetGO button pressed! Rover is moving.\n"});
+        $httpBackend.flush();
+        //expect(scope.notifications).toEqual(output1);
+
+    });
+    it('Go button notification error', () => {  // checks that the notification popped up when the function called
+        $httpBackend.expectGET(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4},
+                {"lat": 23.4, "long": -32.5}]});
+        $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+        $httpBackend.expectGET(PATH + '/api/notifications').respond({"success": true,
+            "notifications": "none yet"});
+
+        $httpBackend.flush();
+        scope.goButton();
+        $httpBackend.expectGET(PATH + '/api/go-button').respond(500);
+        //$httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
+        // "notifications": "none yetGO button pressed! Rover is moving.\n"});
+        $httpBackend.flush();
+        //expect(scope.notifications).toEqual(output1);
+
+    });
 });
 
 /*
