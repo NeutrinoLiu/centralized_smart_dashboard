@@ -14,7 +14,7 @@
         $scope.coordToXY = coordToXY;
         $scope.fullWaypoint = fullWaypoint;
         $scope.addNotification = addNotification;
-        $scope.init = init;
+        //$scope.init = init;
 
         $scope.waypoints = [];
         $scope.roverPin;
@@ -44,44 +44,44 @@
             $window.location.href = "/home";
         }
 
-        function init() {
-            $http.get(PATH + '/api/route')
-                .then((response) => {
-                    if (response.data.success){
-                        for (index = 0; index < response.data.waypoints.length; index++) {  
-                            $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
-                        }
-                    }
-                }, (error) => {
-                    connectionLost()
-                });
+        //function init() {
+        //    $http.get(PATH + '/api/route')
+        //        .then((response) => {
+        //            if (response.data.success){
+        //                for (index = 0; index < response.data.waypoints.length; index++) {  
+        //                    $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+        //                }
+        //            }
+        //        }, (error) => {
+        //            connectionLost()
+        //        });
 
-            $http.get(PATH + '/api/gps')
-                .then((response) => {
-                    if (response.data.success) {
-                        setInterval(updateRoverCoordinates, GPS_INTERVAL);
-                        $scope.curr_coord.lat = response.data.lat;
-                        $scope.curr_coord.long = response.data.long;
-                        $scope.roverPin = fullRoverPin(response.data);
-                    }
-                }, (error) => {
-                    connectionLost();
-                });
+        //    $http.get(PATH + '/api/gps')
+        //        .then((response) => {
+        //            if (response.data.success) {
+        //                setInterval(updateRoverCoordinates, GPS_INTERVAL);
+        //                $scope.curr_coord.lat = response.data.lat;
+        //                $scope.curr_coord.long = response.data.long;
+        //                $scope.roverPin = fullRoverPin(response.data);
+        //            }
+        //        }, (error) => {
+        //            connectionLost();
+        //        });
 
-            $http.get(PATH + '/api/notifications')
-                .then((response) => {
-                    if (response.data.success) {
-                        $scope.notifications = response.data.notifications;
-                    }
-                }, (error) => {
-                    connectionLost();
-                });
+        //    $http.get(PATH + '/api/notifications')
+        //        .then((response) => {
+        //            if (response.data.success) {
+        //                $scope.notifications = response.data.notifications;
+        //            }
+        //        }, (error) => {
+        //            connectionLost();
+        //        });
 
-            $window.onload = function() {
-                addWaypointToMap();
-                moveRoverIcon();
-            }
-        }
+        //    $window.onload = function() {
+        //        addWaypointToMap();
+        //        moveRoverIcon();
+        //    }
+        //}
 
         function updateRoverCoordinates() {
             $http.get(PATH + '/api/gps')
@@ -293,7 +293,7 @@
             // TODO: consider if we try some other reconnection or something
         }
 
-        init();
+ //       init();
     }
 
 
