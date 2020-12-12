@@ -1,22 +1,5 @@
 // Unit testing file for the AI Navigation controller
 
-//Do we even bother with this one???
-//
-//describe('testing init function', () => {
-
-//	beforeEach(module('AINavigation'));
-
-//	var scope, $controller;
-
-//	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
-//		scope = $rootScope.$new();
-//		$controller = _$controller_;
-//	}));
-
-//	test('test init called', () => {
-
-//	});
-//});
 
 //This test ensures that each field of waypoint is not null
 const PATH = 'http://localhost:5000';
