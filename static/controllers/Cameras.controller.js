@@ -10,11 +10,15 @@
         $scope.addIP = addIP;
 
         $scope.cameraIPs = [];  // list of our camera IPs to store
-        $scope.notifications = "";
+        $scope.notifications = "blah";
+
+        //scope functions for testing
+        $scope.init = init;
 
         const PATH = 'http://localhost:5000';
 
         function init() {
+        console.log("init");
             $http.get(PATH + '/api/notifications')
                 .then((response) => {
                     if (response.data.success) {
@@ -74,6 +78,7 @@
         function addIP() {
             // TODO: validate ip
             var newIP = document.getElementById("cameraNewIP").value;
+            console.log("addip "+ newIP)
             for (index = 0; index < $scope.cameraIPs.length; index++) {
                 if (newIP == $scope.cameraIPs[index]) {
                     return;
@@ -107,7 +112,8 @@
             $http.get(PATH + '/api/emergency-stop')
                 .then((response) => {
                     if (response.data.success) {
-                        // TODO: add notification through http call 
+                        // TODO: add notification through http call
+                        console.log("estop reached ");
                         addNotification("ESTOP PRESSED! Rover is force restarting.");
                     } else {
                         connectionLost();
