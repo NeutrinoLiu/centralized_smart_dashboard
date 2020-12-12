@@ -37,7 +37,7 @@ describe('Testing waypoint new', () =>{
         $controller = _$controller_;
 
         ctrl = $controller('AINavigationController', { $scope: scope });
-		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}]
+		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 'point-1'}]
     }));
 
     it('testing waypoint new', () =>{
@@ -49,17 +49,17 @@ describe('Testing waypoint new', () =>{
 
     });
 
-	const output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
-	const output2 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
-	const output3 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': -90, 'long': -180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
-	const output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 90, 'long': 180, 'x_pos': 5, 'y_pos': 5, 'index': 2 }];
-	const output5 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 1 }, { 'lat': 0, 'long': 0, 'x_pos': 0, 'y_pos': 0, 'index': 2 }];
+	const output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 'point-1'}];
+	const output2 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 23, 'long': 23, 'x_pos': -1495, 'y_pos': -2990, 'index': 'point-2' }];
+	const output3 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': -90, 'long': -180, 'x_pos': -11700, 'y_pos': -11700, 'index': 'point-2' }];
+	const output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 90, 'long': 180, 'x_pos': -11700, 'y_pos': -11700, 'index': 'point-2' }];
+	const output5 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 0, 'long': 0, 'x_pos': 0, 'y_pos': 0, 'index': 'point-2' }];
 	//const output6 = ;
 
 	//Null input tests invalid and doesn't add a waypoint
-	it('test with null latitude', () => {
-		//Call with invalid input with null latitude;
-		scope.waypointNewLatitude = null;
+	it('test with empty latitude', () => {
+		//Call with invalid input with empty latitude;
+		scope.waypointNewLatitude = "";
 		scope.waypointNewLongitude = 1;
 		scope.waypointNew();
 
@@ -67,10 +67,10 @@ describe('Testing waypoint new', () =>{
 	});
 
 	//Null input tests invalid and doesn't add a waypoint
-	it('test with null longitude', () => {
+	it('test with empty longitude', () => {
 		//Call with invalid input with null longitude;
 		scope.waypointNewLatitude = 1;
-		scope.waypointNewLongitude = null;
+		scope.waypointNewLongitude = "";
 		scope.waypointNew();
 
 		expect(scope.waypoints).toEqual(output1);
@@ -151,7 +151,7 @@ describe('Testing waypoint new', () =>{
 		scope.waypointNewLongitude = 0;
 		scope.waypointNew();
 
-		expect(coordToXY(lat, long)).toEqual(output5);
+		expect(scope.waypoints).toEqual(output5);
 	});
 
 	//Test with many valid inputs (many = 5?)
