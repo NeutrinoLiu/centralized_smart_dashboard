@@ -1,25 +1,31 @@
 // Unit tests page for testing the homepage Controller
+//import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 
-const homepageFunctions = require('../controllers/homepage.controller.js')
+describe('testing homepage controller', () => {
 
-test('test ai-nav called', () => {
-	const mockFunc = jest.fn()
-	homepageFunctions.homepageController.aiNav = mockFunc;
-	expect(mockFunc).toHaveBeenCalled()
-})
+	beforeEach(module('homepage'));
 
-test('test equipment servicing called', () => {
+	var scope, $controller;
 
-})
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
+		ctrl = $controller('homepageController', { $scope: scope });
+	}));
 
-test('test Science called', () => {
+	it('test ai-nav called', () => {
+		
+	});
 
-})
+	it('test Cameras called', () => {
 
-test('test ERDM called', () => {
+	});
 
-})
+	it('test ERDM called', () => {
 
-test('test Maintenance called', () => {
+	});
 
-})
+	it('test Maintenance called', () => {
+
+	});
+});

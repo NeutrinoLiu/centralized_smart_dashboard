@@ -34,15 +34,15 @@ class Cmd:      # the object sending from frontend to the local publisher
                         new_speed=[],
                         remark='<unclaimed>'):
         self.new_route = new_route  
-        # self.new_arm = new_arm
+        self.new_arm = new_arm
         self.new_speed = new_speed
         self.remark = remark
         self.cmd_code = 0           # the code indicates which type of command it is
 
         if new_route != []:
             self.cmd_code = self.cmd_code | 0b0001  # last bit: new route setting cmd
-        # if new_arm != []:
-        #     self.cmd_code = self.cmd_code | 0b0010  # 2nd bit: new arm gesture setting
+        if new_arm != []:
+             self.cmd_code = self.cmd_code | 0b0010  # 2nd bit: new arm gesture setting
         if new_speed != []:
             self.cmd_code = self.cmd_code | 0b0100  # 3rd bit: 
 
@@ -64,7 +64,7 @@ class GPSPoint:
         return '(' + str(self.lati) + ',' + str(self.longt) + ')'
 
 class Rover:
-    def __init__(self, name, frequency=100, auto_init=True):    # frequency is the commmand topic sending freq
+    def __init__(self, name, frequency=100, auto_init=True, ip_file_path = None):    # frequency is the commmand topic sending freq
         # NOTICE:   those fields are though read_only for outside program but not protected.
         #           make sure you did not overwrite them mistakenly
         self.gps_longt = 0.0
@@ -75,6 +75,7 @@ class Rover:
         # the target pos of the car
         self.ori = 0.0
         self.speed = []
+        self.arm = [0, 0, 0, 0, 0, 0, 0]
         self.remark = ''
         self.name = name
         # self.warn_flag = False # indicate whenever there is a warning.
@@ -85,8 +86,28 @@ class Rover:
                                 # r[0]    r[1]    r[2]                            for example: it get updated when rover arrive r[1]
                                 #         0--*----O--------O-------O------------O
                                 #         r[0]    r[1]     r[2]
+        self.ips = []
+        self.ip_file_path = ip_file_path
+        if ip_file_path is not None:
+            self.ips = self.get_ip_from_file(ip_file_path)
         if auto_init:
             self.ros_init()
+
+    # gets the ip addresses for cameras from a file specified
+    def get_ip_from_file(self, file_path):
+        ips = []
+        with open(file_path, "r") as f:
+            for line in f:
+                ips.append(line.rstrip("\n"))
+        return ips
+
+    # updates the ip camera addresses and writes them to a file
+    def update_ips(self, new_ips):
+        self.ips = new_ips
+        if self.ip_file_path is not None:
+            with open(self.ip_file_path, "w") as f:
+                for i in new_ips:
+                    f.write(str(i) + "\n")
 
     def ros_init(self):
         #ros init
@@ -111,8 +132,8 @@ class Rover:
         self.ori = nav_data.heading
         self.gps_longt = nav_data.cur_long
         self.gps_lati = nav_data.cur_lat
-        if self.route_state == []:
-            self.route_state = [GPSPoint(self.gps_lati, self.gps_longt)]
+        # if self.route_state == []:
+        #     self.route_state = [GPSPoint(self.gps_lati, self.gps_longt)]
         self.buffer_longt = nav_data.tar_long
         self.buffer_lati = nav_data.tar_lat
 
@@ -130,9 +151,8 @@ class Rover:
             self.set_new_route(command.new_route)                    # remote update
 
         if command.cmd_code & 0b0010:    # an arm gesture update command
-            # pub.set_arm_gesture(command.new_arm) 
-            # local-rover interface not implemented
-            pass 
+            self.set_new_arm(command.new_arm) 
+            # local-rover interface not implemented 
 
         if command.cmd_code & 0b0100:    # a speed update command
             self.set_new_speed(command.new_speed)
@@ -152,12 +172,16 @@ class Rover:
         nav_data.tar_long = new_target.longt
         self.navi_pub.publish(nav_data) 
     
+    def set_new_arm(self, new_arm):
+        self.arm = new_arm
+        # due to the mock rover node do not have the corresponded topic, simply store it locally
+
     def set_new_speed(self, new_speed):
         # invalid if it is not number
         if len(new_speed) != 6:
             raise InvalidSpeed("incorrect num of speed")
-        if not reduce(lambda a,b: a and b, map(lambda a: a>=0 , new_speed)):
-            raise InvalidSpeed("negative speed")
+        #if not reduce(lambda a,b: a and b, map(lambda a: a>=0 , new_speed)):
+            #raise InvalidSpeed("negative speed")
         drive_data = Drive()
         drive_data.wheel0 = new_speed[0]
         drive_data.wheel1 = new_speed[1]
@@ -165,7 +189,18 @@ class Rover:
         drive_data.wheel3 = new_speed[3]
         drive_data.wheel4 = new_speed[4]
         drive_data.wheel5 = new_speed[5]
+        self.speed = [      drive_data.wheel0,
+                            drive_data.wheel1,
+                            drive_data.wheel2,
+                            drive_data.wheel3,
+                            drive_data.wheel4,
+                            drive_data.wheel5]
         self.driv_pub.publish(drive_data)
+
+        return self.speed
+    
+    def emergent_stop(self):
+        self.set_new_speed([0, 0, 0, 0, 0, 0])
 
     def get_notification(self):
         remark = self.remark

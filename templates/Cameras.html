@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html ng-app="cameras">
+<head>
+    <meta charset="utf-8" />
+    <title>Centralized Dashboard - Cameras</title>
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/UIStyleSheet.css') }}">
+    <style type="text/css">
+        .pan-zoom-frame {
+            border: 2px solid black;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="http://monospaced.github.io/hamster.js/hamster.js"></script>
+    <script src="https://code.angularjs.org/1.3.13/angular.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-mocks.js"></script>
+    
+
+    <script type="text/javascript" src="{{ url_for('static', filename='controllers/Cameras.controller.js') }}"></script>
+</head>
+<body ng-controller="CamerasController">
+    <div class="topnav">
+        <pageName href="#pageName">Camera Views</pageName>
+        <homepage ng-click="homepage()" href="#home">Homepage</homepage>
+    </div>
+
+    <div class="cameras">
+
+        <!--camera-display will be a big table that includes all of the camera view IP addresses that can be selected to view-->
+        <camera-display>
+            <table>
+                <tr>
+                    <td>Current Cameras:</td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat="ip in cameraIPs">
+                    <td><a href="http://{{ '{{ip}}' }}" target="_blank">{{ '{{ip}}' }}</a> &nbsp;&nbsp;</td>
+                </tr>
+                
+            </table>
+        </camera-display>
+        
+        <form ng-submit="cameraIP()">
+        </form><div></div>
+        <enter-cameraIP>  <!-- Setup for us to enter new camera IP address -->
+            <form>
+                <input id="cameraNewIP" name="cameraNew" placeholder="Enter New IP:"><br>  <!-- input for the camera IP.  May need to change type-->
+                <input type="submit" ng-click="addIP()" value="Submit" id="submit-button"><br>
+            </form>
+        </enter-cameraIP>
+        <input class="remove-camera-button" type="button" ng-click="removeLatestCamera()" value="Remove Latest Camera IP" />
+        
+        <div></div>
+        <notification-bar id="notification-bar"><div id="notices">{{ '{{notifications}}' }}</div></notification-bar>
+        <div id="emergency-stop" ng-click="eStopButton()">STOP</div>
+    </div>
+</body>
+</html>

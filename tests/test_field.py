@@ -9,8 +9,9 @@ from rover import Rover
 
 @pytest.fixture(scope="module", autouse=True)   # one new test node for a new module
 def testNode():
-    testNode = Rover("testNode", auto_init=False)
+    testNode = Rover("testNode", auto_init=False, ip_file_path = None)
     print(">>> test node is running >>>")
+
     yield testNode
     print("<<< test node shuts down <<<")
 
@@ -53,3 +54,6 @@ def test_remark(testNode):
 
 def test_name(testNode):
     assert testNode.name == "testNode"
+
+def test_ips(testNode):
+    assert testNode.ips == []

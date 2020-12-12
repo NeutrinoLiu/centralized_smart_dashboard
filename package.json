@@ -1,0 +1,26 @@
+{
+  "name": "csd-application",
+  "jest": {
+    "verbose": true
+  },
+  "description": "Sample app for CSD for AngularJS",
+  "version": "1.0.2",
+  "scripts": {
+    "test": "karma start my.conf.js"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.8.2",
+    "jasmine": "^3.6.3",
+    "jasmine-core": "^3.6.0",
+    "karma": "^5.2.3",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.0.3",
+    "karma-jasmine": "^4.0.1"
+  },
+  "dependencies": {
+    "angular": "^1.8.2",
+    "angularjs": "^0.0.1",
+    "async": "^3.2.0",
+    "esm": "^3.2.25"
+  }
+}

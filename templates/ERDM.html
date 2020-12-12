@@ -43,9 +43,11 @@
                 <panzoom id="PanZoom" config="panzoomConfig" model="panzoomModel" style="background-color:#DEB887; width:100%; height: 550px">
                     <svg id="map" style="position:absolute;" width="100%" height="550px">
                         <div ng-repeat="point in waypoints" ng-attr-x="{{ '{{point.x_pos}}' }}" ng-attr-y="{{ '{{point.y_pos}}' }}" ng-attr-width="10" ng-attr-height="10" rx="10" ry="10" style="fill:red;stroke-width:2;stroke:rgb(255,0,0)">
-                            <img ng-attr-id="{{ '{{point.index}}' }}" src="{{ url_for('static', filename='imgs/pin.svg') }}" width="1" height="1"><br>
-
+                            <img ng-attr-id="{{ '{{point.index}}' }}" src="{{ url_for('static', filename='imgs/pin.svg') }}" width="1" height="1">
                         </div>
+                        <div ng-model="roverPin" ng-attr-x="{{ '{{roverPin.x_pos}}' }}" ng-attr-y="{{ '{{roverPin.y_pos}}' }}" ng-attr-width="10" ng-attr-height="10" rx="10" ry="10">
+                        <img id="roverPin" src="{{ url_for('static', filename='imgs/rover.png') }}" width="1" height="1">
+                       </div> 
                     </svg>
                 </panzoom>
             </div>
@@ -61,7 +63,7 @@
                 <tr>
                     <th>Target coordinates</th>
                     <!--<th>Distance</th>-->
-                    <th><input type="button" ng-click="deleteLatestWaypoint()" value="Delete Latest Waypoint"></th>
+                    <th><input type="button" ng-click="deleteEarliestWaypoint()" value="Delete Latest Waypoint"></th>
                 </tr>
 
                 <tr ng-repeat="waypoint in waypoints">
@@ -73,16 +75,13 @@
         </coord-display>
         <enter-coord>
             <form>
-                <input type="text" id="waypointNewLatitude" pattern="^\d*(\.\d*)?$" name="waypointNew" placeholder="Enter New Latitude:"><br>
-                <input type="text" id="waypointNewLongitude" pattern="^\d*(\.\d*)?$" name="waypointNew" placeholder="Enter New Longitude:"><br>
+                <input type="number" id="waypointNewLongitude" ng-model="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
+                <input type="number" id="waypointNewLatitude" ng-model="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
                 <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
             </form>
         </enter-coord>
-        
-        <form ng-submit="cameraIP()">
-            <!--<input type="text" id="cameraIP" name="cameraIP" placeholder="Add Camera IP Address:">
-        <input type="submit" value="Submit" id="submit-button">-->
-        </form><div></div>
+       
+        <div></div>
         
         <div></div>
         <notification-bar id="notification-bar"><div id="notices">{{ '{{notifications}}' }}</div></notification-bar>
