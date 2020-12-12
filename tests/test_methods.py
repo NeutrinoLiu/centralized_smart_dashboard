@@ -9,7 +9,7 @@ from rover import *
 
 ############## FIXTURE WITHOUT INIT ROS ##############
 
-@pytest.fixture(scope="module", autouse=True)   
+@pytest.fixture(scope="module", autouse=True)
 def testNode():
     testNode = Rover("testNode", auto_init=True, ip_file_path="testipfile.txt")
     print(">>> test node is running >>>")
@@ -26,13 +26,11 @@ def testNode():
 
 ################### METHOD TEST ######################
 
-def test_get_ips_from_file(testNode):
-    assert testNode.get_ip_from_file("testipfile.txt") == ['192.168.2.3\n', '192.128.9.9\n', '152.167.2.5\n', '199.188.6.9']
-
-def test_update_ips(testNode):
+def test_ips(testNode):
+    assert testNode.get_ip_from_file("testipfile.txt") == ['192.168.2.3', '192.128.9.9', '152.167.2.5', '199.188.6.9']
     testNode.update_ips(['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9'])
     assert testNode.ips == ['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9']
-    assert testNode.get_ip_from_file("testipfile.txt") == ['292.168.2.3\n', '692.128.9.9\n', '052.167.2.5\n', '799.188.6.9\n']
+    assert testNode.get_ip_from_file("testipfile.txt") == ['292.168.2.3', '692.128.9.9', '052.167.2.5', '799.188.6.9']
     testNode.update_ips(['192.168.2.3', '192.128.9.9', '152.167.2.5', '199.188.6.9'])
 
 
