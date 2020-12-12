@@ -20,8 +20,8 @@
         var initial_zoom = {
             x: -41.26540000000034,
             y: -6.979799999999869,
-            width: 5,
-            height: 5
+            width: 10,
+            height: 10
         };
 
         $scope.panzoomConfig = {
@@ -132,6 +132,11 @@
         }
 
         function moveRoverIcon() {
+            // could be undefined on initial load, but this function is called at fixed intervals
+            if ($scope.roverPin == null) {
+                return;
+            }
+            
             top_ = $scope.roverPin['y_pos'].toString();
             top_ = top_ + 'px';
             left_ = $scope.roverPin['x_pos'].toString();
@@ -157,8 +162,8 @@
                 var point_location = {
                     x: $scope.waypoints[0]['x_pos'],
                     y: $scope.waypoints[0]['y_pos'],
-                    width: 5,
-                    height: 5
+                    width: 10,
+                    height: 10
                 };
 
                 PanZoomService.getAPI('PanZoom').then(function (api) {
@@ -169,8 +174,8 @@
 
         //Adds waypoint coordinates to the list
         function waypointNew() {
-            var latitude = document.getElementById("waypointNewLatitude").value;
-            var longitude = document.getElementById("waypointNewLongitude").value;
+            var latitude = $scope.waypointNewLatitude;
+            var longitude = $scope.waypointNewLongitude;
             var invalidInput = (latitude == "" || longitude == "") || latitude < -90 || latitude > 90 
                 || longitude < -180 || longitude > 180;
 
@@ -197,7 +202,6 @@
 
         // Removes the last waypoint added to our waypoints 
         function deleteLatestWaypoint() {
-            // $scope.waypoints.pop();
             $scope.waypoints.shift();
             $http.post(PATH + '/api/route',
                 {
@@ -219,10 +223,6 @@
  */
         function cameraIP() {  // future iteration item
             alert("A new camera stream IP address has been opened.");
-        }
-
-        function getCameraIP(){  //future iteration item
-        
         }
 
         function addNotification(newNotification) {

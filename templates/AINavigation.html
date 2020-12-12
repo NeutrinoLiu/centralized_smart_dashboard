@@ -58,7 +58,7 @@
                 <tr>
                     <th>Target coordinates</th>
                     <!--<th>Distance</th>-->
-                    <td><input type="button" ng-click="deleteLatestWaypoint()" value="Delete Latest Waypoint"></td>
+                    <td><input type="button" ng-click="deleteEarliesttWaypoint()" value="Delete Latest Waypoint"></td>
                 </tr>
 
                 <tr ng-repeat="waypoint in waypoints">
@@ -69,8 +69,8 @@
         </coord-display>
         <enter-coord>
             <form>
-                <input type="number" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
-                <input type="number" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
+                <input type="number" id="waypointNewLongitude" ng-model="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
+                <input type="number" id="waypointNewLatitude" ng-model="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
                 <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
             </form>
         </enter-coord>
