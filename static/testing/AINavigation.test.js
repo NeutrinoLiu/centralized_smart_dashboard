@@ -23,7 +23,7 @@ describe('Testing init', () =>{
 		scope.init();
 		//$httpBackend.flush();
 
-	})
+	});
 
 });
 
@@ -39,14 +39,14 @@ describe('Testing waypoint new', () =>{
         ctrl = $controller('AINavigationController', { $scope: scope });
     }));
 
-    it('testing waypoint new', () =>{
-        $httpBackend.expectPOST(PATH + '/api/route').respond({"success": true, "waypoints":[{"lat": 56.42, "long": 58.4}]});
-        //$httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
-        //$httpBackend.expectGET(PATH + '/api/notifications').respond({"success": true, "notifications": ""});
-        scope.waypointNew();
-        //$httpBackend.flush();
+	it('testing waypoint new', () => {
+		$httpBackend.expectPOST(PATH + '/api/route').respond({ "success": true, "waypoints": [{ "lat": 56.42, "long": 58.4 }] });
+		//$httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
+		//$httpBackend.expectGET(PATH + '/api/notifications').respond({"success": true, "notifications": ""});
+		scope.waypointNew();
+		//$httpBackend.flush();
 
-    })
+	});
 
 });
 
