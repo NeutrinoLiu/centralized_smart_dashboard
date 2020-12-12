@@ -132,8 +132,8 @@ class Rover:
         self.ori = nav_data.heading
         self.gps_longt = nav_data.cur_long
         self.gps_lati = nav_data.cur_lat
-        if self.route_state == []:
-            self.route_state = [GPSPoint(self.gps_lati, self.gps_longt)]
+        # if self.route_state == []:
+        #     self.route_state = [GPSPoint(self.gps_lati, self.gps_longt)]
         self.buffer_longt = nav_data.tar_long
         self.buffer_lati = nav_data.tar_lat
 

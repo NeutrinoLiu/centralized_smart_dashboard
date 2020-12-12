@@ -120,24 +120,12 @@
             and height of the map.
             */
 
-            scale_factor = 1;
-            x_pos = Math.abs(parseInt(longitude) - longitude);
-            y_pos = Math.abs(parseInt(latitude) - latitude);
-            if (Math.abs(latitude) < 10) {
-                y_pos *= 10;
-            } else {
-                y_pos *= 100;
-            }
+            scale_factor = 130;
+            x_pos = longitude / 2;
+            y_pos = latitude;
 
-            if (Math.abs(longitude) < 10) {
-                x_pos *= 10;
-            } else if (Math.abs(longitude) < 100) {
-                x_pos *= 100;
-            } else {
-                x_pos *= 1000;
-            }
 
-            x_pos = (longitude < 0 ? -1 * x_pos : x_pos) * scale_factor;
+            x_pos = (longitude > 0 ? -1 * x_pos : x_pos) * scale_factor;
             y_pos = (latitude > 0 ? -1 * y_pos : y_pos) * scale_factor;
 
             return {'x': x_pos, 'y': y_pos};
@@ -167,8 +155,8 @@
 
             if ($scope.waypoints.length > 0) {
                 var point_location = {
-                    x: $scope.waypoints[$scope.waypoints.length - 1]['x_pos'],
-                    y: $scope.waypoints[$scope.waypoints.length - 1]['y_pos'],
+                    x: $scope.waypoints[0]['x_pos'],
+                    y: $scope.waypoints[0]['y_pos'],
                     width: 5,
                     height: 5
                 };
@@ -209,7 +197,8 @@
 
         // Removes the last waypoint added to our waypoints 
         function deleteLatestWaypoint() {
-            $scope.waypoints.pop();
+            // $scope.waypoints.pop();
+            $scope.waypoints.shift();
             $http.post(PATH + '/api/route',
                 {
                     'waypoints': $scope.waypoints

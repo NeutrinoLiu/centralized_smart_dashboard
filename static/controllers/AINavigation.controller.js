@@ -19,8 +19,8 @@
         var initial_zoom = {
             x: 0,
             y: 0,
-            width: 5,
-            height: 5
+            width: 10,
+            height: 10
         };
 
         $scope.panzoomConfig = {
@@ -58,7 +58,6 @@
                         $scope.curr_coord.lat = response.data.lat;
                         $scope.curr_coord.long = response.data.long;
                         $scope.roverPin = fullRoverPin(response.data);
-                        moveRoverIcon();
                     }
                 }, (error) => {
                     connectionLost();
@@ -75,6 +74,7 @@
 
             $window.onload = function() {
                 addWaypointToMap();
+                moveRoverIcon();
             }
         }
 
@@ -128,26 +128,12 @@
             Scaling factor for latitude and longitude was manually calculated from pixel length
             and height of the map.
             */
+            scale_factor = 130;
+            x_pos = longitude / 2;
+            y_pos = latitude;
 
-            // South is positive, east is positive
-            scale_factor = 1;
-            x_pos = Math.abs(parseInt(longitude) - longitude);
-            y_pos = Math.abs(parseInt(latitude) - latitude);
-            if (Math.abs(latitude) < 10) {
-                y_pos *= 10;
-            } else {
-                y_pos *= 100;
-            }
 
-            if (Math.abs(longitude) < 10) {
-                x_pos *= 10;
-            } else if (Math.abs(longitude) < 100) {
-                x_pos *= 100;
-            } else {
-                x_pos *= 1000;
-            }
-
-            x_pos = (longitude < 0 ? -1 * x_pos : x_pos) * scale_factor;
+            x_pos = (longitude > 0 ? -1 * x_pos : x_pos) * scale_factor;
             y_pos = (latitude > 0 ? -1 * y_pos : y_pos) * scale_factor;
 
             return {'x': x_pos, 'y': y_pos};
@@ -177,10 +163,10 @@
 
             if ($scope.waypoints.length > 0) {
                 var point_location = {
-                    x: $scope.waypoints[$scope.waypoints.length - 1]['x_pos'],
-                    y: $scope.waypoints[$scope.waypoints.length - 1]['y_pos'],
-                    width: 5,
-                    height: 5
+                    x: $scope.waypoints[0]['x_pos'],
+                    y: $scope.waypoints[0]['y_pos'],
+                    width: 10,
+                    height: 10
                 };
 
                 PanZoomService.getAPI('PanZoom').then(function (api) {
@@ -216,12 +202,14 @@
                         connectionLost();
                     });
             }
+
         }
 
         // Removes the last waypoint added to our waypoints 
         function deleteLatestWaypoint() {
             if ($scope.waypoints.length != 0) {
-                $scope.waypoints.pop();
+                // $scope.waypoints.pop();
+                $scope.waypoints.shift();
                 $http.post(PATH + '/api/route',
                     {
                         'waypoints': $scope.waypoints
@@ -239,6 +227,7 @@
             } else {
                 alert("No waypoint added. So we cannot remove anything");
             }
+
         }
 
         // Adds a new notification to the notifications scope for the notifications bar

@@ -18,10 +18,10 @@ class NavData:
         self.publisher = rospy.Publisher(topic_name, NavigationMsg, queue_size=1)
         self.subscriber = rospy.Subscriber('/set_nav_data', NavigationMsg, self.set_target)
         self.rate = rospy.Rate(frequency)
-        self.cur_lat = 0
-        self.cur_long = 0
-        self.tar_lat = 0
-        self.tar_long = 0
+        self.cur_lat = 43.01
+        self.cur_long = -89.01
+        self.tar_lat = 43.01
+        self.tar_long = -89.01
 
     def set_target(self, data):
         self.tar_lat = data.tar_lat
@@ -45,7 +45,7 @@ class NavData:
         global stop_flag
         if stop_flag:
             return
-        line_speed = 0.01
+        line_speed = 0.0001
         dist = sqrt((self.tar_lat - self.cur_lat)*(self.tar_lat - self.cur_lat) + (self.tar_long - self.cur_long)*(self.tar_long - self.cur_long))
         if dist != 0 :
             delta_lat = (self.tar_lat - self.cur_lat)/dist * line_speed
