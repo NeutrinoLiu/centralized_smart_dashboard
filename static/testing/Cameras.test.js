@@ -33,39 +33,6 @@ describe('CAMERA Testing init', () =>{
 
 	beforeEach(module('cameras'));
 
-	var scope, $controller;
-
-	beforeEach(inject(function ($rootScope, $compile) {  // inject and mock(?) function
-		scope = $rootScope.$new();
-
-		var content = '<my-directive></my-directive>';
-
-		compiledDirective = $compile(content)(scope);
-		scope.$digest();
-	}));
-
-	it('broadcasts an event when the button is clicked', function () {
-		var data = null;
-
-		scope.$on('event.action', function ($event, eventData) {
-			data = eventData;
-		});
-
-		compiledDirective.find('.topnav homepage').click();
-
-		expect(data.attributeOne).to.equal('value 1');
-	});
-
-	/* it('should go to homepage', () => {
-		spyOn(home, 'homepage');
-
-		let button = fixture.debugElement.nativeElement.querySelector('button');
-		button.click();
-
-		fixture.whenStable().then(() => {
-			expect(home.onEditButtonClick).toHaveBeenCalled();
-		});
-	});  */
 });
 
 describe('testing addNotification', () => {
