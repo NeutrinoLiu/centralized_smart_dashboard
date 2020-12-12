@@ -1,7 +1,7 @@
 // unit testing file for the erdm controller
 
 //This test ensures that each field of waypoint is not null
-const PATH = 'http://localhost:5000';
+var PATH = 'http://localhost:5000';
 
 describe('Testing init', () => {
 	beforeEach(module('ERDM'));
