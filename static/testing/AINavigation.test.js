@@ -21,7 +21,7 @@ describe('Testing init', () =>{
         $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 56.43, "long": 58.5});
         $httpBackend.expectGET(PATH + '/api/notifications').respond({"success": true, "notifications": ""});
 		scope.init();
-		//$httpBackend.flush();
+		//$httpBackend.flush(); //
 
 	});
 
