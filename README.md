@@ -69,6 +69,9 @@ roscore &
 
 Inside here, we should find a file called rover.py, which is the one we want to test. Thus, we run:
 ```
+touch testipfile.txt
+```
+```
 pytest --cov=rover
 ```
 
