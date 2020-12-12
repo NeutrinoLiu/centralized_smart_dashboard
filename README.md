@@ -40,8 +40,9 @@ Inside your docker container:
 source /opt/ros/noetic/setup.bash
 ```
 
-<li> cd model
-<li>
+```
+cd model
+```
   
 ```
 catkin_make
@@ -59,6 +60,7 @@ To start the model server, we need to run roscore you can run it in the backgrou
 ```
 roscore &
 ```
+</ol>
 
 # Running the backend tests
 ```
@@ -77,4 +79,51 @@ pytest --cov=routes
 ```
 
 For this iteration, we have achieved an 88% code coverage. 
+</li>
+
+
+  
+# Running the frontend tests
+From inside the project folder, install angular on your local drive using the following command
+```
+npm install angular
+
+```
+Then, install the angular mocks with this command
+```
+npm install angular-mocks
+
+```
+For frontend automated tests, we are using Karma as a platform. Use the following command to install Karma.
+```
+npm install karma --save-dev
+
+```
+Install the dependendencies for Karma. The chrome launcher dependencies is as our client will be using Chrome as a default browser.
+```
+npm install karma-jasmine karma-chrome-launcher --save-dev
+
+```
+Use the following command for ease of running through command line. This allows you to not have to define the path every time you run a test. Instead, you can just use "karma"
+```
+npm install -g karma-cli
+
+```
+Install the code coverage dependency for Karma. A file with the code coverage of the tests will be generated each time the tests are run.
+```
+npm install karma-coverage --save-dev
+
+```
+Now that you've installed the necessary programs and dependencies, you don't need to do this again.
+
+
+Use the following command to run the automated front end tests.
+```
+npm test
+```
+
+For this iteration, we achieved a <?> code coverage. We considered this an acceptable value due to the dynamic nature of the GUI as well as a majority of the HTML front-end tests are visual acceptance tests, i.e. map testing, range sliders and zoom in AINavigation and Maintenance.
+
+</li>
+
 </ol>
