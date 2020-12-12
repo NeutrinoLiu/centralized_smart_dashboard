@@ -82,7 +82,6 @@ For this iteration, we have achieved an 88% code coverage.
 </li>
 
 
-<li>
   
 # Running the frontend tests
 From inside the project folder, install angular on your local drive using the following command
