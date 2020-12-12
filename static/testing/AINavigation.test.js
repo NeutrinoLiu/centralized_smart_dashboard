@@ -49,11 +49,11 @@ describe('Testing waypoint new', () =>{
 
     });
 
-	const output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 'point-1'}];
-	const output2 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 23, 'long': 23, 'x_pos': -1495, 'y_pos': -2990, 'index': 'point-2' }];
-	const output3 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': -90, 'long': -180, 'x_pos': -11700, 'y_pos': -11700, 'index': 'point-2' }];
-	const output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 90, 'long': 180, 'x_pos': -11700, 'y_pos': -11700, 'index': 'point-2' }];
-	const output5 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 0, 'long': 0, 'x_pos': 0, 'y_pos': 0, 'index': 'point-2' }];
+	var output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 'point-1'}];
+	var output2 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 23, 'long': 23, 'x_pos': -1495, 'y_pos': -2990, 'index': 'point-2' }];
+	var output3 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': -90, 'long': -180, 'x_pos': -11700, 'y_pos': -11700, 'index': 'point-2' }];
+	var output4 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 90, 'long': 180, 'x_pos': -11700, 'y_pos': -11700, 'index': 'point-2' }];
+	var output5 = [{ 'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5, 'index': 'point-1' }, { 'lat': 0, 'long': 0, 'x_pos': 0, 'y_pos': 0, 'index': 'point-2' }];
 	//const output6 = ;
 
 	//Null input tests invalid and doesn't add a waypoint
@@ -247,9 +247,9 @@ describe('testing addNotification', () => {  // testing the addNotification func
 	//	$httpBackend.verifyNoOutstandingRequest();
 	//});
 
-	const output1 = "none yetNew Notification Sent To Server\n";
-	const output2 = "none yetHello\nThis\nIs A New\nNotification\nThat We\nSent!\n";
-	const output3 = "none yet\n";
+	var output1 = "none yetNew Notification Sent To Server\n";
+	var output2 = "none yetHello\nThis\nIs A New\nNotification\nThat We\nSent!\n";
+	var output3 = "none yet\n";
 
 	it('Notifications are as expected after call', () => {  //test after 1 call that notifications matches
 		//$httpBackend.flush();
@@ -300,7 +300,7 @@ describe('testing ESTOP button', () => {  // tests the ESTOP button javscript fu
 		scope.notifications = "none yet";
 	});
 
-	const output1 = "none yetESTOP PRESSED! Rover is force restarting.\n"
+	var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n"
 
 	it('Estop button notification called', () => {  // checks that the notification popped up when the function called
 		scope.eStopButton();
@@ -325,7 +325,7 @@ describe('testing GO button', () => {  // tests the GO button javascript functio
 		scope.notifications = "none yet";
 	});
 
-	const output1 = "none yetGO button pressed! Rover is moving.\n"
+	var output1 = "none yetGO button pressed! Rover is moving.\n"
 
 	it('Go button notification called', () => {  // checks that the notification popped up when the function called
 		scope.goButton();
@@ -351,11 +351,11 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 
 	//Tests math completed in coordToXY
 	it('test with regular input', () => {
-		const lat = 53.687;
-		const long = 37.993;
+		var lat = 53.687;
+		var long = 37.993;
 		//TODO: Once Docker is up and running, the xpos and ypos can be determined from this. 
-		const outputy = -6979.31;
-		const outputx = -2469.545;
+		var outputy = -6979.31;
+		var outputx = -2469.545;
 
 		expect(scope.coordToXY(lat, long).x).toBeCloseTo(outputx);
 		expect(scope.coordToXY(lat, long).y).toBeCloseTo(outputy);
@@ -363,17 +363,17 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 
 	// Tests for Null Input in coordToXY (not for coordToXY; using as reminder for waypointNew)
 	it('test with null input', () => {
-		const lat = null;
-		const long = null;
-		const output = ({'y': 0, 'x': 0});
+		var lat = null;
+		var long = null;
+		var output = ({'y': 0, 'x': 0});
 		//TODO: To check what the null value should return
 		expect(scope.coordToXY(lat, long)).toEqual(output);
 	});
 
 	//Test that x_pos is greater than 0 with a negative value entered
 	it('test xpos is positive with negative value', () => {
-		const lat = 0;
-		const long = -334;
+		var lat = 0;
+		var long = -334;
 		var outputx = 0;
 
 		expect(scope.coordToXY(lat,long).x).toBeLessThan(outputx);
@@ -381,8 +381,8 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 
 	//Test that x_pos is greater than 0 with a positive value entered
 	it('test xpos is negative with positive value', () => {
-		const lat = 0;
-		const long = 10;
+		var lat = 0;
+		var long = 10;
 		var outputx = 0;
 
 		expect(scope.coordToXY(lat, long).x).toBeLessThan(outputx);
@@ -390,42 +390,42 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 
 	//Test that y_pos is less than 0 with a negative value entered
 	it('test ypos is negative with negative value', () => {
-		const lat = -10.1;
-		const long = 0;
+		var lat = -10.1;
+		var long = 0;
 
 		expect(scope.coordToXY(lat, long).y).toBeLessThan(0);
 	});
 
 	//Test that y_pos is less than 0 with a positive value entered
 	it('test ypos is negative with positive value', () => {
-		const lat = 10.1;
-		const long = 0;
+		var lat = 10.1;
+		var long = 0;
 
 		expect(scope.coordToXY(lat, long).y).toBeLessThan(0);
 	});
 
 	//Test that when point A is more west than point B, x_pos for A is less than x_pos for B
 	it('west point A.xpos greater than east point B.xpos', () => {
-		const latA = 0;
-		const longA = 40.1;
-		const latB = 0;
-		const longB = 80.2;
+		var latA = 0;
+		var longA = 40.1;
+		var latB = 0;
+		var longB = 80.2;
 
-		const testA = scope.coordToXY(latA, longA);
-		const testB = scope.coordToXY(latB, longB);
+		var testA = scope.coordToXY(latA, longA);
+		var testB = scope.coordToXY(latB, longB);
 
 		expect(testA['x']).toBeGreaterThan(testB['x']);
 	});
 
 	//Test that when point A is more north than point B, y_pos for A is less than y_pos for B
 	it('north point A.xpos less than south point B.xpos', () => {
-		const latA = 80.1;
-		const longA = 0;
-		const latB = 40.1;
-		const longB = 0;
+		var latA = 80.1;
+		var longA = 0;
+		var latB = 40.1;
+		var longB = 0;
 
-		const testA = scope.coordToXY(latA, longA);
-		const testB = scope.coordToXY(latB, longB);
+		var testA = scope.coordToXY(latA, longA);
+		var testB = scope.coordToXY(latB, longB);
 
 		expect(testA['y']).toBeLessThan(testB['y']);
 	});
@@ -433,8 +433,8 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 	//The minimum value (save for waypointNew?)
 	
 	it('test with very large negative input', () => {
-		const lat = -89.000000;
-		const long = -179.00000;
+		var lat = -89.000000;
+		var long = -179.00000;
 
 		expect(scope.coordToXY(lat, long).x).toBeLessThan(0);
 		expect(scope.coordToXY(lat, long).y).toBeLessThan(0);
@@ -445,10 +445,10 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 	//DONE
 	
 	it('test with same input', () => {
-		const lat = 55;
-		const long = 55;
-		const lat1 = 55;
-		const long1 = 55;
+		var lat = 55;
+		var long = 55;
+		var lat1 = 55;
+		var long1 = 55;
 
 		expect(scope.coordToXY(lat, long)).toEqual(scope.coordToXY(lat1,long1));
 	});
@@ -506,10 +506,10 @@ describe('Testing deleteEarliestWaypoint', () => {  // test the deleteLatestWayp
 
 	}));
 
-	const output1 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
-	const output2 = [];
-	const output3 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
-	const output4 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6}, {'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}];
+	var output1 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+	var output2 = [];
+	var output3 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+	var output4 = [{'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6}, {'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}];
 
 	it('test with normal waypoint', () => {  // just test with removing 1 waypoint
 		scope.deleteEarliestWaypoint();

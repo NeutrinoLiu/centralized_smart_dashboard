@@ -1,6 +1,6 @@
 // Unit testing file for the Cameras Controller
 // May need to add some includes at the top, not sure what to add though
-const PATH = 'http://localhost:5000';
+var PATH = 'http://localhost:5000';
 
 describe('CAMERA Testing init', () =>{
     beforeEach(module('cameras'));
