@@ -102,7 +102,7 @@ touch testipfile.txt
 pytest --cov=rover
 ```
 
-For this iteration, we have achieved an 88% code coverage. 
+For our final iteration, we have achieved an 88% code coverage. 
 </li>
 
 
@@ -146,7 +146,7 @@ Use the following command to run the automated front end tests.
 npm test
 ```
 
-For this iteration, we achieved a 77% code coverage. We considered this an acceptable value due to the dynamic nature of the GUI as well as a majority of the HTML front-end tests are visual acceptance tests, i.e. map testing, range sliders and zoom in AINavigation and Maintenance.
+For our final iteration, we achieved a 79% code coverage. We considered this an acceptable value due to the dynamic nature of the GUI as well as a majority of the HTML front-end tests are visual acceptance tests, i.e. map testing, range sliders and zoom in AINavigation and Maintenance.
 
 </li>
 

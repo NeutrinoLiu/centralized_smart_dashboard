@@ -171,7 +171,7 @@ describe('Testing waypoint new', () => {
 
 describe('testing update rover coordinates', () => {  // tests written for the update rover coordinates button
 
-    beforeEach(module('AINavigation'));
+    beforeEach(module('ERDM'));
 
     var scope, $controller, $httpBackend;
 
@@ -193,7 +193,7 @@ describe('testing update rover coordinates', () => {  // tests written for the u
             }
         });
         $httpBackend.expectGET(PATH + '/api/gps').respond({"success": true, "lat": 57.43, "long": 58.5});
-        ctrl = $controller('AINavigationController', {$scope: scope});
+        ctrl = $controller('ERDMController', {$scope: scope});
         scope.updateRoverCoordinates();
         $httpBackend.flush();
         //expect(scope.notifications).toEqual(output1);
@@ -322,7 +322,7 @@ describe('testing addNotification', () => {  // testing the addNotification func
 
 describe('testing eStop button', () => {  // tests written for the eStop button
 
-    beforeEach(module('AINavigation'));
+    beforeEach(module('ERDM'));
 
     var scope, $controller, $httpBackend;
 
@@ -342,7 +342,7 @@ describe('testing eStop button', () => {  // tests written for the eStop button
         $httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
             "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
         //scope.notifications = "none yet";
-        ctrl = $controller('AINavigationController', { $scope: scope });
+        ctrl = $controller('ERDMController', { $scope: scope });
         var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
         scope.eStopButton();
         $httpBackend.flush();
@@ -353,7 +353,7 @@ describe('testing eStop button', () => {  // tests written for the eStop button
         //$httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
         //    "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
         //scope.notifications = "none yet";
-        ctrl = $controller('AINavigationController', { $scope: scope });
+        ctrl = $controller('ERDMController', { $scope: scope });
         var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
         scope.eStopButton();
         $httpBackend.flush();
@@ -364,7 +364,7 @@ describe('testing eStop button', () => {  // tests written for the eStop button
         //$httpBackend.expectPOST(PATH + '/api/notifications').respond({"success": true,
         //    "notifications": "none yetESTOP PRESSED! Rover is force restarting.\n"});
         //scope.notifications = "none yet";
-        ctrl = $controller('AINavigationController', { $scope: scope });
+        ctrl = $controller('ERDMController', { $scope: scope });
         var output1 = "none yetESTOP PRESSED! Rover is force restarting.\n";
         scope.eStopButton();
         $httpBackend.flush();
