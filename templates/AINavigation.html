@@ -17,7 +17,7 @@
     <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="http://monospaced.github.io/hamster.js/hamster.js"></script>
     <script src="https://code.angularjs.org/1.3.13/angular.min.js"></script>
-    <script src="http://monospaced.github.io/angular-mousewheel/mousewheel.js"></script
+    <script src="http://monospaced.github.io/angular-mousewheel/mousewheel.js"></script>
 
     <script type="text/javascript" src="{{ url_for('static', filename='directives/panzoom.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='services/PanZoomService.js') }}"></script>
@@ -58,7 +58,7 @@
                 <tr>
                     <th>Target coordinates</th>
                     <!--<th>Distance</th>-->
-                    <td><input type="button" ng-click="deleteLatestWaypoint()" value="Delete Latest Waypoint"></td>
+                    <td><input type="button" ng-click="deleteEarliesttWaypoint()" value="Delete Latest Waypoint"></td>
                 </tr>
 
                 <tr ng-repeat="waypoint in waypoints">
@@ -69,8 +69,8 @@
         </coord-display>
         <enter-coord>
             <form>
-                <input type="number" id="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
-                <input type="number" id="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
+                <input type="number" id="waypointNewLongitude" ng-model="waypointNewLongitude" name="waypointNew" placeholder="Enter New Longitude:"><br>
+                <input type="number" id="waypointNewLatitude" ng-model="waypointNewLatitude" name="waypointNew" placeholder="Enter New Latitude:"><br>
                 <input type="submit" ng-click="waypointNew()" value="Submit" id="submit-button"><br>
             </form>
         </enter-coord>

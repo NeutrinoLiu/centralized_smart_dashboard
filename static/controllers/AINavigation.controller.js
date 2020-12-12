@@ -8,7 +8,7 @@
         $scope.waypointNew = waypointNew;
         $scope.goButton = goButton;
         $scope.eStopButton = eStopButton;
-        $scope.deleteLatestWaypoint = deleteLatestWaypoint;
+        $scope.deleteEarliestWaypoint = deleteEarliestWaypoint;
 
         /* Scope functions needed for testing*/
         $scope.coordToXY = coordToXY;
@@ -21,7 +21,6 @@
         $scope.curr_coord = {'lat': 0, 'long':0};
         $scope.notifications = "none yet";
 
-        // todo: add a zoomtofit after each addition
         var initial_zoom = {
             x: 0,
             y: 0,
@@ -46,42 +45,42 @@
         }
 
         function init() {
-            $http.get(PATH + '/api/route')
-                .then((response) => {
-                    if (response.data.success){
-                        for (index = 0; index < response.data.waypoints.length; index++) {  
-                            $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
-                        }
-                    }
-                }, (error) => {
-                    connectionLost()
-                });
+           $http.get(PATH + '/api/route')
+               .then((response) => {
+                   if (response.data.success){
+                       for (index = 0; index < response.data.waypoints.length; index++) {  
+                           $scope.waypoints.push(fullWaypoint(response.data.waypoints[index]));
+                       }
+                   }
+               }, (error) => {
+                   connectionLost()
+               });
 
-            $http.get(PATH + '/api/gps')
-                .then((response) => {
-                    if (response.data.success) {
-                        setInterval(updateRoverCoordinates, GPS_INTERVAL);
-                        $scope.curr_coord.lat = response.data.lat;
-                        $scope.curr_coord.long = response.data.long;
-                        $scope.roverPin = fullRoverPin(response.data);
-                    }
-                }, (error) => {
-                    connectionLost();
-                });
+           $http.get(PATH + '/api/gps')
+               .then((response) => {
+                   if (response.data.success) {
+                       setInterval(updateRoverCoordinates, GPS_INTERVAL);
+                       $scope.curr_coord.lat = response.data.lat;
+                       $scope.curr_coord.long = response.data.long;
+                       $scope.roverPin = fullRoverPin(response.data);
+                   }
+               }, (error) => {
+                   connectionLost();
+               });
 
-            $http.get(PATH + '/api/notifications')
-                .then((response) => {
-                    if (response.data.success) {
-                        $scope.notifications = response.data.notifications;
-                    }
-                }, (error) => {
-                    connectionLost();
-                });
+           $http.get(PATH + '/api/notifications')
+               .then((response) => {
+                   if (response.data.success) {
+                       $scope.notifications = response.data.notifications;
+                   }
+               }, (error) => {
+                   connectionLost();
+               });
 
-            $window.onload = function() {
-                addWaypointToMap();
-                moveRoverIcon();
-            }
+           $window.onload = function() {
+               addWaypointToMap();
+               moveRoverIcon();
+           }
         }
 
         function updateRoverCoordinates() {
@@ -146,6 +145,11 @@
         }
 
         function moveRoverIcon() {
+            // could be undefined on initial load, but this function is called at fixed intervals
+            if ($scope.roverPin == null) {
+                return;
+            }
+            
             top_ = $scope.roverPin['y_pos'].toString();
             top_ = top_ + 'px';
             left_ = $scope.roverPin['x_pos'].toString();
@@ -183,15 +187,14 @@
 
         //Adds waypoint coordinates to the list
         function waypointNew() {
-            var latitude = document.getElementById("waypointNewLatitude").value;
-            var longitude = document.getElementById("waypointNewLongitude").value;
+            var latitude = $scope.waypointNewLatitude;
+            var longitude = $scope.waypointNewLongitude;
             var invalidInput = (latitude == "" || longitude == "") || latitude < -90 || latitude > 90 
                 || longitude < -180 || longitude > 180;
 
             if (invalidInput) {
                 alert("Invalid coordinates for new waypoint");
             } else {
-
                 $scope.waypoints.push(fullWaypoint({'lat': latitude, 'long': longitude}));
                 $http.post(PATH + '/api/route',
                     {
@@ -212,9 +215,8 @@
         }
 
         // Removes the last waypoint added to our waypoints 
-        function deleteLatestWaypoint() {
+        function deleteEarliestWaypoint() {
             if ($scope.waypoints.length != 0) {
-                // $scope.waypoints.pop();
                 $scope.waypoints.shift();
                 $http.post(PATH + '/api/route',
                     {
@@ -256,12 +258,9 @@
         function goButton() {
             if ($scope.waypoints.length != 0) {
                 alert("GO Command Sent! The rover is moving to the top waypoint.");
-                // todo: POST to fo button endpoint
                 $http.get(PATH + '/api/go-button')
                     .then ((response) => {
                         if ( response.data.success) {
-                            // TODO: change colors of waypoints, or something in map
-                            // TODO: add notigiation through http call 
                             addNotification("GO button pressed! Rover is moving.");
                         } else {
                             connectionLost();
@@ -280,7 +279,6 @@
             $http.get(PATH + '/api/emergency-stop')
                 .then ((response) => {
                     if (response.data.success) {
-                        // TODO: add notigiation through http call 
                         addNotification("ESTOP PRESSED! Rover is force restarting.");
                     } else {
                         connectionLost();
@@ -292,10 +290,10 @@
 
         function connectionLost() {
             alert("Connection lost to server");
-            // todo: consider if we try some other reconnection or something
+            // TODO: consider if we try some other reconnection or something
         }
 
-        init();
+ //       init();
     }
 
 
