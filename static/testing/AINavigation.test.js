@@ -85,6 +85,8 @@ describe('testing addNotification', () => {  // testing the addNotification func
 	beforeEach(inject(function ($rootScope, _$controller_, $injector) {  // inject and mock(?) function
 		$httpBackend = $injector.get('$httpBackend');
 
+		// authRequestHandler = $httpBackend.when('GET', '/auth.py').respond({userId: 'userX'}, {'A-Token': 'xxx'});  //maybe needed?
+
 		scope = $rootScope.$new();
 		$controller = _$controller_;
 
@@ -459,49 +461,61 @@ describe('Testing coordToXY', () => {  // tests for testing coordToXY.  Expected
 //	});
 //});
 
-//describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoint functionality
-	
-//	beforeEach(() => {  // setup initial waypoints array
-//		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
-//	})
+describe('Testing deleteLatestWaypoint', () => {  // test the deleteLatestWaypoint functionality
 
-//	const output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
-//	const output2 = [];
-//	const output3 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
-//	const output4 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+	beforeEach(module('AINavigation'));
 
-//	it('test with normal waypoint', () => {  // just test with removing 1 waypoint
-//		deleteLatestWaypoint();
-//		expect(scope.waypoints).toEqual(output1);
-//	});
+	var scope, $controller;
 
-//	it('test with no waypoints', () => {
-//		scope.waypoints = []  // empty array out since we need it empty for this test
-//		deleteLatestWaypoint();
-//		expect(scope.waypoints).toEqual(output2);
-//	});
+	beforeEach(inject(function ($rootScope, _$controller_) {  // inject and mock(?) function
+		scope = $rootScope.$new();
+		$controller = _$controller_;
 
-//	it('test delete then add then delete waypoint', () => {  // calls deleteLatestWaypoint twice and adds a waypoint between the calls
-//		deleteLatestWaypoint();
-//		scope.waypoints.push({'lat': 56, 'long': 43, 'x_pos': 7, 'y_pos': 8,'index': 2})
-//		deleteLatestWaypoint();
-//		expect(scope.waypoints).toEqual(output3);
-//	});
+		var ctrl = $controller('AINavigationController', { $scope: scope });
 
-//	it('test with many waypoints', () => {  // calls many times in a row with many waypoints in array
-//		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2},
-//		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 3}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 4},
-//		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 5}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6},
-//		{'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}]
-//		deleteLatestWaypoint();
-//		deleteLatestWaypoint();
-//		deleteLatestWaypoint();
-//		deleteLatestWaypoint();
-//		deleteLatestWaypoint();
-//		expect(scope.waypoints).toEqual(output4);
-//	});
+		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];  // setup inital waypoints array
 
-//	//Empties global waypoints variable
-//	afterAll(() => {
-//		scope.waypoints = [];
-//	});
+	}));
+
+	const output1 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
+	const output2 = [];
+	const output3 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}];
+	const output4 = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2}];
+
+	it('test with normal waypoint', () => {  // just test with removing 1 waypoint
+		scope.deleteLatestWaypoint();
+		expect(scope.waypoints).toEqual(output1);
+	});
+
+	it('test with no waypoints', () => {
+		scope.waypoints = [];  // empty array out since we need it empty for this test
+		scope.deleteLatestWaypoint();
+		expect(scope.waypoints).toEqual(output2);
+	});
+
+	it('test delete then add then delete waypoint', () => {  // calls deleteLatestWaypoint twice and adds a waypoint between the calls
+		scope.deleteLatestWaypoint();
+		scope.waypoints.push({'lat': 56, 'long': 43, 'x_pos': 7, 'y_pos': 8,'index': 2});
+		scope.deleteLatestWaypoint();
+		expect(scope.waypoints).toEqual(output3);
+	});
+
+	it('test with many waypoints', () => {  // calls many times in a row with many waypoints in array
+		scope.waypoints = [{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 1}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 2},
+		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 3}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 4},
+		{'lat': 23, 'long': 23, 'x_pos': 5, 'y_pos': 5,'index': 5}, {'lat': 34, 'long': 34, 'x_pos': 5, 'y_pos': 5,'index': 6},
+		{'lat': 37, 'long': 98, 'x_pos': 15, 'y_pos': 13, 'index': 7}];
+		scope.deleteLatestWaypoint();
+		scope.deleteLatestWaypoint();
+		scope.deleteLatestWaypoint();
+		scope.deleteLatestWaypoint();
+		scope.deleteLatestWaypoint();
+		expect(scope.waypoints).toEqual(output4);
+	});
+
+	//Empties global waypoints variable
+	afterAll(() => {
+		scope.waypoints = [];
+	});
+
+});
