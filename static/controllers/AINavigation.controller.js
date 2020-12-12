@@ -293,7 +293,7 @@
             // TODO: consider if we try some other reconnection or something
         }
 
-        init();
+ //       init();
     }
 
 
