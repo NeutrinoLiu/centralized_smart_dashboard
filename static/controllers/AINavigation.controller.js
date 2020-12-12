@@ -15,6 +15,7 @@
         $scope.fullWaypoint = fullWaypoint;
         $scope.addNotification = addNotification;
         $scope.init = init;
+        $scope.updateRoverCoordinates = updateRoverCoordinates;
 
         $scope.waypoints = [];
         $scope.roverPin;
@@ -256,6 +257,7 @@
 
         //Sends the first target waypoint in the list to the rover
         function goButton() {
+            console.log("go button"+ $scope.waypoints.length);
             if ($scope.waypoints.length != 0) {
                 alert("GO Command Sent! The rover is moving to the top waypoint.");
                 $http.get(PATH + '/api/go-button')

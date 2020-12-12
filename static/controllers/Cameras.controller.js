@@ -8,6 +8,7 @@
         $scope.addNotification = addNotification;
         $scope.eStopButton = eStopButton;
         $scope.addIP = addIP;
+        $scope.connectionLost = connectionLost;
 
         $scope.cameraIPs = [];  // list of our camera IPs to store
         $scope.notifications = "blah";
